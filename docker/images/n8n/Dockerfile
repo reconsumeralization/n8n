@@ -1,4 +1,4 @@
-FROM node:12.19-alpine
+FROM node:erbium-alpine3.11
 
 ARG N8N_VERSION
 
