@@ -1,5 +1,5 @@
 # 1. Create an image to build n8n
-FROM node:12.16-alpine as builder
+FROM node:12.22.1-alpine as builder
 
 # Update everything and install needed dependencies
 USER root
@@ -25,7 +25,7 @@ RUN npm run build
 
 
 # 2. Start with a new clean image with just the code that is needed to run n8n
-FROM node:12.16-alpine
+FROM node:12.22.1-alpine
 
 USER root
 
