@@ -32,7 +32,7 @@ export class CoinGecko implements INodeType {
 	description: INodeTypeDescription = {
 		displayName: 'CoinGecko',
 		name: 'coinGecko',
-		icon: 'file:coinGecko.png',
+		icon: 'file:coinGecko.svg',
 		group: ['output'],
 		version: 1,
 		description: 'Consume CoinGecko API',
@@ -526,12 +526,13 @@ export class CoinGecko implements INodeType {
 				}
 			}
 
+			if (Array.isArray(responseData)) {
+				returnData.push.apply(returnData, responseData as IDataObject[]);
+			} else if (responseData !== undefined) {
+				returnData.push(responseData as IDataObject);
+			}
 		}
-		if (Array.isArray(responseData)) {
-			returnData.push.apply(returnData, responseData as IDataObject[]);
-		} else if (responseData !== undefined) {
-			returnData.push(responseData as IDataObject);
-		}
+
 		return [this.helpers.returnJsonArray(returnData)];
 	}
 }

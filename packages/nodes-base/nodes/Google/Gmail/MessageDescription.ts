@@ -126,6 +126,46 @@ export const messageFields = [
 		description: 'The message subject.',
 	},
 	{
+		displayName: 'HTML',
+		name: 'includeHtml',
+		type: 'boolean',
+		displayOptions: {
+			show: {
+				resource: [
+					'message',
+				],
+				operation: [
+					'send',
+					'reply',
+				],
+			},
+		},
+		default: false,
+		description: 'Switch ON if the message should also be included as HTML.',
+	},
+	{
+		displayName: 'HTML Message',
+		name: 'htmlMessage',
+		type: 'string',
+		default: '',
+		required: true,
+		displayOptions: {
+			show: {
+				includeHtml: [
+					true,
+				],
+				resource: [
+					'message',
+				],
+				operation: [
+					'reply',
+					'send',
+				],
+			},
+		},
+		description: 'The HTML message body.',
+	},
+	{
 		displayName: 'Message',
 		name: 'message',
 		type: 'string',
@@ -142,8 +182,7 @@ export const messageFields = [
 				],
 			},
 		},
-		placeholder: 'Hello World!',
-		description: 'The message body. This can be in HTML.',
+		description: 'Plain text message body.',
 	},
 	{
 		displayName: 'To Email',
@@ -188,30 +227,6 @@ export const messageFields = [
 		default: {},
 		options: [
 			{
-				displayName: 'CC Email',
-				name: 'ccList',
-				type: 'string',
-				description: 'The email addresses of the copy recipients.',
-				typeOptions: {
-					multipleValues: true,
-					multipleValueButtonText: 'Add CC Email',
-				},
-				placeholder: 'info@example.com',
-				default: [],
-			},
-			{
-				displayName: 'BCC Email',
-				name: 'bccList',
-				type: 'string',
-				description: 'The email addresses of the blind copy recipients.',
-				typeOptions: {
-					multipleValues: true,
-					multipleValueButtonText: 'Add BCC Email',
-				},
-				placeholder: 'info@example.com',
-				default: [],
-			},
-			{
 				displayName: 'Attachments',
 				name: 'attachmentsUi',
 				placeholder: 'Add Attachments',
@@ -229,13 +244,38 @@ export const messageFields = [
 								name: 'property',
 								type: 'string',
 								default: '',
-								description: 'Name of the binary properties which contain data which should be added to email as attachment',
+								description: `Name of the binary property containing the data to be added to the email as an attachment.</br>
+								Multiples can be set separated by comma.`,
 							},
 						],
 					},
 				],
 				default: '',
 				description: 'Array of supported attachments to add to the message.',
+			},
+			{
+				displayName: 'BCC Email',
+				name: 'bccList',
+				type: 'string',
+				description: 'The email addresses of the blind copy recipients.',
+				typeOptions: {
+					multipleValues: true,
+					multipleValueButtonText: 'Add BCC Email',
+				},
+				placeholder: 'info@example.com',
+				default: [],
+			},
+			{
+				displayName: 'CC Email',
+				name: 'ccList',
+				type: 'string',
+				description: 'The email addresses of the copy recipients.',
+				typeOptions: {
+					multipleValues: true,
+					multipleValueButtonText: 'Add CC Email',
+				},
+				placeholder: 'info@example.com',
+				default: [],
 			},
 		],
 	},

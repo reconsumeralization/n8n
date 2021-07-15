@@ -21,6 +21,11 @@ export const customObjectOperations = [
 				description: 'Create a custom object record',
 			},
 			{
+				name: 'Create or Update',
+				value: 'upsert',
+				description: 'Create a new record, or update the current one if it already exists (upsert)',
+			},
+			{
 				name: 'Get',
 				value: 'get',
 				description: 'Get a custom object record',
@@ -48,9 +53,9 @@ export const customObjectOperations = [
 
 export const customObjectFields = [
 
-/* -------------------------------------------------------------------------- */
-/*                                customObject:create                         */
-/* -------------------------------------------------------------------------- */
+	/* -------------------------------------------------------------------------- */
+	/*                                customObject:create                         */
+	/* -------------------------------------------------------------------------- */
 	{
 		displayName: 'Custom Object',
 		name: 'customObject',
@@ -67,10 +72,53 @@ export const customObjectFields = [
 				],
 				operation: [
 					'create',
+					'upsert',
 				],
 			},
 		},
-		description: 'Name of the custom object',
+		description: 'Name of the custom object.',
+	},
+	{
+		displayName: 'Match Against',
+		name: 'externalId',
+		type: 'options',
+		typeOptions: {
+			loadOptionsMethod: 'getExternalIdFields',
+			loadOptionsDependsOn: [
+				'customObject',
+			],
+		},
+		required: true,
+		default: '',
+		displayOptions: {
+			show: {
+				resource: [
+					'customObject',
+				],
+				operation: [
+					'upsert',
+				],
+			},
+		},
+		description: `The field to check to see if the object already exists`,
+	},
+	{
+		displayName: 'Value to Match',
+		name: 'externalIdValue',
+		type: 'string',
+		required: true,
+		default: '',
+		displayOptions: {
+			show: {
+				resource: [
+					'customObject',
+				],
+				operation: [
+					'upsert',
+				],
+			},
+		},
+		description: `If this value exists in the 'match against' field, update the object. Otherwise create a new one`,
 	},
 	{
 		displayName: 'Fields',
@@ -87,10 +135,11 @@ export const customObjectFields = [
 				],
 				operation: [
 					'create',
+					'upsert',
 				],
 			},
 		},
-		description: 'Filter by custom fields ',
+		description: 'Filter by custom fields.',
 		default: {},
 		options: [
 			{
@@ -121,9 +170,10 @@ export const customObjectFields = [
 			},
 		],
 	},
-/* -------------------------------------------------------------------------- */
-/*                                 customObject:update                        */
-/* -------------------------------------------------------------------------- */
+
+	/* -------------------------------------------------------------------------- */
+	/*                                 customObject:update                        */
+	/* -------------------------------------------------------------------------- */
 	{
 		displayName: 'Custom Object',
 		name: 'customObject',
@@ -161,7 +211,7 @@ export const customObjectFields = [
 				],
 			},
 		},
-		description: 'Record id to be updated',
+		description: 'Record ID to be updated.',
 	},
 	{
 		displayName: 'Fields',
@@ -212,9 +262,10 @@ export const customObjectFields = [
 			},
 		],
 	},
-/* -------------------------------------------------------------------------- */
-/*                                  customObject:get                          */
-/* -------------------------------------------------------------------------- */
+
+	/* -------------------------------------------------------------------------- */
+	/*                                  customObject:get                          */
+	/* -------------------------------------------------------------------------- */
 	{
 		displayName: 'Custom Object',
 		name: 'customObject',
@@ -252,11 +303,12 @@ export const customObjectFields = [
 				],
 			},
 		},
-		description: 'Record id to be retrieved',
+		description: 'Record ID to be retrieved.',
 	},
-/* -------------------------------------------------------------------------- */
-/*                                  customObject:delete                       */
-/* -------------------------------------------------------------------------- */
+
+	/* -------------------------------------------------------------------------- */
+	/*                                  customObject:delete                       */
+	/* -------------------------------------------------------------------------- */
 	{
 		displayName: 'Custom Object',
 		name: 'customObject',
@@ -276,7 +328,7 @@ export const customObjectFields = [
 				],
 			},
 		},
-		description: 'Name of the custom object',
+		description: 'Name of the custom object.',
 	},
 	{
 		displayName: 'Record ID',
@@ -294,11 +346,12 @@ export const customObjectFields = [
 				],
 			},
 		},
-		description: 'Record id to be deleted',
+		description: 'Record ID to be deleted.',
 	},
-/* -------------------------------------------------------------------------- */
-/*                                 customObject:getAll                        */
-/* -------------------------------------------------------------------------- */
+
+	/* -------------------------------------------------------------------------- */
+	/*                                 customObject:getAll                        */
+	/* -------------------------------------------------------------------------- */
 	{
 		displayName: 'Custom Object',
 		name: 'customObject',
@@ -378,6 +431,72 @@ export const customObjectFields = [
 			},
 		},
 		options: [
+			{
+				displayName: 'Conditions',
+				name: 'conditionsUi',
+				placeholder: 'Add Condition',
+				type: 'fixedCollection',
+				typeOptions: {
+					multipleValues: true,
+				},
+				description: 'The condition to set.',
+				default: {},
+				options: [
+					{
+						name: 'conditionValues',
+						displayName: 'Condition',
+						values: [
+							{
+								displayName: 'Field',
+								name: 'field',
+								type: 'options',
+								typeOptions: {
+									loadOptionsMethod: 'getCustomObjectFields',
+									loadOptionsDependsOn: [
+										'customObject',
+									],
+								},
+								default: '',
+								description: 'For date, number, or boolean, please use expressions.',
+							},
+							{
+								displayName: 'Operation',
+								name: 'operation',
+								type: 'options',
+								options: [
+									{
+										name: '=',
+										value: 'equal',
+									},
+									{
+										name: '>',
+										value: '>',
+									},
+									{
+										name: '<',
+										value: '<',
+									},
+									{
+										name: '>=',
+										value: '>=',
+									},
+									{
+										name: '<=',
+										value: '<=',
+									},
+								],
+								default: 'equal',
+							},
+							{
+								displayName: 'Value',
+								name: 'value',
+								type: 'string',
+								default: '',
+							},
+						],
+					},
+				],
+			},
 			{
 				displayName: 'Fields',
 				name: 'fields',

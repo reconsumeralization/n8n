@@ -1,22 +1,23 @@
 import {
 	ICredentialType,
-	NodePropertyTypes,
+	INodeProperties,
 } from 'n8n-workflow';
 
 export class StrapiApi implements ICredentialType {
 	name = 'strapiApi';
 	displayName = 'Strapi API';
-	properties = [
+	documentationUrl = 'strapi';
+	properties: INodeProperties[] = [
 		{
 			displayName: 'Email',
 			name: 'email',
-			type: 'string' as NodePropertyTypes,
+			type: 'string',
 			default: '',
 		},
 		{
 			displayName: 'Password',
 			name: 'password',
-			type: 'string' as NodePropertyTypes,
+			type: 'string',
 			typeOptions: {
 				password: true,
 			},
@@ -25,7 +26,7 @@ export class StrapiApi implements ICredentialType {
 		{
 			displayName: 'URL',
 			name: 'url',
-			type: 'string' as NodePropertyTypes,
+			type: 'string',
 			default: '',
 			placeholder: 'https://api.example.com',
 		},

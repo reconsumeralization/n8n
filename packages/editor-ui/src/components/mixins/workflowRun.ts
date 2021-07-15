@@ -10,6 +10,7 @@ import {
 	NodeHelpers,
 } from 'n8n-workflow';
 
+import { externalHooks } from '@/components/mixins/externalHooks';
 import { restApi } from '@/components/mixins/restApi';
 import { workflowHelpers } from '@/components/mixins/workflowHelpers';
 
@@ -17,6 +18,7 @@ import mixins from 'vue-typed-mixins';
 import { titleChange } from './titleChange';
 
 export const workflowRun = mixins(
+	externalHooks,
 	restApi,
 	workflowHelpers,
 	titleChange,
@@ -51,7 +53,7 @@ export const workflowRun = mixins(
 
 			return response;
 		},
-		async runWorkflow (nodeName: string): Promise<IExecutionPushResponse | undefined> {
+		async runWorkflow (nodeName: string, source?: string): Promise<IExecutionPushResponse | undefined> {
 			if (this.$store.getters.isActionActive('workflowRunning') === true) {
 				return;
 			}
@@ -82,6 +84,7 @@ export const workflowRun = mixins(
 							duration: 0,
 						});
 						this.$titleSet(workflow.name as string, 'ERROR');
+						this.$externalHooks().run('workflowRun.runError', { errorMessages, nodeName });
 						return;
 					}
 				}
@@ -169,7 +172,11 @@ export const workflowRun = mixins(
 				};
 				this.$store.commit('setWorkflowExecutionData', executionData);
 
-				 return await this.runWorkflowApi(startRunData);
+				 const runWorkflowApiResponse = await this.runWorkflowApi(startRunData);
+
+				 this.$externalHooks().run('workflowRun.runWorkflow', { nodeName, source });
+
+				 return runWorkflowApiResponse;
 			} catch (error) {
 				this.$titleSet(workflow.name as string, 'ERROR');
 				this.$showError(error, 'Problem running workflow', 'There was a problem running the workflow:');

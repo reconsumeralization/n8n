@@ -11,11 +11,16 @@ import {
 import {
 	IDataObject,
 	INodePropertyOptions,
+	NodeApiError,
 } from 'n8n-workflow';
 
 import * as moment from 'moment-timezone';
 
 import * as jwt from 'jsonwebtoken';
+
+import {
+	LoggerProxy as Logger
+} from 'n8n-workflow';
 
 export async function salesforceApiRequest(this: IExecuteFunctions | IExecuteSingleFunctions | ILoadOptionsFunctions, method: string, endpoint: string, body: any = {}, qs: IDataObject = {}, uri?: string, option: IDataObject = {}): Promise<any> { // tslint:disable-line:no-any
 	const authenticationMethod = this.getNodeParameter('authentication', 0, 'oAuth2') as string;
@@ -28,24 +33,21 @@ export async function salesforceApiRequest(this: IExecuteFunctions | IExecuteSin
 			const response = await getAccessToken.call(this, credentials as IDataObject);
 			const { instance_url, access_token } = response;
 			const options = getOptions.call(this, method, (uri || endpoint), body, qs, instance_url as string);
+			Logger.debug(`Authentication for "Salesforce" node is using "jwt". Invoking URI ${options.uri}`);
 			options.headers!.Authorization = `Bearer ${access_token}`;
 			//@ts-ignore
 			return await this.helpers.request(options);
 		} else {
 			// https://help.salesforce.com/articleView?id=remoteaccess_oauth_web_server_flow.htm&type=5
 			const credentialsType = 'salesforceOAuth2Api';
-			const credentials = this.getCredentials(credentialsType);
-			const subdomain = ((credentials!.accessTokenUrl as string).match(/https:\/\/(.+).salesforce\.com/) || [])[1];
-			const options = getOptions.call(this, method, (uri || endpoint), body, qs, `https://${subdomain}.salesforce.com`);
+			const credentials = this.getCredentials(credentialsType) as { oauthTokenData: { instance_url: string } };
+			const options = getOptions.call(this, method, (uri || endpoint), body, qs, credentials.oauthTokenData.instance_url);
+			Logger.debug(`Authentication for "Salesforce" node is using "OAuth2". Invoking URI ${options.uri}`);
 			//@ts-ignore
 			return await this.helpers.requestOAuth2.call(this, credentialsType, options);
 		}
 	} catch (error) {
-		if (error.response && error.response.body && error.response.body[0] && error.response.body[0].message) {
-			// Try to return the error prettier
-			throw new Error(`Salesforce error response [${error.statusCode}]: ${error.response.body[0].message}`);
-		}
-		throw error;
+		throw new NodeApiError(this.getNode(), error);
 	}
 }
 
@@ -133,4 +135,60 @@ function getAccessToken(this: IExecuteFunctions | IExecuteSingleFunctions | ILoa
 
 	//@ts-ignore
 	return this.helpers.request(options);
+}
+
+export function getConditions(options: IDataObject) {
+	const conditions = (options.conditionsUi as IDataObject || {}).conditionValues as IDataObject[];
+	let data = undefined;
+	if (Array.isArray(conditions) && conditions.length !== 0) {
+		data = conditions.map((condition: IDataObject) => `${condition.field}${(condition.operation) === 'equal' ? '=' : condition.operation}${getValue(condition.value)}`);
+		data = `WHERE ${data.join(' AND ')}`;
+	}
+	return data;
+}
+
+export function getDefaultFields(sobject: string) {
+	return (
+		{
+			'Account': 'id,name,type',
+			'Lead': 'id,company,firstname,lastname,street,postalCode,city,email,status',
+			'Contact': 'id,firstname,lastname,email',
+			'Opportunity': 'id,accountId,amount,probability,type',
+			'Case': 'id,accountId,contactId,priority,status,subject,type',
+			'Task': 'id,subject,status,priority',
+			'Attachment': 'id,name',
+			'User': 'id,name,email',
+		} as IDataObject
+	)[sobject];
+}
+
+export function getQuery(options: IDataObject, sobject: string, returnAll: boolean, limit = 0) {
+	const fields: string[] = [];
+	if (options.fields) {
+		// options.fields is comma separated in standard Salesforce objects and array in custom Salesforce objects -- handle both cases
+		if (typeof options.fields === 'string') {
+			fields.push.apply(fields, options.fields.split(','));
+		} else {
+			fields.push.apply(fields, options.fields as string[]);
+		}
+	} else {
+		fields.push.apply(fields, (getDefaultFields(sobject) as string || 'id').split(','));
+	}
+	const conditions = getConditions(options);
+
+	let query = `SELECT ${fields.join(',')} FROM ${sobject} ${(conditions ? conditions : '')}`;
+
+	if (returnAll === false) {
+		query = `SELECT ${fields.join(',')} FROM ${sobject} ${(conditions ? conditions : '')} LIMIT ${limit}`;
+	}
+
+	return query;
+}
+
+export function getValue(value: any) { // tslint:disable-line:no-any
+	if (typeof value === 'string') {
+		return `'${value}'`;
+	} else {
+		return value;
+	}
 }

@@ -31,6 +31,11 @@ export const contactOperations = [
 				description: 'Create a contact',
 			},
 			{
+				name: 'Create or Update',
+				value: 'upsert',
+				description: 'Create a new contact, or update the current one if it already exists (upsert)',
+			},
+			{
 				name: 'Delete',
 				value: 'delete',
 				description: 'Delete a contact',
@@ -43,7 +48,7 @@ export const contactOperations = [
 			{
 				name: 'Get Summary',
 				value: 'getSummary',
-				description: `Returns an overview of contact's metadata.`,
+				description: `Returns an overview of contact's metadata`,
 			},
 			{
 				name: 'Get All',
@@ -63,9 +68,51 @@ export const contactOperations = [
 
 export const contactFields = [
 
-/* -------------------------------------------------------------------------- */
-/*                                contact:create                              */
-/* -------------------------------------------------------------------------- */
+	/* -------------------------------------------------------------------------- */
+	/*                                contact:create                              */
+	/* -------------------------------------------------------------------------- */
+	{
+		displayName: 'Match Against',
+		name: 'externalId',
+		type: 'options',
+		typeOptions: {
+			loadOptionsMethod: 'getExternalIdFields',
+			loadOptionsDependsOn: [
+				'resource',
+			],
+		},
+		required: true,
+		default: '',
+		displayOptions: {
+			show: {
+				resource: [
+					'contact',
+				],
+				operation: [
+					'upsert',
+				],
+			},
+		},
+		description: `The field to check to see if the contact already exists`,
+	},
+	{
+		displayName: 'Value to Match',
+		name: 'externalIdValue',
+		type: 'string',
+		required: true,
+		default: '',
+		displayOptions: {
+			show: {
+				resource: [
+					'contact',
+				],
+				operation: [
+					'upsert',
+				],
+			},
+		},
+		description: `If this value exists in the 'match against' field, update the contact. Otherwise create a new one`,
+	},
 	{
 		displayName: 'Last Name',
 		name: 'lastname',
@@ -79,6 +126,7 @@ export const contactFields = [
 				],
 				operation: [
 					'create',
+					'upsert',
 				],
 			},
 		},
@@ -97,6 +145,7 @@ export const contactFields = [
 				],
 				operation: [
 					'create',
+					'upsert',
 				],
 			},
 		},
@@ -152,7 +201,7 @@ export const contactFields = [
 								name: 'fieldId',
 								type: 'options',
 								typeOptions: {
-									loadOptionsMethod: 'getLeadCustomFields',
+									loadOptionsMethod: 'getCustomFields',
 								},
 								default: '',
 								description: 'The ID of the field to add custom field to.',
@@ -336,24 +385,25 @@ export const contactFields = [
 				description: 'Phone number for the contact.',
 			},
 			{
-				displayName: 'Title',
-				name: 'title',
-				type: 'string',
-				default: '',
-				description: 'Title of the contact such as CEO or Vice President.',
-			},
-			{
 				displayName: 'Salutation',
 				name: 'salutation',
 				type: 'string',
 				default: '',
 				description: 'Honorific abbreviation, word, or phrase to be used in front of name in greetings, such as Dr. or Mrs.',
 			},
+			{
+				displayName: 'Title',
+				name: 'title',
+				type: 'string',
+				default: '',
+				description: 'Title of the contact such as CEO or Vice President.',
+			},
 		],
 	},
-/* -------------------------------------------------------------------------- */
-/*                                 contact:update                             */
-/* -------------------------------------------------------------------------- */
+
+	/* -------------------------------------------------------------------------- */
+	/*                                 contact:update                             */
+	/* -------------------------------------------------------------------------- */
 	{
 		displayName: 'Contact ID',
 		name: 'contactId',
@@ -370,7 +420,7 @@ export const contactFields = [
 				],
 			},
 		},
-		description: 'Id of contact that needs to be fetched',
+		description: 'ID of contact that needs to be fetched.',
 	},
 	{
 		displayName: 'Update Fields',
@@ -440,7 +490,7 @@ export const contactFields = [
 								name: 'fieldId',
 								type: 'options',
 								typeOptions: {
-									loadOptionsMethod: 'getLeadCustomFields',
+									loadOptionsMethod: 'getCustomFields',
 								},
 								default: '',
 								description: 'The ID of the field to add custom field to.',
@@ -519,6 +569,13 @@ export const contactFields = [
 				default: '',
 				description: `references the ID of a contact in Data.com.
 				If a contact has a value in this field, it means that a contact was imported as a contact from Data.com.`,
+			},
+			{
+				displayName: 'Last Name',
+				name: 'lastName',
+				type: 'string',
+				default: '',
+				description: 'Last name of the contact. Limited to 80 characters.',
 			},
 			{
 				displayName: 'Lead Source',
@@ -640,9 +697,9 @@ export const contactFields = [
 		],
 	},
 
-/* -------------------------------------------------------------------------- */
-/*                                  contact:get                                  */
-/* -------------------------------------------------------------------------- */
+	/* -------------------------------------------------------------------------- */
+	/*                                  contact:get                               */
+	/* -------------------------------------------------------------------------- */
 	{
 		displayName: 'Contact ID',
 		name: 'contactId',
@@ -659,11 +716,12 @@ export const contactFields = [
 				],
 			},
 		},
-		description: 'Id of contact that needs to be fetched',
+		description: 'ID of contact that needs to be fetched.',
 	},
-/* -------------------------------------------------------------------------- */
-/*                                  contact:delete                               */
-/* -------------------------------------------------------------------------- */
+
+	/* -------------------------------------------------------------------------- */
+	/*                                  contact:delete                               */
+	/* -------------------------------------------------------------------------- */
 	{
 		displayName: 'Contact ID',
 		name: 'contactId',
@@ -680,11 +738,12 @@ export const contactFields = [
 				],
 			},
 		},
-		description: 'Id of contact that needs to be fetched',
+		description: 'ID of contact that needs to be fetched',
 	},
-/* -------------------------------------------------------------------------- */
-/*                                 contact:getAll                                */
-/* -------------------------------------------------------------------------- */
+
+	/* -------------------------------------------------------------------------- */
+	/*                                 contact:getAll                                */
+	/* -------------------------------------------------------------------------- */
 	{
 		displayName: 'Return All',
 		name: 'returnAll',
@@ -744,6 +803,69 @@ export const contactFields = [
 		},
 		options: [
 			{
+				displayName: 'Conditions',
+				name: 'conditionsUi',
+				placeholder: 'Add Condition',
+				type: 'fixedCollection',
+				typeOptions: {
+					multipleValues: true,
+				},
+				description: 'The condition to set.',
+				default: {},
+				options: [
+					{
+						name: 'conditionValues',
+						displayName: 'Condition',
+						values: [
+							{
+								displayName: 'Field',
+								name: 'field',
+								type: 'options',
+								typeOptions: {
+									loadOptionsMethod: 'getContactFields',
+								},
+								default: '',
+								description: 'For date, number, or boolean, please use expressions.',
+							},
+							{
+								displayName: 'Operation',
+								name: 'operation',
+								type: 'options',
+								options: [
+									{
+										name: '=',
+										value: 'equal',
+									},
+									{
+										name: '>',
+										value: '>',
+									},
+									{
+										name: '<',
+										value: '<',
+									},
+									{
+										name: '>=',
+										value: '>=',
+									},
+									{
+										name: '<=',
+										value: '<=',
+									},
+								],
+								default: 'equal',
+							},
+							{
+								displayName: 'Value',
+								name: 'value',
+								type: 'string',
+								default: '',
+							},
+						],
+					},
+				],
+			},
+			{
 				displayName: 'Fields',
 				name: 'fields',
 				type: 'string',
@@ -753,9 +875,9 @@ export const contactFields = [
 		],
 	},
 
-/* -------------------------------------------------------------------------- */
-/*                            contact:addToCampaign                           */
-/* -------------------------------------------------------------------------- */
+	/* -------------------------------------------------------------------------- */
+	/*                            contact:addToCampaign                           */
+	/* -------------------------------------------------------------------------- */
 	{
 		displayName: 'Contact ID',
 		name: 'contactId',
@@ -772,7 +894,7 @@ export const contactFields = [
 				],
 			},
 		},
-		description: 'Id of contact that needs to be fetched',
+		description: 'ID of contact that needs to be fetched.',
 	},
 	{
 		displayName: 'Campaign',
@@ -793,7 +915,7 @@ export const contactFields = [
 				],
 			},
 		},
-		description: 'Id of the campaign that needs to be fetched',
+		description: 'ID of the campaign that needs to be fetched.',
 	},
 	{
 		displayName: 'Options',
@@ -817,13 +939,14 @@ export const contactFields = [
 				name: 'status',
 				type: 'string',
 				default: '',
-				description: 'Controls the HasResponded flag on this object',
+				description: 'Controls the HasResponded flag on this object.',
 			},
 		],
 	},
-/* -------------------------------------------------------------------------- */
-/*                             contact:addNote                                */
-/* -------------------------------------------------------------------------- */
+
+	/* -------------------------------------------------------------------------- */
+	/*                             contact:addNote                                */
+	/* -------------------------------------------------------------------------- */
 	{
 		displayName: 'Contact ID',
 		name: 'contactId',
@@ -840,7 +963,7 @@ export const contactFields = [
 				],
 			},
 		},
-		description: 'Id of contact that needs to be fetched',
+		description: 'ID of contact that needs to be fetched.',
 	},
 	{
 		displayName: 'Title',

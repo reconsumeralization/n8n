@@ -1,5 +1,7 @@
 import * as convict from 'convict';
 import * as dotenv from 'dotenv';
+import * as path from 'path';
+import * as core from 'n8n-core';
 
 dotenv.config();
 
@@ -8,17 +10,9 @@ const config = convict({
 	database: {
 		type: {
 			doc: 'Type of database to use',
-			format: ['sqlite', 'mariadb', 'mongodb', 'mysqldb', 'postgresdb'],
+			format: ['sqlite', 'mariadb', 'mysqldb', 'postgresdb'],
 			default: 'sqlite',
 			env: 'DB_TYPE',
-		},
-		mongodb: {
-			connectionUrl: {
-				doc: 'MongoDB Connection URL',
-				format: '*',
-				default: 'mongodb://user:password@localhost:27017/database',
-				env: 'DB_MONGODB_CONNECTION_URL',
-			},
 		},
 		tablePrefix: {
 			doc: 'Prefix for table names',
@@ -124,6 +118,14 @@ const config = convict({
 				env: 'DB_MYSQLDB_USER',
 			},
 		},
+		sqlite: {
+			executeVacuumOnStartup: {
+				doc: 'Runs VACUUM operation on startup to rebuild the database. Reduces filesize and optimizes indexes. WARNING: This is a long running blocking operation. Will increase start-up time.',
+				format: Boolean,
+				default: false,
+				env: 'DB_SQLITE_VACUUM_ON_STARTUP',
+			},
+		},
 	},
 
 	credentials: {
@@ -147,6 +149,15 @@ const config = convict({
 		},
 	},
 
+	workflows: {
+		defaultName: {
+			doc: 'Default name for workflow',
+			format: String,
+			default: 'My workflow',
+			env: 'WORKFLOWS_DEFAULT_NAME',
+		},
+	},
+
 	executions: {
 
 		// By default workflows get always executed in their own process.
@@ -157,6 +168,13 @@ const config = convict({
 			format: ['main', 'own'],
 			default: 'own',
 			env: 'EXECUTIONS_PROCESS',
+		},
+
+		mode: {
+			doc: 'If it should run executions directly or via queue',
+			format: ['regular', 'queue'],
+			default: 'regular',
+			env: 'EXECUTIONS_MODE',
 		},
 
 		// A Workflow times out and gets canceled after this time (seconds).
@@ -201,6 +219,12 @@ const config = convict({
 			default: 'all',
 			env: 'EXECUTIONS_DATA_SAVE_ON_SUCCESS',
 		},
+		saveExecutionProgress: {
+			doc: 'Wether or not to save progress for each node executed',
+			format: 'Boolean',
+			default: false,
+			env: 'EXECUTIONS_DATA_SAVE_ON_PROGRESS',
+		},
 
 		// If the executions of workflows which got started via the editor
 		// should be saved. By default they will not be saved as this runs
@@ -239,6 +263,54 @@ const config = convict({
 		},
 	},
 
+	queue: {
+		bull: {
+			prefix: {
+				doc: 'Prefix for all queue keys',
+				format: String,
+				default: '',
+				env: 'QUEUE_BULL_PREFIX',
+			},
+			redis: {
+				db: {
+					doc: 'Redis DB',
+					format: Number,
+					default: 0,
+					env: 'QUEUE_BULL_REDIS_DB',
+				},
+				host: {
+					doc: 'Redis Host',
+					format: String,
+					default: 'localhost',
+					env: 'QUEUE_BULL_REDIS_HOST',
+				},
+				password: {
+					doc: 'Redis Password',
+					format: String,
+					default: '',
+					env: 'QUEUE_BULL_REDIS_PASSWORD',
+				},
+				port: {
+					doc: 'Redis Port',
+					format: Number,
+					default: 6379,
+					env: 'QUEUE_BULL_REDIS_PORT',
+				},
+				timeoutThreshold: {
+					doc: 'Redis timeout threshold',
+					format: Number,
+					default: 10000,
+					env: 'QUEUE_BULL_REDIS_TIMEOUT_THRESHOLD',
+				},
+			},
+			queueRecoveryInterval: {
+				doc: 'If > 0 enables an active polling to the queue that can recover for Redis crashes. Given in seconds; 0 is disabled. May increase Redis traffic significantly.',
+				format: Number,
+				default: 60,
+				env: 'QUEUE_RECOVERY_INTERVAL',
+			},
+		},
+	},
 	generic: {
 		// The timezone to use. Is important for nodes like "Cron" which start the
 		// workflow automatically at a specified time. This setting can also be
@@ -385,6 +457,26 @@ const config = convict({
 	},
 
 	endpoints: {
+		payloadSizeMax: {
+			format: Number,
+			default: 16,
+			env: 'N8N_PAYLOAD_SIZE_MAX',
+			doc: 'Maximum payload size in MB.',
+		},
+		metrics: {
+			enable: {
+				format: 'Boolean',
+				default: false,
+				env: 'N8N_METRICS',
+				doc: 'Enable metrics endpoint',
+			},
+			prefix: {
+				format: String,
+				default: 'n8n_',
+				env: 'N8N_METRICS_PREFIX',
+				doc: 'An optional prefix for metric names. Default: n8n_',
+			},
+		},
 		rest: {
 			format: String,
 			default: 'rest',
@@ -403,6 +495,30 @@ const config = convict({
 			env: 'N8N_ENDPOINT_WEBHOOK_TEST',
 			doc: 'Path for test-webhook endpoint',
 		},
+		disableProductionWebhooksOnMainProcess: {
+			format: Boolean,
+			default: false,
+			env: 'N8N_DISABLE_PRODUCTION_MAIN_PROCESS',
+			doc: 'Disable production webhooks from main process. This helps ensures no http traffic load to main process when using webhook-specific processes.',
+		},
+		skipWebhoooksDeregistrationOnShutdown: {
+			/**
+			 * Longer explanation: n8n deregisters webhooks on shutdown / deactivation
+			 * and registers on startup / activation. If we skip
+			 * deactivation on shutdown, webhooks will remain active on 3rd party services.
+			 * We don't have to worry about startup as it always
+			 * checks if webhooks already exist.
+			 * If users want to upgrade n8n, it is possible to run
+			 * two instances simultaneously without downtime, similar
+			 * to blue/green deployment.
+			 * WARNING: Trigger nodes (like Cron) will cause duplication
+			 * of work, so be aware when using.
+			 */
+			doc: 'Deregister webhooks on external services only when workflows are deactivated.',
+			format: Boolean,
+			default: false,
+			env: 'N8N_SKIP_WEBHOOK_DEREGISTRATION_SHUTDOWN',
+		},
 	},
 
 	externalHookFiles: {
@@ -413,6 +529,30 @@ const config = convict({
 	},
 
 	nodes: {
+		include: {
+			doc: 'Nodes to load',
+			format: function check(rawValue) {
+				if (rawValue === '') {
+					return;
+				}
+				try {
+					const values = JSON.parse(rawValue);
+					if (!Array.isArray(values)) {
+						throw new Error();
+					}
+
+					for (const value of values) {
+						if (typeof value !== 'string') {
+							throw new Error();
+						}
+					}
+				} catch (error) {
+					throw new TypeError(`The Nodes to include is not a valid Array of strings.`);
+				}
+			},
+			default: undefined,
+			env: 'NODES_INCLUDE',
+		},
 		exclude: {
 			doc: 'Nodes not to load',
 			format: function check(rawValue) {
@@ -440,6 +580,41 @@ const config = convict({
 			format: String,
 			default: 'n8n-nodes-base.errorTrigger',
 			env: 'NODES_ERROR_TRIGGER_TYPE',
+		},
+	},
+
+	logs: {
+		level: {
+			doc: 'Log output level. Options are error, warn, info, verbose and debug.',
+			format: String,
+			default: 'info',
+			env: 'N8N_LOG_LEVEL',
+		},
+		output: {
+			doc: 'Where to output logs. Options are: console, file. Multiple can be separated by comma (",")',
+			format: String,
+			default: 'console',
+			env: 'N8N_LOG_OUTPUT',
+		},
+		file: {
+			fileCountMax: {
+				doc: 'Maximum number of files to keep.',
+				format: Number,
+				default: 100,
+				env: 'N8N_LOG_FILE_COUNT_MAX',
+			},
+			fileSizeMax: {
+				doc: 'Maximum size for each log file in MB.',
+				format: Number,
+				default: 16,
+				env: 'N8N_LOG_FILE_SIZE_MAX',
+			},
+			location: {
+				doc: 'Log file location; only used if log output is set to file.',
+				format: String,
+				default: path.join(core.UserSettings.getUserN8nFolderPath(), 'logs/n8n.log'),
+				env: 'N8N_LOG_FILE_LOCATION',
+			},
 		},
 	},
 

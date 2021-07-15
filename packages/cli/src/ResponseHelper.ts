@@ -64,7 +64,11 @@ export function sendSuccessResponse(res: Response, data: any, raw?: boolean, res
 	}
 
 	if (raw === true) {
-		res.json(data);
+		if (typeof data === 'string') {
+			res.send(data);
+		} else {
+			res.json(data);
+		}
 	} else {
 		res.json({
 			data,
@@ -88,6 +92,10 @@ export function sendErrorResponse(res: Response, error: ResponseError) {
 		code: 0,
 		message: 'Unknown error',
 	};
+
+	if (error.name === 'NodeApiError') {
+		Object.assign(response, error);
+	}
 
 	if (error.errorCode) {
 		response.code = error.errorCode;
@@ -184,6 +192,7 @@ export function unflattenExecutionData(fullExecutionData: IExecutionFlattedDb): 
 		startedAt: fullExecutionData.startedAt,
 		stoppedAt: fullExecutionData.stoppedAt,
 		finished: fullExecutionData.finished ? fullExecutionData.finished : false,
+		workflowId: fullExecutionData.workflowId,
 	});
 
 	return returnData;

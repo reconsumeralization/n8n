@@ -26,6 +26,11 @@ export const accountOperations = [
 				description: 'Create an account',
 			},
 			{
+				name: 'Create or Update',
+				value: 'upsert',
+				description: 'Create a new account, or update the current one if it already exists (upsert)',
+			},
+			{
 				name: 'Get',
 				value: 'get',
 				description: 'Get an account',
@@ -58,9 +63,51 @@ export const accountOperations = [
 
 export const accountFields = [
 
-/* -------------------------------------------------------------------------- */
-/*                                account:create                              */
-/* -------------------------------------------------------------------------- */
+	/* -------------------------------------------------------------------------- */
+	/*                                account:create                              */
+	/* -------------------------------------------------------------------------- */
+	{
+		displayName: 'Match Against',
+		name: 'externalId',
+		type: 'options',
+		typeOptions: {
+			loadOptionsMethod: 'getExternalIdFields',
+			loadOptionsDependsOn: [
+				'resource',
+			],
+		},
+		required: true,
+		default: '',
+		displayOptions: {
+			show: {
+				resource: [
+					'account',
+				],
+				operation: [
+					'upsert',
+				],
+			},
+		},
+		description: `The field to check to see if the account already exists`,
+	},
+	{
+		displayName: 'Value to Match',
+		name: 'externalIdValue',
+		type: 'string',
+		required: true,
+		default: '',
+		displayOptions: {
+			show: {
+				resource: [
+					'account',
+				],
+				operation: [
+					'upsert',
+				],
+			},
+		},
+		description: `If this value exists in the 'match against' field, update the account. Otherwise create a new one`,
+	},
 	{
 		displayName: 'Name',
 		name: 'name',
@@ -74,6 +121,7 @@ export const accountFields = [
 				],
 				operation: [
 					'create',
+					'upsert',
 				],
 			},
 		},
@@ -92,6 +140,7 @@ export const accountFields = [
 				],
 				operation: [
 					'create',
+					'upsert',
 				],
 			},
 		},
@@ -104,7 +153,7 @@ export const accountFields = [
 					loadOptionsMethod: 'getAccountSources',
 				},
 				default: '',
-				description: 'The source of the account record',
+				description: 'The source of the account record.',
 			},
 			{
 				displayName: 'Annual Revenue',
@@ -171,7 +220,7 @@ export const accountFields = [
 								name: 'fieldId',
 								type: 'options',
 								typeOptions: {
-									loadOptionsMethod: 'getLeadCustomFields',
+									loadOptionsMethod: 'getCustomFields',
 								},
 								default: '',
 								description: 'The ID of the field to add custom field to.',
@@ -209,7 +258,7 @@ export const accountFields = [
 				name: 'jigsaw',
 				type: 'string',
 				default: '',
-				description: 'references the ID of a company in Data.com',
+				description: 'References the ID of a company in Data.com',
 			},
 			{
 				displayName: 'Industry',
@@ -262,7 +311,7 @@ export const accountFields = [
 				description: 'Type of account',
 			},
 			{
-				displayName: 'Parent Id',
+				displayName: 'Parent ID',
 				name: 'parentId',
 				type: 'string',
 				default: '',
@@ -312,9 +361,10 @@ export const accountFields = [
 			},
 		],
 	},
-/* -------------------------------------------------------------------------- */
-/*                                 account:update                             */
-/* -------------------------------------------------------------------------- */
+
+	/* -------------------------------------------------------------------------- */
+	/*                                 account:update                             */
+	/* -------------------------------------------------------------------------- */
 	{
 		displayName: 'Account ID',
 		name: 'accountId',
@@ -331,7 +381,7 @@ export const accountFields = [
 				],
 			},
 		},
-		description: 'Id of account that needs to be fetched',
+		description: 'ID of account that needs to be fetched.',
 	},
 	{
 		displayName: 'Update Fields',
@@ -358,7 +408,7 @@ export const accountFields = [
 					loadOptionsMethod: 'getAccountSources',
 				},
 				default: '',
-				description: 'The source of the account record',
+				description: 'The source of the account record.',
 			},
 			{
 				displayName: 'Annual Revenue',
@@ -425,7 +475,7 @@ export const accountFields = [
 								name: 'fieldId',
 								type: 'options',
 								typeOptions: {
-									loadOptionsMethod: 'getLeadCustomFields',
+									loadOptionsMethod: 'getCustomFields',
 								},
 								default: '',
 								description: 'The ID of the field to add custom field to.',
@@ -470,7 +520,7 @@ export const accountFields = [
 				name: 'jigsaw',
 				type: 'string',
 				default: '',
-				description: 'references the ID of a company in Data.com',
+				description: 'References the ID of a company in Data.com',
 			},
 			{
 				displayName: 'Owner',
@@ -514,7 +564,7 @@ export const accountFields = [
 				description: 'Number of employees',
 			},
 			{
-				displayName: 'Parent Id',
+				displayName: 'Parent ID',
 				name: 'parentId',
 				type: 'string',
 				default: '',
@@ -574,9 +624,9 @@ export const accountFields = [
 		],
 	},
 
-/* -------------------------------------------------------------------------- */
-/*                                  account:get                               */
-/* -------------------------------------------------------------------------- */
+	/* -------------------------------------------------------------------------- */
+	/*                                  account:get                               */
+	/* -------------------------------------------------------------------------- */
 	{
 		displayName: 'Account ID',
 		name: 'accountId',
@@ -593,11 +643,12 @@ export const accountFields = [
 				],
 			},
 		},
-		description: 'Id of account that needs to be fetched',
+		description: 'ID of account that needs to be fetched.',
 	},
-/* -------------------------------------------------------------------------- */
-/*                                  account:delete                            */
-/* -------------------------------------------------------------------------- */
+
+	/* -------------------------------------------------------------------------- */
+	/*                                  account:delete                            */
+	/* -------------------------------------------------------------------------- */
 	{
 		displayName: 'Account ID',
 		name: 'accountId',
@@ -614,11 +665,12 @@ export const accountFields = [
 				],
 			},
 		},
-		description: 'Id of account that needs to be fetched',
+		description: 'ID of account that needs to be fetched.',
 	},
-/* -------------------------------------------------------------------------- */
-/*                                 account:getAll                             */
-/* -------------------------------------------------------------------------- */
+
+	/* -------------------------------------------------------------------------- */
+	/*                                 account:getAll                             */
+	/* -------------------------------------------------------------------------- */
 	{
 		displayName: 'Return All',
 		name: 'returnAll',
@@ -684,11 +736,75 @@ export const accountFields = [
 				default: '',
 				description: 'Fields to include separated by ,',
 			},
+			{
+				displayName: 'Conditions',
+				name: 'conditionsUi',
+				placeholder: 'Add Condition',
+				type: 'fixedCollection',
+				typeOptions: {
+					multipleValues: true,
+				},
+				description: 'The condition to set.',
+				default: {},
+				options: [
+					{
+						name: 'conditionValues',
+						displayName: 'Condition',
+						values: [
+							{
+								displayName: 'Field',
+								name: 'field',
+								type: 'options',
+								typeOptions: {
+									loadOptionsMethod: 'getAccountFields',
+								},
+								default: '',
+								description: 'For date, number, or boolean, please use expressions',
+							},
+							{
+								displayName: 'Operation',
+								name: 'operation',
+								type: 'options',
+								options: [
+									{
+										name: '=',
+										value: 'equal',
+									},
+									{
+										name: '>',
+										value: '>',
+									},
+									{
+										name: '<',
+										value: '<',
+									},
+									{
+										name: '>=',
+										value: '>=',
+									},
+									{
+										name: '<=',
+										value: '<=',
+									},
+								],
+								default: 'equal',
+							},
+							{
+								displayName: 'Value',
+								name: 'value',
+								type: 'string',
+								default: '',
+							},
+						],
+					},
+				],
+			},
 		],
 	},
-/* -------------------------------------------------------------------------- */
-/*                             account:addNote                                */
-/* -------------------------------------------------------------------------- */
+
+	/* -------------------------------------------------------------------------- */
+	/*                             account:addNote                                */
+	/* -------------------------------------------------------------------------- */
 	{
 		displayName: 'Account ID',
 		name: 'accountId',
@@ -705,7 +821,7 @@ export const accountFields = [
 				],
 			},
 		},
-		description: 'Id of account that needs to be fetched',
+		description: 'ID of account that needs to be fetched.',
 	},
 	{
 		displayName: 'Title',

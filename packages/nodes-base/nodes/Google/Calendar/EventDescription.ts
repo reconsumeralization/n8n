@@ -48,7 +48,7 @@ export const eventOperations = [
 
 export const eventFields = [
 	/* -------------------------------------------------------------------------- */
-	/*                                 event:ALL                               */
+	/*                                 event:getAll                               */
 	/* -------------------------------------------------------------------------- */
 	{
 		displayName: 'Calendar ID',
@@ -166,7 +166,7 @@ export const eventFields = [
 					multipleValueButtonText: 'Add Attendee',
 				},
 				default: '',
-				description: 'The attendees of the event',
+				description: 'The attendees of the event. Multiple ones can be separated by comma.',
 			},
 			{
 				displayName: 'Color',
@@ -299,6 +299,13 @@ export const eventFields = [
 					minValue: 1,
 				},
 				default: 1,
+			},
+			{
+				displayName: 'RRULE',
+				name: 'rrule',
+				type: 'string',
+				default: '',
+				description: 'Recurrence rule. When set, the parameters Repeat Frecuency, Repeat How Many Times and Repeat Until are ignored.',
 			},
 			{
 				displayName: 'Send Updates',
@@ -810,7 +817,7 @@ export const eventFields = [
 					multipleValueButtonText: 'Add Attendee',
 				},
 				default: '',
-				description: 'The attendees of the event',
+				description: 'The attendees of the event. Multiple ones can be separated by comma.',
 			},
 			{
 				displayName: 'Color',
@@ -919,6 +926,13 @@ export const eventFields = [
 					minValue: 1,
 				},
 				default: 1,
+			},
+			{
+				displayName: 'RRULE',
+				name: 'rrule',
+				type: 'string',
+				default: '',
+				description: 'Recurrence rule. When set, the parameters Repeat Frecuency, Repeat How Many Times and Repeat Until are ignored.',
 			},
 			{
 				displayName: 'Start',
