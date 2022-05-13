@@ -469,7 +469,7 @@
     "change-case": "^4.1.1",
     "cheerio": "^1.0.0-rc.3",
     "cron": "^1.7.2",
-    "eventsource": "^1.0.7",
+    "eventsource": "^2.0.2",
     "formidable": "^1.2.1",
     "glob-promise": "^3.4.0",
     "gm": "^1.23.1",
