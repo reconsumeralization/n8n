@@ -470,7 +470,7 @@
     "cheerio": "^1.0.0-rc.3",
     "cron": "^1.7.2",
     "eventsource": "^1.0.7",
-    "formidable": "^1.2.1",
+    "formidable": "^3.2.4",
     "glob-promise": "^3.4.0",
     "gm": "^1.23.1",
     "imap-simple": "^4.3.0",
