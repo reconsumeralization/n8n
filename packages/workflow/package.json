@@ -53,7 +53,7 @@
   "dependencies": {
     "@n8n_io/riot-tmpl": "^3.0.0",
     "ast-types": "0.15.2",
-    "crypto-js": "^4.1.1",
+    "crypto-js": "^4.2.0",
     "deep-equal": "^2.2.0",
     "esprima-next": "5.8.4",
     "jmespath": "^0.16.0",

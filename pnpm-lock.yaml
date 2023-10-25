@@ -260,8 +260,8 @@ importers:
         specifier: ^1.4.6
         version: 1.4.6
       crypto-js:
-        specifier: ~4.1.1
-        version: 4.1.1
+        specifier: ~4.2.0
+        version: 4.2.0
       csrf:
         specifier: ^3.1.0
         version: 3.1.0
@@ -645,8 +645,8 @@ importers:
         specifier: ~1.7.2
         version: 1.7.2
       crypto-js:
-        specifier: ~4.1.1
-        version: 4.1.1
+        specifier: ~4.2.0
+        version: 4.2.0
       fast-glob:
         specifier: ^3.2.5
         version: 3.2.12
@@ -1601,8 +1601,8 @@ importers:
         specifier: 0.15.2
         version: 0.15.2
       crypto-js:
-        specifier: ^4.1.1
-        version: 4.1.1
+        specifier: ^4.2.0
+        version: 4.2.0
       deep-equal:
         specifier: ^2.2.0
         version: 2.2.0
@@ -5549,7 +5549,7 @@ packages:
     resolution: {integrity: sha512-99kuCVH4NcBi4nyn/WIpd6KSIMLk/pbBks0zr8bC65ALKj0se7/2MwC6N+WwGkG7NqH0kMdGe/7Y5KnJkMTefg==}
     engines: {node: '>=14.0.0', npm: '>=7.10.0'}
     dependencies:
-      crypto-js: 4.1.1
+      crypto-js: 4.2.0
       node-machine-id: 1.1.12
       node-rsa: 1.1.1
       undici: 5.21.0
@@ -10858,6 +10858,7 @@ packages:
   /consolidate@0.15.1(react-dom@18.2.0)(react@17.0.2):
     resolution: {integrity: sha512-DW46nrsMJgy9kqAbPt5rKaCr7uFtpo4mSUvLHIUbJEjm0vo+aY5QLwBUq3FK4tRnJr/X0Psc0C4jf/h+HtXSMw==}
     engines: {node: '>= 0.10.0'}
+    deprecated: Please upgrade to consolidate v1.0.0+ as it has been modernized with several long-awaited fixes implemented. Maintenance is supported by Forward Email at https://forwardemail.net ; follow/watch https://github.com/ladjs/consolidate for updates and release changelog
     peerDependencies:
       arc-templates: ^0.5.3
       atpl: '>=0.7.6'
@@ -11234,8 +11235,8 @@ packages:
     resolution: {integrity: sha512-mCxBlsHFYh9C+HVpiEacem8FEBnMXgU9gy4zmNC+SXAZNB/1idgp/aulFJ4FgCi7GPEVbfyng092GqL2k2rmow==}
     dev: false
 
-  /crypto-js@4.1.1:
-    resolution: {integrity: sha512-o2JlM7ydqd3Qk9CA0L4NL6mTzU2sdx96a+oOfPu8Mkl/PK51vSyoi8/rQ8NknZtk44vq15lmhAj9CIAGwgeWKw==}
+  /crypto-js@4.2.0:
+    resolution: {integrity: sha512-KALDyEYgpY+Rlob/iriUtjV6d5Eq+Y191A5g4UqLAi8CyGP9N1+FdVbkc1SxKc2r4YAYqG8JzO2KGL+AizD70Q==}
     dev: false
 
   /crypto-random-string@2.0.0:
