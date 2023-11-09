@@ -1,0 +1,2676 @@
+repo_name: reconsumeralization/n8n
+report_id: dce1b33a2ca96f193f761499832c7685
+repo_type: Public
+timestamp: '2023-11-09T16:10:06+00:00'
+requested_by: reconsumeralization
+provider: github
+branch: master
+detected_tools_count: 195
+tools:
+- name: Handlebars.js
+  description: Minimal Templating on Steroids
+  website_url: http://handlebarsjs.com/
+  open_source: true
+  hosted_saas: false
+  category: Languages & Frameworks
+  sub_category: Templating Languages & Extensions
+  image_url: https://img.stackshare.io/service/1143/Handlebars.png
+  detection_source: Repo Metadata
+- name: JavaScript
+  description: Lightweight, interpreted, object-oriented language with first-class
+    functions
+  website_url: https://developer.mozilla.org/en-US/docs/Web/JavaScript
+  open_source: true
+  hosted_saas: false
+  category: Languages & Frameworks
+  sub_category: Languages
+  image_url: https://img.stackshare.io/service/1209/javascript.jpeg
+  detection_source: Repo Metadata
+- name: Python
+  description: A clear and powerful object-oriented programming language, comparable
+    to Perl, Ruby, Scheme, or Java.
+  website_url: https://www.python.org
+  open_source: true
+  hosted_saas: false
+  category: Languages & Frameworks
+  sub_category: Languages
+  image_url: https://img.stackshare.io/service/993/pUBY5pVj.png
+  detection_source: packages/workflow/package.json
+  last_updated_by: Jan Oberhauser
+  last_updated_on: 2019-06-23 10:35:23.000000000 Z
+- name: TypeScript
+  description: A superset of JavaScript that compiles to clean JavaScript output
+  website_url: http://www.typescriptlang.org
+  license: Apache-2.0
+  open_source: true
+  hosted_saas: false
+  category: Languages & Frameworks
+  sub_category: Languages
+  image_url: https://img.stackshare.io/service/1612/bynNY5dJ.jpg
+  detection_source: Repo Metadata
+- name: ".NET"
+  description: A free, cross-platform, open source developer platform for building
+    many different types of applications
+  website_url: http://www.microsoft.com/net/
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Languages & Frameworks
+  sub_category: Frameworks (Full Stack)
+  image_url: https://img.stackshare.io/service/1014/IoPy1dce_400x400.png
+  detection_source: packages/nodes-base/package.json
+  last_updated_by: कारतोफ्फेलस्क्रिप्ट™
+  last_updated_on: 2023-02-21 13:04:35.000000000 Z
+- name: Autoprefixer
+  description: PostCSS plugin to parse CSS and add vendor prefixes to CSS rules
+  website_url: https://github.com/postcss/autoprefixer
+  open_source: false
+  hosted_saas: false
+  category: Languages & Frameworks
+  sub_category: CSS Pre-processors / Extensions
+  image_url: https://img.stackshare.io/service/2202/72d087642cfce6fef6f2dabec5bf49e8_400x400.png
+  detection_source: packages/design-system/package.json
+  last_updated_by: कारतोफ्फेलस्क्रिप्ट™
+  last_updated_on: 2023-02-14 11:44:13.000000000 Z
+- name: ExpressJS
+  description: Sinatra inspired web development framework for node.js -- insanely
+    fast, flexible, and simple
+  website_url: http://expressjs.com/
+  version: 4.18.2
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Languages & Frameworks
+  sub_category: Microframeworks (Backend)
+  image_url: https://img.stackshare.io/service/1163/hashtag.png
+  detection_source_url: packages/cli/package.json
+  detection_source: packages/workflow/package.json
+  last_updated_by: Michael Auerswald
+  last_updated_on: 2023-04-19 15:46:10.000000000 Z
+- name: Node.js
+  description: A platform built on Chrome's JavaScript runtime for easily building
+    fast, scalable network applications
+  website_url: http://nodejs.org/
+  open_source: true
+  hosted_saas: false
+  category: Languages & Frameworks
+  sub_category: Frameworks (Full Stack)
+  image_url: https://img.stackshare.io/service/1011/n1JRsFeB_400x400.png
+  detection_source: package.json
+  last_updated_by: कारतोफ्फेलस्क्रिप्ट™
+  last_updated_on: 2022-08-31 13:25:52.000000000 Z
+- name: Storybook
+  description: Build bulletproof UI components faster
+  website_url: https://storybook.js.org/
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: JavaScript Framework Components
+  image_url: https://img.stackshare.io/service/9240/sOct-Txm_400x400.png
+  detection_source: packages/design-system/package.json
+  last_updated_by: कारतोफ्फेलस्क्रिप्ट™
+  last_updated_on: 2023-05-12 08:21:40.000000000 Z
+- name: TypeORM
+  description: An ORM that can run in NodeJS and others
+  website_url: https://typeorm.io/
+  version: 0.3.12
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Languages & Frameworks
+  sub_category: Microframeworks (Backend)
+  image_url: https://img.stackshare.io/service/7419/20165699.png
+  detection_source_url: packages/cli/package.json
+  detection_source: packages/cli/package.json
+  last_updated_by: Michael Auerswald
+  last_updated_on: 2023-02-17 09:54:07.000000000 Z
+- name: Vue.js
+  description: A progressive framework for building user interfaces
+  website_url: http://vuejs.org/
+  version: 2.7.14
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: Javascript MVC Frameworks
+  image_url: https://img.stackshare.io/service/3837/paeckCWC.png
+  detection_source_url: packages/design-system/package.json
+  detection_source: packages/editor-ui/package.json
+  last_updated_by: Jan Oberhauser
+  last_updated_on: 2019-06-23 10:35:23.000000000 Z
+- name: Cloud DB for Mysql
+  description: Easily setup and manage the MySQL database service
+  website_url: https://www.ncloud.com/product/database/cloudDbMysql
+  open_source: false
+  hosted_saas: true
+  category: Data Stores
+  sub_category: SQL Database as a Service
+  image_url: https://img.stackshare.io/service/21275/default_078eb0ae2b56280a937ed073a3ba4332291f9ba8.png
+  detection_source: ".github/docker-compose.yml"
+  last_updated_by: कारतोफ्फेलस्क्रिप्ट™
+  last_updated_on: 2022-10-25 20:06:03.000000000 Z
+- name: Cron
+  description: Background-only application
+  website_url: https://directory.fsf.org/wiki/Cron
+  open_source: false
+  hosted_saas: false
+  category: Data Stores
+  sub_category: Background Processing
+  image_url: https://img.stackshare.io/service/2416/default_274ed9bcc98502018f007cfcd8c09f3514d3d319.png
+  detection_source: packages/nodes-base/package.json
+  last_updated_by: Jan Oberhauser
+  last_updated_on: 2021-10-14 23:45:51.000000000 Z
+- name: MQTT
+  description: A machine-to-machine Internet of Things connectivity protocol
+  website_url: http://mqtt.org/
+  open_source: false
+  hosted_saas: false
+  category: Data Stores
+  sub_category: Message Queue
+  image_url: https://img.stackshare.io/service/3670/mqtticon-large_400x400.png
+  detection_source: packages/nodes-base/package.json
+  last_updated_by: Ricardo Espinoza
+  last_updated_on: 2021-05-01 01:23:25.000000000 Z
+- name: MSSQL
+  description: It is an enterprise-level database system that is very popular for
+    Windows web servers
+  website_url: https://www.microsoft.com/en-us/sql-server
+  open_source: false
+  hosted_saas: false
+  category: Data Stores
+  sub_category: Databases
+  image_url: https://img.stackshare.io/service/2445/ZKsJsucq_400x400.jpg
+  detection_source: packages/nodes-base/package.json
+  last_updated_by: Jan Oberhauser
+  last_updated_on: 2019-06-23 10:35:23.000000000 Z
+- name: MongoDB
+  description: The database for giant ideas
+  website_url: http://www.mongodb.com/
+  open_source: true
+  hosted_saas: false
+  category: Data Stores
+  sub_category: Databases
+  image_url: https://img.stackshare.io/service/1030/leaf-360x360.png
+  detection_source: packages/nodes-base/package.json
+  last_updated_by: Michael Kret
+  last_updated_on: 2022-09-14 09:54:05.000000000 Z
+- name: MySQL
+  description: The world's most popular open source database
+  website_url: http://www.mysql.com
+  open_source: true
+  hosted_saas: false
+  category: Data Stores
+  sub_category: Databases
+  image_url: https://img.stackshare.io/service/1025/logo-mysql-170x170.png
+  detection_source: packages/nodes-base/package.json
+  last_updated_by: Jan Oberhauser
+  last_updated_on: 2019-06-23 10:35:23.000000000 Z
+- name: PostgreSQL
+  description: A powerful, open source object-relational database system
+  website_url: http://www.postgresql.org/
+  open_source: true
+  hosted_saas: false
+  category: Data Stores
+  sub_category: Databases
+  image_url: https://img.stackshare.io/service/1028/ASOhU5xJ.png
+  detection_source: packages/nodes-base/package.json
+  last_updated_by: कारतोफ्फेलस्क्रिप्ट™
+  last_updated_on: 2023-03-30 13:09:13.000000000 Z
+- name: Redis
+  description: Open source (BSD licensed), in-memory data structure store
+  website_url: http://redis.io/
+  version: 3.1.1
+  license: BSD-3-Clause
+  open_source: true
+  hosted_saas: false
+  category: Data Stores
+  sub_category: In-Memory Databases
+  image_url: https://img.stackshare.io/service/1031/default_cbce472cd134adc6688572f999e9122b9657d4ba.png
+  detection_source_url: packages/nodes-base/package.json
+  detection_source: packages/nodes-base/package.json
+  last_updated_by: Iván Ovejero
+  last_updated_on: 2022-11-22 13:11:29.000000000 Z
+- name: SQLite
+  description: A software library that implements a self-contained, serverless, zero-configuration,
+    transactional SQL database engine
+  website_url: http://www.sqlite.org/
+  open_source: false
+  hosted_saas: true
+  category: Data Stores
+  sub_category: Databases
+  image_url: https://img.stackshare.io/service/1071/sqlite.jpg
+  detection_source: packages/cli/package.json
+  last_updated_by: Jan Oberhauser
+  last_updated_on: 2019-06-23 10:35:23.000000000 Z
+- name: ws
+  description: A Node.js WebSocket library
+  website_url: https://github.com/websockets/ws
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Application Hosting
+  sub_category: Realtime Backend / API
+  image_url: https://img.stackshare.io/service/11381/no-img-open-source.png
+  detection_source: packages/cli/package.json
+  last_updated_by: Jan Oberhauser
+  last_updated_on: 2019-06-23 10:35:23.000000000 Z
+- name: Cypress
+  description: When testing is easy, developers build better things faster and with
+    confidence.
+  website_url: https://www.cypress.io/
+  version: 12.8.1
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Javascript Testing Framework
+  image_url: https://img.stackshare.io/service/9231/default_66c5c1a197dcd0232e41e4ab6299d119b4e165b3.png
+  detection_source_url: package.json
+  detection_source: package.json
+  last_updated_by: OlegIvaniv
+  last_updated_on: 2023-03-24 15:12:26.000000000 Z
+- name: Docker
+  description: Enterprise Container Platform for High-Velocity Innovation.
+  website_url: https://www.docker.com/
+  license: Apache-2.0
+  open_source: true
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Virtual Machine Platforms & Containers
+  image_url: https://img.stackshare.io/service/586/n4u37v9t_400x400.png
+  detection_source: Repo Metadata
+- name: Dotenv
+  description: Loads environment variables from .env for Nodejs projects
+  website_url: https://github.com/motdotla/dotenv
+  license: BSD-2-Clause
+  open_source: true
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Server Configuration and Automation
+  image_url: https://img.stackshare.io/service/8067/default_90dcb1286af7685c68df319c764b80704df1155b.png
+  detection_source: packages/cli/package.json
+  last_updated_by: Jan Oberhauser
+  last_updated_on: 2021-03-26 08:06:26.000000000 Z
+- name: ESLint
+  description: The fully pluggable JavaScript code quality tool
+  website_url: http://eslint.org/
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Code Review
+  image_url: https://img.stackshare.io/service/3337/Q4L7Jncy.jpg
+  detection_source: packages/@n8n_io/eslint-config/package.json
+  last_updated_by: कारतोफ्फेलस्क्रिप्ट™
+  last_updated_on: 2022-09-12 09:41:50.000000000 Z
+- name: Git
+  description: Fast, scalable, distributed revision control system
+  website_url: http://git-scm.com/
+  open_source: true
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Version Control System
+  image_url: https://img.stackshare.io/service/1046/git.png
+  detection_source: Repo Metadata
+- name: GitHub Actions
+  description: Automate your workflow from idea to production
+  website_url: https://github.com/features/actions
+  open_source: false
+  hosted_saas: true
+  category: Build, Test, Deploy
+  sub_category: Continuous Integration
+  image_url: https://img.stackshare.io/service/11563/actions.png
+  detection_source: ".github/workflows/test-workflows.yml"
+  last_updated_by: कारतोफ्फेलस्क्रिप्ट™
+  last_updated_on: 2022-12-22 16:01:29.000000000 Z
+- name: Jest
+  description: Painless JavaScript Unit Testing
+  website_url: http://facebook.github.io/jest/
+  version: 29.5.0
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Javascript Testing Framework
+  image_url: https://img.stackshare.io/service/830/jest.png
+  detection_source_url: package.json
+  detection_source: package.json
+  last_updated_by: Jan Oberhauser
+  last_updated_on: 2019-06-23 10:35:23.000000000 Z
+- name: NuGet
+  description: The package manager for .NET
+  website_url: https://www.nuget.org/
+  open_source: false
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Package Managers
+  image_url: https://img.stackshare.io/service/2637/6I3oEOP4_400x400.jpg
+  detection_source: packages/nodes-base/package.json
+  last_updated_by: कारतोफ्फेलस्क्रिप्ट™
+  last_updated_on: 2023-02-21 13:04:35.000000000 Z
+- name: Prettier
+  description: 'Prettier is an opinionated code formatter. '
+  website_url: https://prettier.io/
+  version: 2.8.3
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Code Review
+  image_url: https://img.stackshare.io/service/7035/default_66f265943abed56bcdbfca1c866a4261b1fbb063.jpg
+  detection_source_url: package.json
+  detection_source: packages/editor-ui/package.json
+  last_updated_by: कारतोफ्फेलस्क्रिप्ट™
+  last_updated_on: 2023-01-27 11:44:31.000000000 Z
+- name: Prometheus
+  description: An open-source service monitoring system and time series database,
+    developed by SoundCloud
+  website_url: http://prometheus.io/
+  license: Apache-2.0
+  open_source: true
+  hosted_saas: false
+  category: Monitoring
+  sub_category: Monitoring Tools
+  image_url: https://img.stackshare.io/service/2501/default_3cf1b307194b26782be5cb209d30360580ae5b3c.png
+  detection_source: packages/cli/package.json
+  last_updated_by: Jan Oberhauser
+  last_updated_on: 2019-06-23 10:35:23.000000000 Z
+- name: PyPI
+  description: A repository of software for the Python programming language
+  website_url: https://pypi.org/
+  open_source: false
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Hosted Package Repository
+  image_url: https://img.stackshare.io/service/12572/-RIWgodF_400x400.jpg
+  detection_source: packages/workflow/package.json
+  last_updated_by: Jan Oberhauser
+  last_updated_on: 2019-06-23 10:35:23.000000000 Z
+- name: Sentry
+  description: 'See performance issues, fix errors faster, and optimize code health. '
+  website_url: https://sentry.io/welcome/?utm_source=stackshare&utm_medium=link&utm_campaign=profile
+  open_source: true
+  hosted_saas: true
+  category: Monitoring
+  sub_category: Exception Monitoring
+  image_url: https://img.stackshare.io/service/191/default_9262326592c97828a2a4299dec085a3674dd05f4.png
+  detection_source: packages/cli/package.json
+  last_updated_by: कारतोफ्फेलस्क्रिप्ट™
+  last_updated_on: 2023-01-02 11:14:39.000000000 Z
+- name: SuperTest
+  description: 'A library for testing node.js HTTP servers '
+  website_url: https://www.npmjs.com/package/supertest
+  version: 6.3.3
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Javascript Testing Framework
+  image_url: https://img.stackshare.io/no-img-open-source.png
+  detection_source_url: package.json
+  detection_source: package.json
+  last_updated_by: कारतोफ्फेलस्क्रिप्ट™
+  last_updated_on: 2023-02-07 14:49:35.000000000 Z
+- name: gulp
+  description: The streaming build system
+  website_url: http://gulpjs.com/
+  version: 4.0.0
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: JS Build Tools / JS Task Runners
+  image_url: https://img.stackshare.io/service/844/iruTC031.png
+  detection_source_url: packages/nodes-base/package.json
+  detection_source: packages/nodes-base/package.json
+  last_updated_by: कारतोफ्फेलस्क्रिप्ट™
+  last_updated_on: 2023-03-08 13:33:13.000000000 Z
+- name: jsdom
+  description: A JavaScript implementation of the WHATWG DOM and HTML standards, for
+    use with node.js
+  website_url: https://github.com/jsdom/jsdom
+  version: 21.1.0
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Headless Browsers
+  image_url: https://img.stackshare.io/service/7054/preview.jpeg
+  detection_source_url: packages/design-system/package.json
+  detection_source: packages/design-system/package.json
+  last_updated_by: कारतोफ्फेलस्क्रिप्ट™
+  last_updated_on: 2023-02-14 11:44:13.000000000 Z
+- name: nodemon
+  description: A simple monitor script for use during development of a node.js app
+  website_url: http://nodemon.io/
+  version: 2.0.2
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Monitoring
+  sub_category: node.js Application Monitoring
+  image_url: https://img.stackshare.io/service/5577/preview.png
+  detection_source_url: packages/cli/package.json
+  detection_source: packages/cli/package.json
+  last_updated_by: कारतोफ्फेलस्क्रिप्ट™
+  last_updated_on: 2023-03-30 10:23:39.000000000 Z
+- name: npm
+  description: The package manager for JavaScript.
+  website_url: https://www.npmjs.com/
+  open_source: false
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Front End Package Manager
+  image_url: https://img.stackshare.io/service/1120/lejvzrnlpb308aftn31u.png
+  detection_source: packages/workflow/package.json
+  last_updated_by: Jan Oberhauser
+  last_updated_on: 2019-06-23 10:35:23.000000000 Z
+- name: Lodash
+  description: A JavaScript utility library
+  website_url: https://lodash.com
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: Javascript Utilities & Libraries
+  image_url: https://img.stackshare.io/service/2438/lodash.png
+  detection_source: packages/workflow/package.json
+  last_updated_by: Michael Auerswald
+  last_updated_on: 2023-02-24 19:37:19.000000000 Z
+- name: Moment.js
+  description: A JavaScript date library for parsing, validating, manipulating, and
+    formatting dates
+  website_url: http://momentjs.com/
+  version: 2.29.2
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: Javascript Utilities & Libraries
+  image_url: https://img.stackshare.io/service/3643/Xrtdc94q_400x400.png
+  detection_source_url: packages/nodes-base/package.json
+  detection_source: packages/nodes-base/package.json
+  last_updated_by: Jan Oberhauser
+  last_updated_on: 2022-04-10 10:29:19.000000000 Z
+- name: Nodemailer
+  description: A module for Node.js applications to allow email sending
+  website_url: http://www.nodemailer.com/
+  open_source: true
+  hosted_saas: false
+  category: Communications
+  sub_category: Transactional Email
+  image_url: https://img.stackshare.io/service/2862/qr2-jCLr.jpg
+  detection_source: packages/nodes-base/package.json
+  last_updated_by: Michael Kret
+  last_updated_on: 2022-09-08 12:44:34.000000000 Z
+- name: Shell
+  description: A shell is a text-based terminal, used for manipulating programs and
+    files. Shell scripts typically manage program execution.
+  website_url: https://en.wikipedia.org/wiki/Shell_script
+  open_source: false
+  hosted_saas: false
+  category: Languages & Frameworks
+  sub_category: Languages
+  image_url: https://img.stackshare.io/service/4631/default_c2062d40130562bdc836c13dbca02d318205a962.png
+  detection_source: Repo Metadata
+- name: Showdown
+  description: JavaScript port of Markdown
+  website_url: https://github.com/coreyti/showdown
+  version: 2.0.3
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: Javascript Utilities & Libraries
+  image_url: https://img.stackshare.io/no-img-open-source.png
+  detection_source_url: packages/nodes-base/package.json
+  detection_source: packages/nodes-base/package.json
+  last_updated_by: Ricardo Espinoza
+  last_updated_on: 2022-04-19 07:24:10.000000000 Z
+- name: axios
+  description: Promise based HTTP client for the browser and node.js
+  website_url: https://github.com/mzabriskie/axios
+  version: 0.21.1
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: Javascript Utilities & Libraries
+  image_url: https://img.stackshare.io/no-img-open-source.png
+  detection_source_url: packages/@n8n/client-oauth2/package.json
+  detection_source: packages/editor-ui/package.json
+  last_updated_by: कारतोफ्फेलस्क्रिप्ट™
+  last_updated_on: 2023-05-17 14:40:53.000000000 Z
+- name: n8n
+  description: Open Source Alternative for Zapier
+  website_url: https://n8n.io
+  open_source: true
+  hosted_saas: false
+  category: Support, Sales, and Marketing
+  sub_category: Web Service Automation
+  image_url: https://img.stackshare.io/service/11396/qrGCgo1C_400x400.png
+  detection_source: package.json
+  last_updated_by: Jan Oberhauser
+  last_updated_on: 2019-06-23 10:35:23.000000000 Z
+- name: "@fortawesome/fontawesome-svg-core"
+  description: The iconic font, CSS, and SVG framework
+  package_url: https://www.npmjs.com/@fortawesome/fontawesome-svg-core
+  version: 1.2.36
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/16644/default_50c9ed1615a25628505ab53def64d82450ced26b.png
+  detection_source_url: packages/design-system/package.json
+  detection_source: packages/editor-ui/package.json
+  last_updated_by: कारतोफ्फेलस्क्रिप्ट™
+  last_updated_on: 2023-02-14 11:44:13.000000000 Z
+- name: "@fortawesome/free-regular-svg-icons"
+  description: The iconic font, CSS, and SVG framework
+  package_url: https://www.npmjs.com/@fortawesome/free-regular-svg-icons
+  version: 6.1.1
+  license: CC-BY-4.0,MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/18157/default_63cbe387694d6d77dde61448de98c6bd2a9b18de.png
+  detection_source_url: packages/editor-ui/package.json
+  detection_source: packages/editor-ui/package.json
+  last_updated_by: OlegIvaniv
+  last_updated_on: 2023-04-26 07:18:10.000000000 Z
+- name: "@fortawesome/free-solid-svg-icons"
+  description: The iconic font, CSS, and SVG framework
+  package_url: https://www.npmjs.com/@fortawesome/free-solid-svg-icons
+  version: 5.15.4
+  license: CC-BY-4.0,MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/16683/default_6dad4e42e12d47cc6edfbdea036dae12f91abebb.png
+  detection_source_url: packages/design-system/package.json
+  detection_source: packages/editor-ui/package.json
+  last_updated_by: Alex Grozav
+  last_updated_on: 2023-01-27 01:09:30.000000000 Z
+- name: "@fortawesome/vue-fontawesome"
+  description: Official Vue component for Font Awesome 5
+  package_url: https://www.npmjs.com/@fortawesome/vue-fontawesome
+  version: 2.0.9
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/18329/default_fcb0000f89932f65c58527fdec74a1b27eb78a83.png
+  detection_source_url: packages/design-system/package.json
+  detection_source: packages/editor-ui/package.json
+  last_updated_by: Csaba Tuncsik
+  last_updated_on: 2023-05-04 15:43:58.000000000 Z
+- name: "@oclif/command"
+  description: Oclif base command
+  package_url: https://www.npmjs.com/@oclif/command
+  version: 1.8.16
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/16803/default_9a5182350af29cb82b3344853e865051f508ac6c.png
+  detection_source_url: packages/cli/package.json
+  detection_source: packages/node-dev/package.json
+  last_updated_by: कारतोफ्फेलस्क्रिप्ट™
+  last_updated_on: 2022-11-09 16:32:05.000000000 Z
+- name: "@oclif/dev-cli"
+  description: Helpers for oclif CLIs
+  package_url: https://www.npmjs.com/@oclif/dev-cli
+  version: 1.22.2
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/16776/default_c6eddffbed005d007ab4638fbcac90e4b79576b2.png
+  detection_source_url: packages/cli/package.json
+  detection_source: packages/node-dev/package.json
+  last_updated_by: Michael Auerswald
+  last_updated_on: 2023-01-04 08:47:48.000000000 Z
+- name: "@sentry/node"
+  description: Offical Sentry SDK for Node.js
+  package_url: https://www.npmjs.com/@sentry/node
+  version: 7.28.1
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/18428/default_9499465ee49aaffadf126149b962e9838bc4a993.png
+  detection_source_url: packages/cli/package.json
+  detection_source: packages/cli/package.json
+  last_updated_by: कारतोफ्फेलस्क्रिप्ट™
+  last_updated_on: 2023-03-30 10:23:39.000000000 Z
+- name: "@storybook/addon-actions"
+  description: Action Logger addon for storybook
+  package_url: https://www.npmjs.com/@storybook/addon-actions
+  version: 7.0.7
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/16126/default_73326c44fbfa7369fd17573edb113e5d849468bc.png
+  detection_source_url: packages/design-system/package.json
+  detection_source: packages/design-system/package.json
+  last_updated_by: कारतोफ्फेलस्क्रिप्ट™
+  last_updated_on: 2023-05-12 08:21:40.000000000 Z
+- name: "@storybook/addon-docs"
+  description: Superior documentation for your components
+  package_url: https://www.npmjs.com/@storybook/addon-docs
+  version: 7.0.7
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/17835/default_abcc2eea82e62d338a749f334647866df76198b8.png
+  detection_source_url: packages/design-system/package.json
+  detection_source: packages/design-system/package.json
+  last_updated_by: कारतोफ्फेलस्क्रिप्ट™
+  last_updated_on: 2023-05-12 08:21:40.000000000 Z
+- name: "@storybook/addon-links"
+  description: Story Links addon for storybook
+  package_url: https://www.npmjs.com/@storybook/addon-links
+  version: 7.0.7
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/16204/default_41f04716a804e853d5c38a5b81ee0ea8a842ad82.png
+  detection_source_url: packages/design-system/package.json
+  detection_source: packages/design-system/package.json
+  last_updated_by: कारतोफ्फेलस्क्रिप्ट™
+  last_updated_on: 2023-05-12 08:21:40.000000000 Z
+- name: "@storybook/vue"
+  description: 'Storybook for Vue: Develop Vue Component in isolation with Hot Reloading'
+  package_url: https://www.npmjs.com/@storybook/vue
+  version: 7.0.7
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/17492/default_2ae5beb193365eca46e337162957275ebc9c6b3b.png
+  detection_source_url: packages/design-system/package.json
+  detection_source: packages/design-system/package.json
+  last_updated_by: कारतोफ्फेलस्क्रिप्ट™
+  last_updated_on: 2023-05-12 08:21:40.000000000 Z
+- name: "@testing-library/jest-dom"
+  description: Custom jest matchers to test the state of the DOM
+  package_url: https://www.npmjs.com/@testing-library/jest-dom
+  version: 5.16.5
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/17424/default_1cdcda15ebb7caed879f8340bc212b44c4ec9dac.png
+  detection_source_url: packages/design-system/package.json
+  detection_source: packages/editor-ui/package.json
+  last_updated_by: कारतोफ्फेलस्क्रिप्ट™
+  last_updated_on: 2023-03-14 12:13:21.000000000 Z
+- name: "@types/amqplib"
+  description: TypeScript definitions for amqplib
+  package_url: https://www.npmjs.com/@types/amqplib
+  version: 0.10.1
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/18378/default_b2c6032681a6747cfd45e1399143ed0d1db9b898.png
+  detection_source_url: packages/nodes-base/package.json
+  detection_source: packages/nodes-base/package.json
+  last_updated_by: कारतोफ्फेलस्क्रिप्ट™
+  last_updated_on: 2023-04-11 13:05:56.000000000 Z
+- name: "@types/cheerio"
+  description: TypeScript definitions for Cheerio
+  package_url: https://www.npmjs.com/@types/cheerio
+  version: 0.22.15
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/17279/default_b2015e9577d171c4c3f12c3c8d253c01fe63ba8d.png
+  detection_source_url: packages/nodes-base/package.json
+  detection_source: packages/nodes-base/package.json
+  last_updated_by: कारतोफ्फेलस्क्रिप्ट™
+  last_updated_on: 2023-04-11 13:05:56.000000000 Z
+- name: "@types/compression"
+  description: TypeScript definitions for compression
+  package_url: https://www.npmjs.com/@types/compression
+  version: 1.0.1
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/18206/default_dfaa3c3f19039c5391ee1a13529324eaa2685e7f.png
+  detection_source_url: packages/cli/package.json
+  detection_source: packages/cli/package.json
+  last_updated_by: github-actions[bot]
+  last_updated_on: 2023-05-17 11:35:26.000000000 Z
+- name: "@types/cookie-parser"
+  description: TypeScript definitions for cookie-parser
+  package_url: https://www.npmjs.com/@types/cookie-parser
+  version: 1.4.2
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/18195/default_5b09e8832af55b8bf88554d45d4eb65653e6ac76.png
+  detection_source_url: packages/cli/package.json
+  detection_source: packages/cli/package.json
+  last_updated_by: Michael Auerswald
+  last_updated_on: 2023-04-19 15:46:10.000000000 Z
+- name: "@types/crypto-js"
+  description: TypeScript definitions for crypto-js
+  package_url: https://www.npmjs.com/@types/crypto-js
+  version: 4.0.1
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/17916/default_ddcb3fb8ca8ccaba871e88d87465cd31ce73df71.png
+  detection_source_url: packages/core/package.json
+  detection_source: packages/workflow/package.json
+  last_updated_by: agobrech
+  last_updated_on: 2023-03-20 16:34:14.000000000 Z
+- name: "@types/eslint"
+  description: TypeScript definitions for eslint
+  package_url: https://www.npmjs.com/@types/eslint
+  version: '8.37'
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/18156/default_9663441986aa2be78296ccf617e43ef9e612b34e.png
+  detection_source_url: packages/@n8n_io/eslint-config/package.json
+  detection_source: packages/@n8n_io/eslint-config/package.json
+  last_updated_by: Iván Ovejero
+  last_updated_on: 2023-04-25 09:47:03.000000000 Z
+- name: "@types/express"
+  description: TypeScript definitions for Express
+  package_url: https://www.npmjs.com/@types/express
+  version: 4.17.6
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/16100/default_d947c1690e032a288145c7e2491999eab3ea8ede.png
+  detection_source_url: packages/cli/package.json
+  detection_source: packages/workflow/package.json
+  last_updated_by: Michael Auerswald
+  last_updated_on: 2023-04-19 15:46:10.000000000 Z
+- name: "@types/inquirer"
+  description: TypeScript definitions for inquirer
+  package_url: https://www.npmjs.com/@types/inquirer
+  version: 6.5.0
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/16530/default_d522554c6a41cb28d922d6d3ad32ad4afa0e3bb5.png
+  detection_source_url: packages/node-dev/package.json
+  detection_source: packages/node-dev/package.json
+  last_updated_by: कारतोफ्फेलस्क्रिप्ट™
+  last_updated_on: 2022-08-31 13:25:52.000000000 Z
+- name: "@types/jest"
+  description: TypeScript definitions for Jest
+  package_url: https://www.npmjs.com/@types/jest
+  version: 29.5.0
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/15840/default_004658cda9b38934f2871435e9dc15608c86e8be.png
+  detection_source_url: package.json
+  detection_source: package.json
+  last_updated_by: कारतोफ्फेलस्क्रिप्ट™
+  last_updated_on: 2023-05-12 08:21:40.000000000 Z
+- name: "@types/jsonwebtoken"
+  description: TypeScript definitions for jsonwebtoken
+  package_url: https://www.npmjs.com/@types/jsonwebtoken
+  version: 9.0.1
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/16959/default_caea01ce44a5fd1bb200d8fc0f8f2a1695b4e569.png
+  detection_source_url: packages/cli/package.json
+  detection_source: packages/nodes-base/package.json
+  last_updated_by: कारतोफ्फेलस्क्रिप्ट™
+  last_updated_on: 2023-04-21 07:48:59.000000000 Z
+- name: "@types/lodash"
+  description: TypeScript definitions for Lo-Dash
+  package_url: https://www.npmjs.com/@types/lodash
+  version: 4.14.191
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/15945/default_54b691c123fc8979741e800e4dcd3936c0f3b246.png
+  detection_source_url: packages/nodes-base/package.json
+  detection_source: packages/nodes-base/package.json
+  last_updated_by: कारतोफ्फेलस्क्रिप्ट™
+  last_updated_on: 2023-04-11 13:05:56.000000000 Z
+- name: "@types/lodash-es"
+  description: TypeScript definitions for lodash-es
+  package_url: https://www.npmjs.com/@types/lodash-es
+  version: 4.17.6
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/17516/default_911633508f32a5d5016c37ab38144cd661ceb682.png
+  detection_source_url: packages/editor-ui/package.json
+  detection_source: packages/editor-ui/package.json
+  last_updated_by: Ricardo Espinoza
+  last_updated_on: 2023-04-11 16:43:47.000000000 Z
+- name: "@types/lodash.get"
+  description: TypeScript definitions for lodash.get
+  package_url: https://www.npmjs.com/@types/lodash.get
+  version: 4.4.6
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/18297/default_678ce8b19e8cee1dde03f165f62525a2c9d0c034.png
+  detection_source_url: packages/cli/package.json
+  detection_source: packages/workflow/package.json
+  last_updated_by: Michael Auerswald
+  last_updated_on: 2023-04-19 15:46:10.000000000 Z
+- name: "@types/redis"
+  description: TypeScript definitions for redis
+  package_url: https://www.npmjs.com/@types/redis
+  version: 2.8.11
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/17536/default_1d2902e8f9c84259702671591379572493b9009b.png
+  detection_source_url: packages/nodes-base/package.json
+  detection_source: packages/nodes-base/package.json
+  last_updated_by: कारतोफ्फेलस्क्रिप्ट™
+  last_updated_on: 2023-04-11 13:05:56.000000000 Z
+- name: "@types/request-promise-native"
+  description: TypeScript definitions for request-promise-native
+  package_url: https://www.npmjs.com/@types/request-promise-native
+  version: 1.0.15
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/17253/default_9aa9c9d4e491c9d2d70df74bfa33cf525babb7f5.png
+  detection_source_url: packages/core/package.json
+  detection_source: packages/nodes-base/package.json
+  last_updated_by: agobrech
+  last_updated_on: 2023-03-20 16:34:14.000000000 Z
+- name: "@types/shelljs"
+  description: TypeScript definitions for ShellJS
+  package_url: https://www.npmjs.com/@types/shelljs
+  version: 0.8.11
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/16927/default_243de814aae175a383b2d9fba99487a89879acdb.png
+  detection_source_url: packages/cli/package.json
+  detection_source: packages/cli/package.json
+  last_updated_by: Michael Auerswald
+  last_updated_on: 2023-04-19 15:46:10.000000000 Z
+- name: "@types/superagent"
+  description: TypeScript definitions for SuperAgent
+  package_url: https://www.npmjs.com/@types/superagent
+  version: 4.1.13
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/17956/default_cc042fd7c0a9cf091d301af307c99c8b7b08b8bc.png
+  detection_source_url: packages/cli/package.json
+  detection_source: packages/cli/package.json
+  last_updated_by: Michael Auerswald
+  last_updated_on: 2023-04-19 15:46:10.000000000 Z
+- name: "@types/supertest"
+  description: TypeScript definitions for SuperTest
+  package_url: https://www.npmjs.com/@types/supertest
+  version: 2.0.12
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/16805/default_31a4e0e11d348225088320f3a5c5ea6fa49c27ad.png
+  detection_source_url: package.json
+  detection_source: package.json
+  last_updated_by: कारतोफ्फेलस्क्रिप्ट™
+  last_updated_on: 2023-05-12 08:21:40.000000000 Z
+- name: "@types/tmp"
+  description: TypeScript definitions for tmp
+  package_url: https://www.npmjs.com/@types/tmp
+  version: 0.2.0
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/17575/default_661ab15cb9ea1663765f3e16ee70a1d2d50118d1.png
+  detection_source_url: packages/node-dev/package.json
+  detection_source: packages/nodes-base/package.json
+  last_updated_by: कारतोफ्फेलस्क्रिप्ट™
+  last_updated_on: 2022-08-31 13:25:52.000000000 Z
+- name: "@types/uuid"
+  description: TypeScript definitions for uuid
+  package_url: https://www.npmjs.com/@types/uuid
+  version: 8.3.2
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/16257/default_ab17554b7e80af3d234b14168ed61e75d43f8eee.png
+  detection_source_url: packages/cli/package.json
+  detection_source: packages/nodes-base/package.json
+  last_updated_by: Michael Auerswald
+  last_updated_on: 2023-04-19 15:46:10.000000000 Z
+- name: "@types/validator"
+  description: TypeScript definitions for validator.js
+  package_url: https://www.npmjs.com/@types/validator
+  version: 13.7.0
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/17698/default_52c11a434d2ce37281914a7f804e07cf95ab96f7.png
+  detection_source_url: packages/cli/package.json
+  detection_source: packages/cli/package.json
+  last_updated_by: Michael Auerswald
+  last_updated_on: 2023-04-19 15:46:10.000000000 Z
+- name: "@types/ws"
+  description: TypeScript definitions for ws
+  package_url: https://www.npmjs.com/@types/ws
+  version: 8.5.4
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/16711/default_9cd376f2200c8f6c32ebd690bb6c290852dee64d.png
+  detection_source_url: packages/cli/package.json
+  detection_source: packages/cli/package.json
+  last_updated_by: Michael Auerswald
+  last_updated_on: 2023-04-19 15:46:10.000000000 Z
+- name: "@types/xml2js"
+  description: TypeScript definitions for node-xml2js
+  package_url: https://www.npmjs.com/@types/xml2js
+  version: 0.4.11
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/17763/default_b527ab15473225ca7c2e9b197c9726e92ac97de8.png
+  detection_source_url: packages/nodes-base/package.json
+  detection_source: packages/workflow/package.json
+  last_updated_by: कारतोफ्फेलस्क्रिप्ट™
+  last_updated_on: 2023-04-11 13:05:56.000000000 Z
+- name: "@typescript-eslint/eslint-plugin"
+  description: TypeScript plugin for ESLint
+  package_url: https://www.npmjs.com/@typescript-eslint/eslint-plugin
+  version: '5.59'
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/15982/default_8b5680d4e916298d08363c291a0d6e34c07ceb15.png
+  detection_source_url: packages/@n8n_io/eslint-config/package.json
+  detection_source: packages/@n8n_io/eslint-config/package.json
+  last_updated_by: Iván Ovejero
+  last_updated_on: 2023-04-25 09:47:03.000000000 Z
+- name: "@typescript-eslint/parser"
+  description: An ESLint custom parser which leverages TypeScript ESTree
+  package_url: https://www.npmjs.com/@typescript-eslint/parser
+  version: '5.59'
+  license: BSD-2-Clause
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/15980/default_732016a20524708efe7a4c77497fe9bfeea19ba6.png
+  detection_source_url: packages/@n8n_io/eslint-config/package.json
+  detection_source: packages/@n8n_io/eslint-config/package.json
+  last_updated_by: Iván Ovejero
+  last_updated_on: 2023-04-25 09:47:03.000000000 Z
+- name: "@vue/eslint-config-typescript"
+  description: Eslint-config-typescript for vue-cli
+  package_url: https://www.npmjs.com/@vue/eslint-config-typescript
+  version: '8.0'
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/18076/image.png
+  detection_source_url: packages/@n8n_io/eslint-config/package.json
+  detection_source: packages/@n8n_io/eslint-config/package.json
+  last_updated_by: Iván Ovejero
+  last_updated_on: 2023-04-25 09:47:03.000000000 Z
+- name: amqplib
+  description: An AMQP 0-9-1
+  package_url: https://www.npmjs.com/amqplib
+  version: 0.10.3
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/16639/default_5a21421012fa20e57fe0aeab31228f42e7118abc.png
+  detection_source_url: packages/nodes-base/package.json
+  detection_source: packages/nodes-base/package.json
+  last_updated_by: कारतोफ्फेलस्क्रिप्ट™
+  last_updated_on: 2022-12-19 16:01:27.000000000 Z
+- name: aws4
+  description: Signs and prepares requests using AWS Signature Version 4
+  package_url: https://www.npmjs.com/aws4
+  version: 1.8.0
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/18421/default_fec2a16e3d4fd2d8184d454d72a65ab5133ec4ae.png
+  detection_source_url: packages/nodes-base/package.json
+  detection_source: packages/nodes-base/package.json
+  last_updated_by: shraddha shaligram
+  last_updated_on: 2020-06-11 22:57:32.000000000 Z
+- name: basic-auth
+  description: Node.js basic auth parser
+  package_url: https://www.npmjs.com/basic-auth
+  version: 2.0.1
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/17338/default_b39374c3a74b433364bfdbff07be26214bf186fd.png
+  detection_source_url: packages/cli/package.json
+  detection_source: packages/nodes-base/package.json
+  last_updated_by: कारतोफ्फेलस्क्रिप्ट™
+  last_updated_on: 2023-05-17 14:40:53.000000000 Z
+- name: bcryptjs
+  description: Optimized bcrypt in plain JavaScript with zero dependencies
+  package_url: https://www.npmjs.com/bcryptjs
+  version: 2.4.3
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/16857/default_627f05e6a07ce29fc9f119417270f38e8aa5c5e2.png
+  detection_source_url: packages/cli/package.json
+  detection_source: packages/cli/package.json
+  last_updated_by: Iván Ovejero
+  last_updated_on: 2022-07-24 15:13:01.000000000 Z
+- name: body-parser
+  description: Node.js body parsing middleware
+  package_url: https://www.npmjs.com/body-parser
+  version: 1.20.1
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/15906/default_7c39a83d4acd952df89b1ebfdb94c8646324fbf1.png
+  detection_source_url: packages/cli/package.json
+  detection_source: packages/cli/package.json
+  last_updated_by: कारतोफ्फेलस्क्रिप्ट™
+  last_updated_on: 2023-01-26 11:10:09.000000000 Z
+- name: change-case
+  description: Transform a string between `camelCase`
+  package_url: https://www.npmjs.com/change-case
+  version: 4.1.1
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/16612/default_9cd376f2200c8f6c32ebd690bb6c290852dee64d.png
+  detection_source_url: packages/cli/package.json
+  detection_source: packages/nodes-base/package.json
+  last_updated_by: कारतोफ्फेलस्क्रिप्ट™
+  last_updated_on: 2022-12-07 14:13:36.000000000 Z
+- name: cheerio
+  description: Fast, flexible, and lean implementation of core jQuery
+  package_url: https://www.npmjs.com/cheerio
+  version: 1.0.0
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/15949/default_54b691c123fc8979741e800e4dcd3936c0f3b246.png
+  detection_source_url: packages/nodes-base/package.json
+  detection_source: packages/nodes-base/package.json
+  last_updated_by: Jan Oberhauser
+  last_updated_on: 2021-05-07 23:27:33.000000000 Z
+- name: chokidar
+  description: A neat wrapper around node.js fs.watch / fs.watchFile / fsevents
+  package_url: https://www.npmjs.com/chokidar
+  version: 3.5.2
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/16043/default_5fd43aeff4d6a935abc13737de01a0355210499d.png
+  detection_source_url: packages/cli/package.json
+  detection_source: packages/nodes-base/package.json
+  last_updated_by: Valya
+  last_updated_on: 2023-02-08 18:26:07.000000000 Z
+- name: class-transformer
+  description: Proper decorator-based transformation / serialization / deserialization
+    of plain javascript objects to class constructors
+  package_url: https://www.npmjs.com/class-transformer
+  version: 0.5.1
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/17651/default_eb9caf7d7fb4d231f7e3b04a8c1fbef6fcd9fd73.png
+  detection_source_url: packages/cli/package.json
+  detection_source: packages/cli/package.json
+  last_updated_by: Michael Auerswald
+  last_updated_on: 2023-03-06 08:44:25.000000000 Z
+- name: class-validator
+  description: Class-based validation with Typescript / ES6 / ES5 using decorators
+    or validation schemas
+  package_url: https://www.npmjs.com/class-validator
+  version: 0.14.0
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/17583/default_661ab15cb9ea1663765f3e16ee70a1d2d50118d1.png
+  detection_source_url: packages/cli/package.json
+  detection_source: packages/cli/package.json
+  last_updated_by: Michael Auerswald
+  last_updated_on: 2023-03-06 08:44:25.000000000 Z
+- name: compression
+  description: Node.js compression middleware
+  package_url: https://www.npmjs.com/compression
+  version: 1.7.4
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/16187/default_9a7a7dcd69c12c746dc4000dc4d1b75758079c9f.png
+  detection_source_url: packages/cli/package.json
+  detection_source: packages/cli/package.json
+  last_updated_by: github-actions[bot]
+  last_updated_on: 2023-05-17 11:35:26.000000000 Z
+- name: concat-stream
+  description: Writable stream that concatenates strings or binary data and calls
+    a callback with the result
+  package_url: https://www.npmjs.com/concat-stream
+  version: 2.0.0
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/16269/default_9924e5da1d50ea01e52b48e4fae4b1347af5e4ff.png
+  detection_source_url: packages/core/package.json
+  detection_source: packages/core/package.json
+  last_updated_by: कारतोफ्फेलस्क्रिप्ट™
+  last_updated_on: 2023-01-02 16:07:10.000000000 Z
+- name: concurrently
+  description: Run commands concurrently
+  package_url: https://www.npmjs.com/concurrently
+  version: 5.1.0
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/16041/default_5fd43aeff4d6a935abc13737de01a0355210499d.png
+  detection_source_url: packages/cli/package.json
+  detection_source: packages/cli/package.json
+  last_updated_by: Michael Auerswald
+  last_updated_on: 2023-02-17 09:54:07.000000000 Z
+- name: connect-history-api-fallback
+  description: Provides a fallback for non-existing directories so that the HTML 5
+    history API can be used
+  package_url: https://www.npmjs.com/connect-history-api-fallback
+  version: 1.6.0
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/16214/default_180418c6fa6cdb8f7a3500f84a8fedb884fcb3fa.png
+  detection_source_url: packages/cli/package.json
+  detection_source: packages/cli/package.json
+  last_updated_by: कारतोफ्फेलस्क्रिप्ट™
+  last_updated_on: 2023-02-21 18:21:56.000000000 Z
+- name: conventional-changelog-cli
+  description: Generate a changelog from git metadata
+  package_url: https://www.npmjs.com/conventional-changelog-cli
+  version: 2.2.2
+  license: ISC
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/16260/default_9924e5da1d50ea01e52b48e4fae4b1347af5e4ff.png
+  detection_source_url: ".github/scripts/package.json"
+  detection_source: ".github/scripts/package.json"
+  last_updated_by: कारतोफ्फेलस्क्रिप्ट™
+  last_updated_on: 2023-02-21 13:04:35.000000000 Z
+- name: convict
+  description: Featureful configuration management library for Node.js
+  package_url: https://www.npmjs.com/convict
+  version: 6.2.4
+  license: Apache-2.0
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/18550/default_75ad0a13c8e7d0c14ad6ccc34241bb40a4c387ca.png
+  detection_source_url: packages/cli/package.json
+  detection_source: packages/cli/package.json
+  last_updated_by: कारतोफ्फेलस्क्रिप्ट™
+  last_updated_on: 2023-03-21 08:47:50.000000000 Z
+- name: cookie-parser
+  description: Parse HTTP request cookies
+  package_url: https://www.npmjs.com/cookie-parser
+  version: 1.4.6
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/16136/default_def3edb85d7fbd20200a5cd7d0a1679e31bc8b3d.png
+  detection_source_url: packages/cli/package.json
+  detection_source: packages/cli/package.json
+  last_updated_by: कारतोफ्फेलस्क्रिप्ट™
+  last_updated_on: 2023-01-26 11:10:09.000000000 Z
+- name: core-js
+  description: Standard library
+  package_url: https://www.npmjs.com/core-js
+  version: 3.27.2
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/15869/default_7c39a83d4acd952df89b1ebfdb94c8646324fbf1.png
+  detection_source_url: packages/design-system/package.json
+  detection_source: packages/design-system/package.json
+  last_updated_by: कारतोफ्फेलस्क्रिप्ट™
+  last_updated_on: 2023-02-14 11:44:13.000000000 Z
+- name: cross-env
+  description: Run scripts that set and use environment variables across platforms
+  package_url: https://www.npmjs.com/cross-env
+  version: 7.0.3
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/15828/default_14fd11531839d935f920b6d55bd6f3528c890ad7.png
+  detection_source_url: package.json
+  detection_source: package.json
+  last_updated_by: कारतोफ्फेलस्क्रिप्ट™
+  last_updated_on: 2023-03-17 16:24:05.000000000 Z
+- name: crypto-js
+  description: JavaScript library of crypto standards
+  package_url: https://www.npmjs.com/crypto-js
+  version: 4.1.1
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/16283/default_9924e5da1d50ea01e52b48e4fae4b1347af5e4ff.png
+  detection_source_url: packages/cli/package.json
+  detection_source: packages/workflow/package.json
+  last_updated_by: Iván Ovejero
+  last_updated_on: 2022-07-24 15:13:01.000000000 Z
+  vulnerabilities:
+  - name: crypto-js PBKDF2 1,000 times weaker than specified in 1993 and 1.3M times
+      weaker than current standard
+    cve_id: CVE-2023-46233
+    cve_url: https://github.com/advisories/GHSA-xwcq-pm8m-c4vf
+    detected_date: Oct 26
+    severity: critical
+    first_patched: 4.2.0
+- name: dateformat
+  description: A node.js package for Steven Levithan's excellent dateFormat
+  package_url: https://www.npmjs.com/dateformat
+  version: 3.0.3
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/16480/default_55f3303d620c93eecbee69c43373d484f2be492f.png
+  detection_source_url: packages/editor-ui/package.json
+  detection_source: packages/editor-ui/package.json
+  last_updated_by: Iván Ovejero
+  last_updated_on: 2022-12-14 09:04:10.000000000 Z
+- name: deep-equal
+  description: Node's assert.deepEqual algorithm
+  package_url: https://www.npmjs.com/deep-equal
+  version: 2.2.0
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/16405/default_5ffcf8d02a3454bd25d27d236025c6d078c3b672.png
+  detection_source_url: packages/workflow/package.json
+  detection_source: packages/workflow/package.json
+  last_updated_by: Milorad FIlipović
+  last_updated_on: 2023-02-15 09:50:16.000000000 Z
+- name: element-ui
+  description: A Component Library for Vue.js
+  package_url: https://www.npmjs.com/element-ui
+  version: 2.15.12
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/16240/default_5dfc1810d0882ab844578a326bb8bf19e45e7227.png
+  detection_source_url: packages/design-system/package.json
+  detection_source: packages/design-system/package.json
+  last_updated_by: कारतोफ्फेलस्क्रिप्ट™
+  last_updated_on: 2022-11-25 09:51:51.000000000 Z
+- name: eslint-config-prettier
+  description: Turns off all rules that are unnecessary or might conflict with Prettier
+  package_url: https://www.npmjs.com/eslint-config-prettier
+  version: '8.8'
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/15879/default_0b10af8ca19c215f781dc07442e75bdc831089d0.png
+  detection_source_url: packages/@n8n_io/eslint-config/package.json
+  detection_source: packages/@n8n_io/eslint-config/package.json
+  last_updated_by: Iván Ovejero
+  last_updated_on: 2023-04-25 09:47:03.000000000 Z
+- name: eslint-import-resolver-typescript
+  description: TypeScript .ts .tsx module resolver for `eslint-plugin-import`
+  package_url: https://www.npmjs.com/eslint-import-resolver-typescript
+  version: '3.5'
+  license: ISC
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/18380/default_d0ba753d47207ad8f04b02befcab81c50f38718f.png
+  detection_source_url: packages/@n8n_io/eslint-config/package.json
+  detection_source: packages/@n8n_io/eslint-config/package.json
+  last_updated_by: Iván Ovejero
+  last_updated_on: 2023-04-25 09:47:03.000000000 Z
+- name: eslint-plugin-import
+  description: Import with sanity
+  package_url: https://www.npmjs.com/eslint-plugin-import
+  version: '2.27'
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/15806/default_98aa227f51aa9d787815ec3fd98d0ab2bfebbb91.png
+  detection_source_url: packages/@n8n_io/eslint-config/package.json
+  detection_source: packages/@n8n_io/eslint-config/package.json
+  last_updated_by: Iván Ovejero
+  last_updated_on: 2023-04-25 09:47:03.000000000 Z
+- name: eslint-plugin-prettier
+  description: Runs prettier as an eslint rule
+  package_url: https://www.npmjs.com/eslint-plugin-prettier
+  version: '4.2'
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/15896/default_6e6e1d6bb189c8bb26c6410618bd597979578f39.png
+  detection_source_url: packages/@n8n_io/eslint-config/package.json
+  detection_source: packages/@n8n_io/eslint-config/package.json
+  last_updated_by: Iván Ovejero
+  last_updated_on: 2023-04-25 09:47:03.000000000 Z
+- name: eslint-plugin-unicorn
+  description: Various awesome ESLint rules
+  package_url: https://www.npmjs.com/eslint-plugin-unicorn
+  version: '46.0'
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/16871/default_2e3ed47575edcaf407097e6171e3d4cb8681a6b3.png
+  detection_source_url: packages/@n8n_io/eslint-config/package.json
+  detection_source: packages/@n8n_io/eslint-config/package.json
+  last_updated_by: Iván Ovejero
+  last_updated_on: 2023-04-25 09:47:03.000000000 Z
+- name: eslint-plugin-vue
+  description: Official ESLint plugin for Vue.js
+  package_url: https://www.npmjs.com/eslint-plugin-vue
+  version: '7.17'
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/15950/default_f49d4c116f8ea0155f4d92673b084378bba02760.png
+  detection_source_url: packages/@n8n_io/eslint-config/package.json
+  detection_source: packages/@n8n_io/eslint-config/package.json
+  last_updated_by: Iván Ovejero
+  last_updated_on: 2023-04-25 09:47:03.000000000 Z
+- name: express
+  description: Fast, unopinionated, minimalist web framework
+  package_url: https://www.npmjs.com/express
+  version: 4.18.2
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/15818/default_db4a7791d2f1174547374b9b587bc10fec088a5a.png
+  detection_source_url: packages/cli/package.json
+  detection_source: packages/cli/package.json
+  last_updated_by: Michael Auerswald
+  last_updated_on: 2023-04-19 15:46:10.000000000 Z
+- name: express-handlebars
+  description: A Handlebars view engine for Express which doesn't suck
+  package_url: https://www.npmjs.com/express-handlebars
+  version: 7.0.2
+  license: BSD-3-Clause
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/17718/default_7ff152b9bcf219fad0d56c78a016d5bad6a2a526.png
+  detection_source_url: packages/cli/package.json
+  detection_source: packages/cli/package.json
+  last_updated_by: Michael Auerswald
+  last_updated_on: 2023-04-19 15:46:10.000000000 Z
+- name: fast-glob
+  description: It's a very fast and efficient glob library for Node.js
+  package_url: https://www.npmjs.com/fast-glob
+  version: 3.2.5
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/17033/default_50357c490b205882dcfb608fd3c74b446186c21e.png
+  detection_source_url: packages/cli/package.json
+  detection_source: packages/nodes-base/package.json
+  last_updated_by: Omar Ajoue
+  last_updated_on: 2021-08-20 21:48:02.000000000 Z
+- name: file-saver
+  description: An HTML5 saveAs
+  package_url: https://www.npmjs.com/file-saver
+  version: 2.0.2
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/16795/default_6e51a44775c61dcb2888547ad406a2f0cf2c344e.png
+  detection_source_url: packages/editor-ui/package.json
+  detection_source: packages/editor-ui/package.json
+  last_updated_by: Alex Grozav
+  last_updated_on: 2022-09-23 14:14:28.000000000 Z
+- name: file-type
+  description: Detect the file type of a Buffer/Uint8Array/ArrayBuffer
+  package_url: https://www.npmjs.com/file-type
+  version: 16.5.4
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/17196/default_21a9522c66101ebad0e63609af74acb35fe29a0a.png
+  detection_source_url: packages/core/package.json
+  detection_source: packages/core/package.json
+  last_updated_by: agobrech
+  last_updated_on: 2023-03-20 16:34:14.000000000 Z
+- name: form-data
+  description: A library to create readable "multipart/form-data" streams
+  package_url: https://www.npmjs.com/form-data
+  version: 4.0.0
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/16415/default_aa91da3cee4d961f0eea8ca5de77f399ec7ec794.png
+  detection_source_url: packages/core/package.json
+  detection_source: packages/core/package.json
+  last_updated_by: Iván Ovejero
+  last_updated_on: 2022-11-22 13:11:29.000000000 Z
+- name: formidable
+  description: A node.js module for parsing form data
+  package_url: https://www.npmjs.com/formidable
+  version: 1.2.1
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/16761/default_c11d90814ded8fcd305b22fdc42b42a3111f1f6d.png
+  detection_source_url: packages/nodes-base/package.json
+  detection_source: packages/nodes-base/package.json
+  last_updated_by: Michael Kret
+  last_updated_on: 2023-05-04 10:17:22.000000000 Z
+- name: gm
+  description: GraphicsMagick and ImageMagick for node.js
+  package_url: https://www.npmjs.com/gm
+  version: 1.25.0
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/16804/default_55e3ea76a7929df1b71c5ea0c9b4130cc87323a4.png
+  detection_source_url: packages/nodes-base/package.json
+  detection_source: packages/nodes-base/package.json
+  last_updated_by: Jan Oberhauser
+  last_updated_on: 2019-06-23 10:35:23.000000000 Z
+- name: handlebars
+  description: Handlebars provides the power necessary to let you build semantic templates
+    effectively with no frustration
+  package_url: https://www.npmjs.com/handlebars
+  version: 4.7.7
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/16013/default_f8be85789693a9901dbcfa43c135c60525ae49a1.png
+  detection_source_url: packages/cli/package.json
+  detection_source: packages/cli/package.json
+  last_updated_by: Michael Auerswald
+  last_updated_on: 2023-04-19 15:46:10.000000000 Z
+- name: iconv-lite
+  description: Convert character encodings in pure javascript
+  package_url: https://www.npmjs.com/iconv-lite
+  version: 0.6.2
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/16350/default_4cc3f31b8c64a6268fc123f0965a09d1b11180af.png
+  detection_source_url: packages/nodes-base/package.json
+  detection_source: packages/nodes-base/package.json
+  last_updated_by: कारतोफ्फेलस्क्रिप्ट™
+  last_updated_on: 2023-03-08 13:33:13.000000000 Z
+- name: inquirer
+  description: A collection of common interactive command line user interfaces
+  package_url: https://www.npmjs.com/inquirer
+  version: 7.0.1
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/15911/default_4dc9671df0093fd7061f6455afdf054e6cc9dacb.png
+  detection_source_url: packages/cli/package.json
+  detection_source: packages/node-dev/package.json
+  last_updated_by: Jan Oberhauser
+  last_updated_on: 2021-03-26 08:06:26.000000000 Z
+- name: ioredis
+  description: A robust
+  package_url: https://www.npmjs.com/ioredis
+  version: 5.2.4
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/16522/default_4e3259350c525d1d859fa80a938000081d7c9db8.png
+  detection_source_url: packages/cli/package.json
+  detection_source: packages/cli/package.json
+  last_updated_by: कारतोफ्फेलस्क्रिप्ट™
+  last_updated_on: 2023-01-02 11:14:39.000000000 Z
+- name: jest-environment-jsdom
+  description: Delightful JavaScript Testing
+  package_url: https://www.npmjs.com/jest-environment-jsdom
+  version: 29.5.0
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/18413/default_867ef7396016341fd213fa568d6de11cc98fefff.png
+  detection_source_url: package.json
+  detection_source: package.json
+  last_updated_by: Marcus
+  last_updated_on: 2023-05-05 15:50:10.000000000 Z
+- name: js-base64
+  description: Yet another Base64 transcoder in pure-JS
+  package_url: https://www.npmjs.com/js-base64
+  version: 3.7.2
+  license: BSD-3-Clause
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/16984/default_caea01ce44a5fd1bb200d8fc0f8f2a1695b4e569.png
+  detection_source_url: packages/workflow/package.json
+  detection_source: packages/workflow/package.json
+  last_updated_by: Valya
+  last_updated_on: 2023-01-10 13:06:12.000000000 Z
+- name: jsonpath
+  description: Query JavaScript objects with JSONPath expressions
+  package_url: https://www.npmjs.com/jsonpath
+  version: 1.1.1
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/17674/default_894a45ad01fa93ac472db719cb1ef1b89f2924f0.png
+  detection_source_url: packages/editor-ui/package.json
+  detection_source: packages/editor-ui/package.json
+  last_updated_by: कारतोफ्फेलस्क्रिप्ट™
+  last_updated_on: 2023-04-25 14:57:21.000000000 Z
+- name: jsonschema
+  description: A fast and easy to use JSON Schema validator
+  package_url: https://www.npmjs.com/jsonschema
+  version: 1.4.1
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/16875/default_ebf16e0c8af5e95030933d9e01479224b6665289.png
+  detection_source_url: packages/cli/package.json
+  detection_source: packages/cli/package.json
+  last_updated_by: कारतोफ्फेलस्क्रिप्ट™
+  last_updated_on: 2023-04-21 07:48:59.000000000 Z
+- name: jsonwebtoken
+  description: JSON Web Token implementation
+  package_url: https://www.npmjs.com/jsonwebtoken
+  version: 9.0.0
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/16155/default_77b54a203c743d16eddb6b6390cba17218454fa0.png
+  detection_source_url: packages/cli/package.json
+  detection_source: packages/nodes-base/package.json
+  last_updated_by: कारतोफ्फेलस्क्रिप्ट™
+  last_updated_on: 2023-04-21 07:48:59.000000000 Z
+- name: lodash-es
+  description: Lodash exported as ES modules
+  package_url: https://www.npmjs.com/lodash-es
+  version: 4.17.21
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/16587/default_ebd83b4f0415be108d977ea72558b13fd7c5283d.png
+  detection_source_url: packages/editor-ui/package.json
+  detection_source: packages/editor-ui/package.json
+  last_updated_by: OlegIvaniv
+  last_updated_on: 2022-12-09 09:56:36.000000000 Z
+- name: lodash.assign
+  description: The lodash method `_.assign` exported as a module
+  package_url: https://www.npmjs.com/lodash.assign
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/16642/default_783b9b6c17b863f264c1418b0eb831316f741afd.png
+  detection_source: packages/nodes-base/package.json
+  last_updated_by: Alex Grozav
+  last_updated_on: 2023-02-23 15:16:05.000000000 Z
+- name: lodash.clone
+  description: The lodash method `_.clone` exported as a module
+  package_url: https://www.npmjs.com/lodash.clone
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/17978/default_72dbba22ca96f25f78f55f8ea5393222efca5494.png
+  detection_source: packages/nodes-base/package.json
+  last_updated_by: Alex Grozav
+  last_updated_on: 2023-02-23 15:16:05.000000000 Z
+- name: lodash.debounce
+  description: The lodash method `_.debounce` exported as a module
+  package_url: https://www.npmjs.com/lodash.debounce
+  version: 4.0.8
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/16481/default_73c88a18b684e01cbdbf945631a40a44aff5a777.png
+  detection_source_url: packages/cli/package.json
+  detection_source: packages/cli/package.json
+  last_updated_by: Michael Auerswald
+  last_updated_on: 2023-02-24 19:37:19.000000000 Z
+- name: lodash.difference
+  description: The lodash method `_.difference` exported as a module
+  package_url: https://www.npmjs.com/lodash.difference
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/18369/default_0af6490274b5a036f3c8f06302acc539142987d3.png
+  detection_source: packages/nodes-base/package.json
+  last_updated_by: Alex Grozav
+  last_updated_on: 2023-02-23 15:16:05.000000000 Z
+- name: lodash.find
+  description: The lodash method `_.find` exported as a module
+  package_url: https://www.npmjs.com/lodash.find
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/17602/default_c568d958091a8b1b28f9f12f4501e181afd1b19f.png
+  detection_source: packages/nodes-base/package.json
+  last_updated_by: Alex Grozav
+  last_updated_on: 2023-02-23 15:16:05.000000000 Z
+- name: lodash.get
+  description: The lodash method `_.get` exported as a module
+  package_url: https://www.npmjs.com/lodash.get
+  version: 4.4.2
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/16377/default_b5c8f3c8e46d368f74a982d06d7f13291fe651ea.png
+  detection_source_url: packages/cli/package.json
+  detection_source: packages/workflow/package.json
+  last_updated_by: Michael Auerswald
+  last_updated_on: 2023-02-24 19:37:19.000000000 Z
+- name: lodash.isarray
+  description: The lodash method `_.isArray` exported as a module
+  package_url: https://www.npmjs.com/lodash.isarray
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/17533/default_1922051267fa78212ab6eb1238cdf6aab8771493.png
+  detection_source: packages/nodes-base/package.json
+  last_updated_by: Alex Grozav
+  last_updated_on: 2023-02-23 15:16:05.000000000 Z
+- name: lodash.isempty
+  description: The lodash method `_.isEmpty` exported as a module
+  package_url: https://www.npmjs.com/lodash.isempty
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/17346/default_2f1b682e838d69744876821bf705f0b2974318b1.png
+  detection_source: packages/nodes-base/package.json
+  last_updated_by: Alex Grozav
+  last_updated_on: 2023-02-23 15:16:05.000000000 Z
+- name: lodash.isequal
+  description: The Lodash method `_.isEqual` exported as a module
+  package_url: https://www.npmjs.com/lodash.isequal
+  version: 4.5.0
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/16523/default_28df1e698b81279fa78b702212cd6185de706683.png
+  detection_source_url: packages/workflow/package.json
+  detection_source: packages/workflow/package.json
+  last_updated_by: Alex Grozav
+  last_updated_on: 2023-02-23 15:16:05.000000000 Z
+- name: lodash.isobject
+  description: The modern build of lodash’s `_.isObject` as a module
+  package_url: https://www.npmjs.com/lodash.isobject
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/17499/default_1d2902e8f9c84259702671591379572493b9009b.png
+  detection_source: packages/nodes-base/package.json
+  last_updated_by: Alex Grozav
+  last_updated_on: 2023-02-23 15:16:05.000000000 Z
+- name: lodash.isstring
+  description: The lodash method `_.isString` exported as a module
+  package_url: https://www.npmjs.com/lodash.isstring
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/17270/default_9b05b1c3b13fc328bf76b8d3fea01ff4688c0c1d.png
+  detection_source: packages/nodes-base/package.json
+  last_updated_by: Alex Grozav
+  last_updated_on: 2023-02-23 15:16:05.000000000 Z
+- name: lodash.map
+  description: The lodash method `_.map` exported as a module
+  package_url: https://www.npmjs.com/lodash.map
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/17357/default_2613a99266d0023b6108b16e4d6613c439a64039.png
+  detection_source: packages/nodes-base/package.json
+  last_updated_by: Alex Grozav
+  last_updated_on: 2023-02-23 15:16:05.000000000 Z
+- name: lodash.merge
+  description: The Lodash method `_.merge` exported as a module
+  package_url: https://www.npmjs.com/lodash.merge
+  version: 4.6.2
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/16314/default_c47f6a56d74fae4d4404d77067b2fa35da6f1924.png
+  detection_source_url: packages/cli/package.json
+  detection_source: packages/workflow/package.json
+  last_updated_by: Michael Auerswald
+  last_updated_on: 2023-02-24 19:37:19.000000000 Z
+- name: lodash.mergewith
+  description: The Lodash method `_.mergeWith` exported as a module
+  package_url: https://www.npmjs.com/lodash.mergewith
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/18656/default_f228716e0e2054736b7cef03e48c321d920064dc.png
+  detection_source: packages/nodes-base/package.json
+  last_updated_by: Alex Grozav
+  last_updated_on: 2023-02-23 15:16:05.000000000 Z
+- name: lodash.omit
+  description: The lodash method `_.omit` exported as a module
+  package_url: https://www.npmjs.com/lodash.omit
+  version: 4.5.0
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/16887/default_e65289f03a07faa8d49ce16c483f18c4f8a98db9.png
+  detection_source_url: packages/cli/package.json
+  detection_source: packages/nodes-base/package.json
+  last_updated_by: Michael Auerswald
+  last_updated_on: 2023-02-24 19:37:19.000000000 Z
+- name: lodash.pick
+  description: The lodash method `_.pick` exported as a module
+  package_url: https://www.npmjs.com/lodash.pick
+  version: 4.4.0
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/16970/default_277303773c2bdb575ee8f4bfe869f0a33d6755b2.png
+  detection_source_url: packages/cli/package.json
+  detection_source: packages/nodes-base/package.json
+  last_updated_by: Michael Auerswald
+  last_updated_on: 2023-02-24 19:37:19.000000000 Z
+- name: lodash.reduce
+  description: The lodash method `_.reduce` exported as a module
+  package_url: https://www.npmjs.com/lodash.reduce
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/18588/default_3e32df88460fecb641a66eef3844367bcb37f592.png
+  detection_source: packages/nodes-base/package.json
+  last_updated_by: Alex Grozav
+  last_updated_on: 2023-02-23 15:16:05.000000000 Z
+- name: lodash.set
+  description: The lodash method `_.set` exported as a module
+  package_url: https://www.npmjs.com/lodash.set
+  version: 4.3.2
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/16998/default_3823aba25646a3f105cc15ee9df24fdf78972314.png
+  detection_source_url: packages/cli/package.json
+  detection_source: packages/workflow/package.json
+  last_updated_by: Michael Auerswald
+  last_updated_on: 2023-02-24 19:37:19.000000000 Z
+- name: lodash.sortby
+  description: The lodash method `_.sortBy` exported as a module
+  package_url: https://www.npmjs.com/lodash.sortby
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/17688/default_9693d58c90f5c726ee648423687212d2a94266da.png
+  detection_source: packages/nodes-base/package.json
+  last_updated_by: Alex Grozav
+  last_updated_on: 2023-02-23 15:16:05.000000000 Z
+- name: lodash.uniq
+  description: The lodash method `_.uniq` exported as a module
+  package_url: https://www.npmjs.com/lodash.uniq
+  version: 4.5.0
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/17115/default_1dbf402c11ef653fcaedc84e608a244e30ebfb87.png
+  detection_source_url: packages/cli/package.json
+  detection_source: packages/cli/package.json
+  last_updated_by: Michael Auerswald
+  last_updated_on: 2023-02-24 19:37:19.000000000 Z
+- name: luxon
+  description: Immutable date wrapper
+  package_url: https://www.npmjs.com/luxon
+  version: 3.3.0
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/17375/default_c1932d441699b98abea6098c6f8f65e2acb4f5ed.png
+  detection_source_url: packages/cli/package.json
+  detection_source: packages/workflow/package.json
+  last_updated_by: कारतोफ्फेलस्क्रिप्ट™
+  last_updated_on: 2023-03-21 08:50:29.000000000 Z
+- name: markdown-it
+  description: Markdown-it - modern pluggable markdown parser
+  package_url: https://www.npmjs.com/markdown-it
+  version: 13.0.1
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/16277/default_ab17554b7e80af3d234b14168ed61e75d43f8eee.png
+  detection_source_url: packages/design-system/package.json
+  detection_source: packages/design-system/package.json
+  last_updated_by: Alex Grozav
+  last_updated_on: 2023-01-27 01:09:30.000000000 Z
+- name: mime-types
+  description: The ultimate javascript content-type utility
+  package_url: https://www.npmjs.com/mime-types
+  version: 2.1.27
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/16448/default_89ba91277e3434b03295bb11d22736632df1d04f.png
+  detection_source_url: packages/core/package.json
+  detection_source: packages/core/package.json
+  last_updated_by: agobrech
+  last_updated_on: 2023-03-20 16:34:14.000000000 Z
+- name: moment
+  description: Parse, validate, manipulate, and display dates
+  package_url: https://www.npmjs.com/moment
+  version: 2.29.2
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/15847/default_4479dbac220be99e50e724b2df6cf415241d71fd.png
+  detection_source_url: packages/nodes-base/package.json
+  detection_source: packages/nodes-base/package.json
+  last_updated_by: Jan Oberhauser
+  last_updated_on: 2022-04-10 10:29:19.000000000 Z
+  vulnerabilities:
+  - name: Moment.js vulnerable to Inefficient Regular Expression Complexity
+    cve_id: CVE-2022-31129
+    cve_url: https://github.com/advisories/GHSA-wc69-rhjr-hc9g
+    detected_date: Jul 7
+    severity: high
+    first_patched: 2.29.4
+- name: moment-timezone
+  description: Parse and display moments in any timezone
+  package_url: https://www.npmjs.com/moment-timezone
+  version: 0.5.28
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/16298/default_8b65a873fd3277d73483d6846fa38192391abf23.png
+  detection_source_url: packages/nodes-base/package.json
+  detection_source: packages/nodes-base/package.json
+  last_updated_by: Iván Ovejero
+  last_updated_on: 2022-06-20 14:54:01.000000000 Z
+  vulnerabilities:
+  - name: Cleartext Transmission of Sensitive Information in moment-timezone
+    cve_id: 
+    cve_url: https://github.com/advisories/GHSA-v78c-4p63-2j6c
+    detected_date: Aug 31
+    severity: moderate
+    first_patched: 0.5.35
+  - name: Command Injection in moment-timezone
+    cve_id: 
+    cve_url: https://github.com/advisories/GHSA-56x4-j7p9-fcf9
+    detected_date: Aug 31
+    severity: low
+    first_patched: 0.5.35
+- name: mysql2
+  description: Fast mysql driver
+  package_url: https://www.npmjs.com/mysql2
+  version: 2.3.3
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/16671/default_4b738bf1758d38dddd276589bbea47fca5a990df.png
+  detection_source_url: packages/cli/package.json
+  detection_source: packages/nodes-base/package.json
+  last_updated_by: कारतोफ्फेलस्क्रिप्ट™
+  last_updated_on: 2023-03-30 13:09:13.000000000 Z
+- name: nock
+  description: HTTP server mocking and expectations library for Node.js
+  package_url: https://www.npmjs.com/nock
+  version: 13.2.9
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/16036/default_5fd43aeff4d6a935abc13737de01a0355210499d.png
+  detection_source_url: package.json
+  detection_source: package.json
+  last_updated_by: कारतोफ्फेलस्क्रिप्ट™
+  last_updated_on: 2022-12-14 14:28:41.000000000 Z
+- name: node-fetch
+  description: A light-weight module that brings window.fetch to node.js
+  package_url: https://www.npmjs.com/node-fetch
+  version: 2.6.7
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/15978/default_f49d4c116f8ea0155f4d92673b084378bba02760.png
+  detection_source_url: package.json
+  detection_source: package.json
+  last_updated_by: कारतोफ्फेलस्क्रिप्ट™
+  last_updated_on: 2023-03-21 13:49:27.000000000 Z
+- name: open
+  description: Open stuff like URLs, files, executables. Cross-platform
+  package_url: https://www.npmjs.com/open
+  version: 7.0.0
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/16245/default_5dfc1810d0882ab844578a326bb8bf19e45e7227.png
+  detection_source_url: packages/cli/package.json
+  detection_source: packages/cli/package.json
+  last_updated_by: Ricardo Espinoza
+  last_updated_on: 2022-06-08 18:53:12.000000000 Z
+- name: p-limit
+  description: Run multiple promise-returning &amp; async functions with limited concurrency
+  package_url: https://www.npmjs.com/p-limit
+  version: 3.1.0
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/18388/default_404701144cd8e1becf3aec789202840caee4d78e.png
+  detection_source_url: package.json
+  detection_source: package.json
+  last_updated_by: कारतोफ्फेलस्क्रिप्ट™
+  last_updated_on: 2023-02-14 12:00:15.000000000 Z
+- name: parseurl
+  description: Parse a url with memoization
+  package_url: https://www.npmjs.com/parseurl
+  version: 1.3.3
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/17347/default_b8b4be8bd54f9619446b80b2bf448c0891101f2a.png
+  detection_source_url: packages/cli/package.json
+  detection_source: packages/cli/package.json
+  last_updated_by: कारतोफ्फेलस्क्रिप्ट™
+  last_updated_on: 2023-01-26 11:10:09.000000000 Z
+- name: passport
+  description: Simple, unobtrusive authentication for Node.js
+  package_url: https://www.npmjs.com/passport
+  version: 0.6.0
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/16304/default_1baba0e6ece19a38adfb211f686c83c781ff703a.png
+  detection_source_url: packages/cli/package.json
+  detection_source: packages/cli/package.json
+  last_updated_by: कारतोफ्फेलस्क्रिप्ट™
+  last_updated_on: 2022-12-06 11:16:49.000000000 Z
+- name: passport-jwt
+  description: Passport authentication strategy using JSON Web Tokens
+  package_url: https://www.npmjs.com/passport-jwt
+  version: 4.0.0
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/18238/default_d0bdfc944c04fa7e84198f9a2784cc716a3d91a3.png
+  detection_source_url: packages/cli/package.json
+  detection_source: packages/cli/package.json
+  last_updated_by: कारतोफ्फेलस्क्रिप्ट™
+  last_updated_on: 2022-12-06 11:16:49.000000000 Z
+- name: pg
+  description: PostgreSQL client - pure javascript &amp; libpq with the same API
+  package_url: https://www.npmjs.com/pg
+  version: 8.8.0
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/16197/default_3d197518f6bb529bfcc1b685e2cefbdfe83ff108.png
+  detection_source_url: packages/cli/package.json
+  detection_source: packages/nodes-base/package.json
+  last_updated_by: Jan Oberhauser
+  last_updated_on: 2019-06-23 10:35:23.000000000 Z
+- name: pg-promise
+  description: PostgreSQL interface for Node.js
+  package_url: https://www.npmjs.com/pg-promise
+  version: 10.5.8
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/18538/default_e75c3c83e4af96462c99ddf6aabdef371444ed62.png
+  detection_source_url: packages/nodes-base/package.json
+  detection_source: packages/nodes-base/package.json
+  last_updated_by: कारतोफ्फेलस्क्रिप्ट™
+  last_updated_on: 2022-08-31 13:25:52.000000000 Z
+- name: pretty-bytes
+  description: 'Convert bytes to a human readable string: 1337 → 1.34 kB'
+  package_url: https://www.npmjs.com/pretty-bytes
+  version: 5.6.0
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/16763/default_6dc099b12d47e378ae121fb53c336fe5d8f0ffc8.png
+  detection_source_url: packages/core/package.json
+  detection_source: packages/nodes-base/package.json
+  last_updated_by: कारतोफ्फेलस्क्रिप्ट™
+  last_updated_on: 2022-11-24 15:54:43.000000000 Z
+- name: prom-client
+  description: Client for prometheus
+  package_url: https://www.npmjs.com/prom-client
+  version: 13.1.0
+  license: Apache-2.0
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/18412/default_863e53b96f84b4092f7c0ba36b8cee4bf60d33fe.png
+  detection_source_url: packages/cli/package.json
+  detection_source: packages/cli/package.json
+  last_updated_by: कारतोफ्फेलस्क्रिप्ट™
+  last_updated_on: 2023-05-17 14:40:53.000000000 Z
+- name: qs
+  description: A querystring parser that supports nesting and arrays
+  package_url: https://www.npmjs.com/qs
+  version: 6.10.1
+  license: BSD-3-Clause
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/16125/default_def3edb85d7fbd20200a5cd7d0a1679e31bc8b3d.png
+  detection_source_url: packages/core/package.json
+  detection_source: packages/core/package.json
+  last_updated_by: Jan Oberhauser
+  last_updated_on: 2019-06-23 10:35:23.000000000 Z
+  vulnerabilities:
+  - name: qs vulnerable to Prototype Pollution
+    cve_id: CVE-2022-24999
+    cve_url: https://github.com/advisories/GHSA-hrpp-h998-j3pp
+    detected_date: Dec 7
+    severity: high
+    first_patched: 6.10.3
+- name: recast
+  description: JavaScript syntax tree transformer
+  package_url: https://www.npmjs.com/recast
+  version: 0.21.5
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/17195/default_183829c5079b84333a720d8590a328efc043ba0e.png
+  detection_source_url: packages/workflow/package.json
+  detection_source: packages/workflow/package.json
+  last_updated_by: Valya
+  last_updated_on: 2023-01-10 13:06:12.000000000 Z
+- name: reflect-metadata
+  description: Polyfill for Metadata Reflection API
+  package_url: https://www.npmjs.com/reflect-metadata
+  version: 0.1.13
+  license: Apache-2.0
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/16019/default_7a88bebb451873cc63bd99007de5bd3bb8ef85de.png
+  detection_source_url: packages/cli/package.json
+  detection_source: packages/cli/package.json
+  last_updated_by: कारतोफ्फेलस्क्रिप्ट™
+  last_updated_on: 2023-02-21 18:21:56.000000000 Z
+- name: replace-in-file
+  description: A simple utility to quickly replace text in one or more files
+  package_url: https://www.npmjs.com/replace-in-file
+  version: 6.0.0
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/16434/default_d73092129e1cde5ea9f47f22e2d7c3db7bd6da8d.png
+  detection_source_url: packages/node-dev/package.json
+  detection_source: packages/node-dev/package.json
+  last_updated_by: Jan Oberhauser
+  last_updated_on: 2021-03-26 08:06:26.000000000 Z
+- name: request
+  description: Simplified HTTP request client
+  package_url: https://www.npmjs.com/request
+  version: 2.88.2
+  license: Apache-2.0
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/15823/default_5e5e8ac63beda29f31f1844df64d4b8247570a66.png
+  detection_source_url: packages/core/package.json
+  detection_source: packages/nodes-base/package.json
+  last_updated_by: Ahsan Virani
+  last_updated_on: 2021-12-23 21:29:04.000000000 Z
+  vulnerabilities:
+  - name: Server-Side Request Forgery in Request
+    cve_id: CVE-2023-28155
+    cve_url: https://github.com/advisories/GHSA-p8p7-x288-28g6
+    detected_date: Mar 17
+    severity: moderate
+    first_patched: 
+- name: request-promise-native
+  description: The simplified HTTP request client 'request' with Promise support
+  package_url: https://www.npmjs.com/request-promise-native
+  version: 1.0.7
+  license: ISC
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/16305/default_f130429ee56156823c8c6e94da6fb7aa07f07ba5.png
+  detection_source_url: packages/core/package.json
+  detection_source: packages/core/package.json
+  last_updated_by: Ahsan Virani
+  last_updated_on: 2021-12-23 21:29:04.000000000 Z
+- name: rimraf
+  description: A deep deletion module for node
+  package_url: https://www.npmjs.com/rimraf
+  version: 3.0.2
+  license: ISC
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/15807/default_db4a7791d2f1174547374b9b587bc10fec088a5a.png
+  detection_source_url: package.json
+  detection_source: package.json
+  last_updated_by: Chris Lonardo
+  last_updated_on: 2020-04-06 18:04:59.000000000 Z
+- name: sanitize-html
+  description: Clean up user-submitted HTML
+  package_url: https://www.npmjs.com/sanitize-html
+  version: 2.10.0
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/17508/default_1d2902e8f9c84259702671591379572493b9009b.png
+  detection_source_url: packages/design-system/package.json
+  detection_source: packages/design-system/package.json
+  last_updated_by: Jan Oberhauser
+  last_updated_on: 2023-03-21 15:38:48.000000000 Z
+- name: sass
+  description: A pure JavaScript implementation of Sass
+  package_url: https://www.npmjs.com/sass
+  version: 1.58.0
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/16057/default_5fd43aeff4d6a935abc13737de01a0355210499d.png
+  detection_source_url: packages/design-system/package.json
+  detection_source: packages/design-system/package.json
+  last_updated_by: कारतोफ्फेलस्क्रिप्ट™
+  last_updated_on: 2023-02-14 11:44:13.000000000 Z
+- name: sass-loader
+  description: Sass loader for webpack
+  package_url: https://www.npmjs.com/sass-loader
+  version: 13.2.0
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/15842/default_b71c906aeda030a5e2f1fe40bf12a93be52404ab.png
+  detection_source_url: packages/design-system/package.json
+  detection_source: packages/design-system/package.json
+  last_updated_by: कारतोफ्फेलस्क्रिप्ट™
+  last_updated_on: 2023-02-14 11:44:13.000000000 Z
+- name: shelljs
+  description: Portable Unix shell commands for Node.js
+  package_url: https://www.npmjs.com/shelljs
+  version: 0.8.5
+  license: BSD-3-Clause
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/15897/default_1d65e37e65b7f80761374f0202776043277d505d.png
+  detection_source_url: packages/cli/package.json
+  detection_source: packages/cli/package.json
+  last_updated_by: कारतोफ्फेलस्क्रिप्ट™
+  last_updated_on: 2022-08-31 13:25:52.000000000 Z
+- name: simple-git
+  description: Simple GIT interface for node.js
+  package_url: https://www.npmjs.com/simple-git
+  version: 3.17.0
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/16567/default_d6ff16957d0b119d673d5ec0eb21b08d8d5008f4.png
+  detection_source_url: packages/nodes-base/package.json
+  detection_source: packages/nodes-base/package.json
+  last_updated_by: कारतोफ्फेलस्क्रिप्ट™
+  last_updated_on: 2023-03-21 08:48:55.000000000 Z
+- name: source-map-support
+  description: Fixes stack traces for files with source maps
+  package_url: https://www.npmjs.com/source-map-support
+  version: 0.5.21
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/16028/default_c7b204838197013798409fa2b4dafce450edc7fb.png
+  detection_source_url: packages/cli/package.json
+  detection_source: packages/cli/package.json
+  last_updated_by: कारतोफ्फेलस्क्रिप्ट™
+  last_updated_on: 2022-12-06 11:16:49.000000000 Z
+- name: sqlite3
+  description: Asynchronous, non-blocking SQLite3 bindings
+  package_url: https://www.npmjs.com/sqlite3
+  version: 5.1.6
+  license: BSD-3-Clause
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/16285/default_3b7197abc4df3d7fa7c5292f17b2e6fb0cd1c8d4.png
+  detection_source_url: packages/cli/package.json
+  detection_source: packages/cli/package.json
+  last_updated_by: कारतोफ्फेलस्क्रिप्ट™
+  last_updated_on: 2023-03-21 08:48:22.000000000 Z
+- name: transliteration
+  description: Unicode to ACSII transliteration / slugify module for node.js
+  package_url: https://www.npmjs.com/transliteration
+  version: 2.3.5
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/16935/default_7fe969828600a90e84607bfa2a19979e53a0579d.png
+  detection_source_url: packages/workflow/package.json
+  detection_source: packages/workflow/package.json
+  last_updated_by: Valya
+  last_updated_on: 2023-01-10 13:06:12.000000000 Z
+- name: ts-jest
+  description: A preprocessor with source maps support to help use TypeScript with
+    Jest
+  package_url: https://www.npmjs.com/ts-jest
+  version: 29.1.0
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/15864/default_6743ba96cf149a3c3c68a185199f9705d6eff80e.png
+  detection_source_url: package.json
+  detection_source: package.json
+  last_updated_by: Marcus
+  last_updated_on: 2023-05-05 15:50:10.000000000 Z
+- name: tsc-watch
+  description: The TypeScript compiler with onSuccess command
+  package_url: https://www.npmjs.com/tsc-watch
+  version: 6.0.0
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/18024/default_d8756eea8d13a271fb42437ffb36c0a116d72925.png
+  detection_source_url: package.json
+  detection_source: package.json
+  last_updated_by: कारतोफ्फेलस्क्रिप्ट™
+  last_updated_on: 2023-04-24 12:47:13.000000000 Z
+- name: tsconfig-paths
+  description: Load node modules according to tsconfig paths
+  package_url: https://www.npmjs.com/tsconfig-paths
+  version: 4.1.2
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/16810/default_55e3ea76a7929df1b71c5ea0c9b4130cc87323a4.png
+  detection_source_url: packages/cli/package.json
+  detection_source: packages/cli/package.json
+  last_updated_by: कारतोफ्फेलस्क्रिप्ट™
+  last_updated_on: 2023-02-09 12:52:41.000000000 Z
+- name: uuid
+  description: RFC4122
+  package_url: https://www.npmjs.com/uuid
+  version: 8.3.2
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/15916/default_e0a4fb1126d7400f419f0931cf1669947a5bc552.png
+  detection_source_url: packages/cli/package.json
+  detection_source: packages/nodes-base/package.json
+  last_updated_by: Iván Ovejero
+  last_updated_on: 2022-07-24 15:13:01.000000000 Z
+- name: validator
+  description: String validation and sanitization
+  package_url: https://www.npmjs.com/validator
+  version: 13.7.0
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/16255/default_fef27d1523ac1844fc00e83e47bddd8898ff8a89.png
+  detection_source_url: packages/cli/package.json
+  detection_source: packages/cli/package.json
+  last_updated_by: Michael Auerswald
+  last_updated_on: 2023-03-06 08:44:25.000000000 Z
+- name: vue
+  description: Vue
+  package_url: https://www.npmjs.com/vue
+  version: 2.7.14
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/15844/default_b71c906aeda030a5e2f1fe40bf12a93be52404ab.png
+  detection_source_url: packages/design-system/package.json
+  detection_source: packages/editor-ui/package.json
+  last_updated_by: Mutasem Aldmour
+  last_updated_on: 2021-08-29 11:36:17.000000000 Z
+- name: vue-i18n
+  description: Internationalization plugin for Vue.js
+  package_url: https://www.npmjs.com/vue-i18n
+  version: 8.26.7
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/16963/default_ebf16e0c8af5e95030933d9e01479224b6665289.png
+  detection_source_url: packages/editor-ui/package.json
+  detection_source: packages/editor-ui/package.json
+  last_updated_by: OlegIvaniv
+  last_updated_on: 2023-04-26 07:18:10.000000000 Z
+- name: vue-router
+  description: Official router for Vue.js 2
+  package_url: https://www.npmjs.com/vue-router
+  version: 3.6.5
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/15969/default_261820f5687b4c88a3e8f95c71b5e8dccd34c1d7.png
+  detection_source_url: packages/editor-ui/package.json
+  detection_source: packages/editor-ui/package.json
+  last_updated_by: OlegIvaniv
+  last_updated_on: 2023-04-26 07:18:10.000000000 Z
+- name: vue-template-compiler
+  description: Template compiler for Vue 2.0
+  package_url: https://www.npmjs.com/vue-template-compiler
+  version: 2.7.14
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/15850/default_0b10af8ca19c215f781dc07442e75bdc831089d0.png
+  detection_source_url: package.json
+  detection_source: package.json
+  last_updated_by: कारतोफ्फेलस्क्रिप्ट™
+  last_updated_on: 2023-05-12 08:21:40.000000000 Z
+- name: winston
+  description: A logger for just about everything
+  package_url: https://www.npmjs.com/winston
+  version: 3.3.3
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/16003/default_261820f5687b4c88a3e8f95c71b5e8dccd34c1d7.png
+  detection_source_url: packages/cli/package.json
+  detection_source: packages/cli/package.json
+  last_updated_by: Ricardo Espinoza
+  last_updated_on: 2022-06-08 18:53:12.000000000 Z
+- name: xlsx
+  description: SheetJS Spreadsheet data parser and writer
+  package_url: https://www.npmjs.com/xlsx
+  license: Apache-2.0
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/16781/default_c6eddffbed005d007ab4638fbcac90e4b79576b2.png
+  detection_source: packages/nodes-base/package.json
+  last_updated_by: कारतोफ्फेलस्क्रिप्ट™
+  last_updated_on: 2023-05-11 10:55:29.000000000 Z
+- name: xml2js
+  description: Simple XML to JavaScript object converter
+  package_url: https://www.npmjs.com/xml2js
+  version: 0.5.0
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/16122/default_efe4f0184d007a28e793d89a59e058b742bc9177.png
+  detection_source_url: packages/nodes-base/package.json
+  detection_source: packages/workflow/package.json
+  last_updated_by: कारतोफ्फेलस्क्रिप्ट™
+  last_updated_on: 2023-04-11 13:05:56.000000000 Z
+- name: yamljs
+  description: Standalone JavaScript YAML 1.2 Parser &amp; Encoder
+  package_url: https://www.npmjs.com/yamljs
+  version: 0.3.0
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/16676/default_4b738bf1758d38dddd276589bbea47fca5a990df.png
+  detection_source_url: packages/cli/package.json
+  detection_source: packages/cli/package.json
+  last_updated_by: कारतोफ्फेलस्क्रिप्ट™
+  last_updated_on: 2022-08-31 13:25:52.000000000 Z
