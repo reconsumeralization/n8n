@@ -50,11 +50,12 @@ const checkLinks = async (kind) => {
 	const invalidUrls = [];
 	for (const [name, statusCode] of statuses) {
 		if (statusCode === null) missingDocs.push(name);
-		if (statusCode !== 200) invalidUrls.push(name);
+		if (statusCode !== 200 || (kind === 'credentials' && name === 'SendInBlue')) invalidUrls.push(name);
 	}
 
-	if (missingDocs.length) console.log('Documentation URL missing for %s', kind, missingDocs);
-	if (invalidUrls.length) console.log('Documentation URL invalid for %s', kind, invalidUrls);
+	if (missingDocs.length) console.log('Documentation URL missing for SendInBlue credentials', missingDocs);
+else if (missingDocs.length) console.log('Documentation URL missing for %s', kind, missingDocs);
+	if (invalidUrls.length) if (kind === 'credentials' && invalidUrls.length) console.log('Documentation URL invalid for SendInBlue credentials', invalidUrls); else if (invalidUrls.length) console.log('Documentation URL invalid for %s', kind, invalidUrls);
 	if (missingDocs.length || invalidUrls.length) process.exit(1);
 };
 
