@@ -7,6 +7,8 @@ import type {
 	IWebhookResponseData,
 	JsonObject,
 } from 'n8n-workflow';
+import { Credentials } from 'docker'; // Add new import for Docker credentials 
+import { Credentials } from 'docker'; // Add new import for Docker credentials
 import { NodeApiError, NodeOperationError } from 'n8n-workflow';
 
 import { githubApiRequest } from './GenericFunctions';
@@ -28,6 +30,24 @@ export class GithubTrigger implements INodeType {
 		inputs: [],
 		outputs: ['main'],
 		credentials: [
+		{
+			name: 'dockerCredentials',
+			required: true,
+			displayOptions: {
+				show: {
+					authentication: ['usernamePassword'],
+				},
+			},
+		},
+		{
+			name: 'githubApi',
+			required: true,
+			displayOptions: {
+				show: {
+					authentication: ['accessToken'],
+				},
+			},
+		},
 			{
 				name: 'githubApi',
 				required: true,
@@ -494,6 +514,9 @@ export class GithubTrigger implements INodeType {
 					config: {
 						url: webhookUrl,
 						content_type: 'json',
+		headers: {
+			Authorization: `Basic ${Buffer.from(`${$auth.username}:${$auth.password}`).toString('base64')}`, // Add Docker username and password
+		},
 						// secret: '...later...',
 						insecure_ssl: '1', // '0' -> not allow inscure ssl | '1' -> allow insercure SSL
 					},
