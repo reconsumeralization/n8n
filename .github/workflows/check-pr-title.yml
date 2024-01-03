@@ -32,4 +32,14 @@ jobs:
         id: validate_pr_title
         uses: n8n-io/validate-n8n-pull-request-title@v1.1
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_TITLE: ${{ github.event.pull_request.title }}
+          ERROR_MESSAGE: >
+            PR title does not match PR title convention: type: subject or type(scope): subject. 
+            For `type`, use `type:` or `type(scope):`, where `type` is one of `feat`, `fix`, `perf`, `test`, `docs`, `refactor`, `build`, `ci`. 
+            If present, `scope` must be one of `API`, `core`, `editor` or `<displayName> Node`. 
+            For the subject, mind the whitespace, start with lowercase and omit final period. 
+            Examples of valid titles: 
+            - "fix: correct minor typos in code"
+            - "feat(editor): add support for multi-line comments"
+            - "test(API): add unit tests for user authentication"
+            - "docs: update README with new screenshots"
