@@ -1,7 +1,8 @@
 repo_name: reconsumeralization/n8n
 report_id: dce1b33a2ca96f193f761499832c7685
+version: 0.1
 repo_type: Public
-timestamp: '2023-11-09T16:10:06+00:00'
+timestamp: '2024-01-04T15:05:00+00:00'
 requested_by: reconsumeralization
 provider: github
 branch: master
@@ -15,6 +16,7 @@ tools:
   category: Languages & Frameworks
   sub_category: Templating Languages & Extensions
   image_url: https://img.stackshare.io/service/1143/Handlebars.png
+  detection_source_url: https://github.com/reconsumeralization/n8n
   detection_source: Repo Metadata
 - name: JavaScript
   description: Lightweight, interpreted, object-oriented language with first-class
@@ -25,6 +27,7 @@ tools:
   category: Languages & Frameworks
   sub_category: Languages
   image_url: https://img.stackshare.io/service/1209/javascript.jpeg
+  detection_source_url: https://github.com/reconsumeralization/n8n
   detection_source: Repo Metadata
 - name: Python
   description: A clear and powerful object-oriented programming language, comparable
@@ -35,6 +38,7 @@ tools:
   category: Languages & Frameworks
   sub_category: Languages
   image_url: https://img.stackshare.io/service/993/pUBY5pVj.png
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/workflow/package.json
   detection_source: packages/workflow/package.json
   last_updated_by: Jan Oberhauser
   last_updated_on: 2019-06-23 10:35:23.000000000 Z
@@ -47,6 +51,7 @@ tools:
   category: Languages & Frameworks
   sub_category: Languages
   image_url: https://img.stackshare.io/service/1612/bynNY5dJ.jpg
+  detection_source_url: https://github.com/reconsumeralization/n8n
   detection_source: Repo Metadata
 - name: ".NET"
   description: A free, cross-platform, open source developer platform for building
@@ -58,7 +63,8 @@ tools:
   category: Languages & Frameworks
   sub_category: Frameworks (Full Stack)
   image_url: https://img.stackshare.io/service/1014/IoPy1dce_400x400.png
-  detection_source: packages/nodes-base/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/.github/scripts/package.json
+  detection_source: ".github/scripts/package.json"
   last_updated_by: कारतोफ्फेलस्क्रिप्ट™
   last_updated_on: 2023-02-21 13:04:35.000000000 Z
 - name: Autoprefixer
@@ -69,6 +75,7 @@ tools:
   category: Languages & Frameworks
   sub_category: CSS Pre-processors / Extensions
   image_url: https://img.stackshare.io/service/2202/72d087642cfce6fef6f2dabec5bf49e8_400x400.png
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/design-system/package.json
   detection_source: packages/design-system/package.json
   last_updated_by: कारतोफ्फेलस्क्रिप्ट™
   last_updated_on: 2023-02-14 11:44:13.000000000 Z
@@ -83,8 +90,8 @@ tools:
   category: Languages & Frameworks
   sub_category: Microframeworks (Backend)
   image_url: https://img.stackshare.io/service/1163/hashtag.png
-  detection_source_url: packages/cli/package.json
-  detection_source: packages/workflow/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/cli/package.json
+  detection_source: packages/cli/package.json
   last_updated_by: Michael Auerswald
   last_updated_on: 2023-04-19 15:46:10.000000000 Z
 - name: Node.js
@@ -96,7 +103,8 @@ tools:
   category: Languages & Frameworks
   sub_category: Frameworks (Full Stack)
   image_url: https://img.stackshare.io/service/1011/n1JRsFeB_400x400.png
-  detection_source: package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/docker/images/n8n-base/Dockerfile
+  detection_source: docker/images/n8n-base/Dockerfile
   last_updated_by: कारतोफ्फेलस्क्रिप्ट™
   last_updated_on: 2022-08-31 13:25:52.000000000 Z
 - name: Storybook
@@ -108,6 +116,7 @@ tools:
   category: Libraries
   sub_category: JavaScript Framework Components
   image_url: https://img.stackshare.io/service/9240/sOct-Txm_400x400.png
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/design-system/package.json
   detection_source: packages/design-system/package.json
   last_updated_by: कारतोफ्फेलस्क्रिप्ट™
   last_updated_on: 2023-05-12 08:21:40.000000000 Z
@@ -121,7 +130,7 @@ tools:
   category: Languages & Frameworks
   sub_category: Microframeworks (Backend)
   image_url: https://img.stackshare.io/service/7419/20165699.png
-  detection_source_url: packages/cli/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/cli/package.json
   detection_source: packages/cli/package.json
   last_updated_by: Michael Auerswald
   last_updated_on: 2023-02-17 09:54:07.000000000 Z
@@ -135,8 +144,8 @@ tools:
   category: Libraries
   sub_category: Javascript MVC Frameworks
   image_url: https://img.stackshare.io/service/3837/paeckCWC.png
-  detection_source_url: packages/design-system/package.json
-  detection_source: packages/editor-ui/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/design-system/package.json
+  detection_source: package.json
   last_updated_by: Jan Oberhauser
   last_updated_on: 2019-06-23 10:35:23.000000000 Z
 - name: Cloud DB for Mysql
@@ -147,6 +156,7 @@ tools:
   category: Data Stores
   sub_category: SQL Database as a Service
   image_url: https://img.stackshare.io/service/21275/default_078eb0ae2b56280a937ed073a3ba4332291f9ba8.png
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/.github/docker-compose.yml
   detection_source: ".github/docker-compose.yml"
   last_updated_by: कारतोफ्फेलस्क्रिप्ट™
   last_updated_on: 2022-10-25 20:06:03.000000000 Z
@@ -158,7 +168,8 @@ tools:
   category: Data Stores
   sub_category: Background Processing
   image_url: https://img.stackshare.io/service/2416/default_274ed9bcc98502018f007cfcd8c09f3514d3d319.png
-  detection_source: packages/nodes-base/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/core/package.json
+  detection_source: packages/core/package.json
   last_updated_by: Jan Oberhauser
   last_updated_on: 2021-10-14 23:45:51.000000000 Z
 - name: MQTT
@@ -169,6 +180,7 @@ tools:
   category: Data Stores
   sub_category: Message Queue
   image_url: https://img.stackshare.io/service/3670/mqtticon-large_400x400.png
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/nodes-base/package.json
   detection_source: packages/nodes-base/package.json
   last_updated_by: Ricardo Espinoza
   last_updated_on: 2021-05-01 01:23:25.000000000 Z
@@ -181,6 +193,7 @@ tools:
   category: Data Stores
   sub_category: Databases
   image_url: https://img.stackshare.io/service/2445/ZKsJsucq_400x400.jpg
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/nodes-base/package.json
   detection_source: packages/nodes-base/package.json
   last_updated_by: Jan Oberhauser
   last_updated_on: 2019-06-23 10:35:23.000000000 Z
@@ -192,6 +205,7 @@ tools:
   category: Data Stores
   sub_category: Databases
   image_url: https://img.stackshare.io/service/1030/leaf-360x360.png
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/nodes-base/package.json
   detection_source: packages/nodes-base/package.json
   last_updated_by: Michael Kret
   last_updated_on: 2022-09-14 09:54:05.000000000 Z
@@ -203,7 +217,8 @@ tools:
   category: Data Stores
   sub_category: Databases
   image_url: https://img.stackshare.io/service/1025/logo-mysql-170x170.png
-  detection_source: packages/nodes-base/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/cli/package.json
+  detection_source: packages/cli/package.json
   last_updated_by: Jan Oberhauser
   last_updated_on: 2019-06-23 10:35:23.000000000 Z
 - name: PostgreSQL
@@ -214,7 +229,8 @@ tools:
   category: Data Stores
   sub_category: Databases
   image_url: https://img.stackshare.io/service/1028/ASOhU5xJ.png
-  detection_source: packages/nodes-base/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/cli/package.json
+  detection_source: packages/cli/package.json
   last_updated_by: कारतोफ्फेलस्क्रिप्ट™
   last_updated_on: 2023-03-30 13:09:13.000000000 Z
 - name: Redis
@@ -227,8 +243,8 @@ tools:
   category: Data Stores
   sub_category: In-Memory Databases
   image_url: https://img.stackshare.io/service/1031/default_cbce472cd134adc6688572f999e9122b9657d4ba.png
-  detection_source_url: packages/nodes-base/package.json
-  detection_source: packages/nodes-base/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/nodes-base/package.json
+  detection_source: docker/compose/withPostgresAndWorker/docker-compose.yml
   last_updated_by: Iván Ovejero
   last_updated_on: 2022-11-22 13:11:29.000000000 Z
 - name: SQLite
@@ -240,6 +256,7 @@ tools:
   category: Data Stores
   sub_category: Databases
   image_url: https://img.stackshare.io/service/1071/sqlite.jpg
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/cli/package.json
   detection_source: packages/cli/package.json
   last_updated_by: Jan Oberhauser
   last_updated_on: 2019-06-23 10:35:23.000000000 Z
@@ -252,6 +269,7 @@ tools:
   category: Application Hosting
   sub_category: Realtime Backend / API
   image_url: https://img.stackshare.io/service/11381/no-img-open-source.png
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/cli/package.json
   detection_source: packages/cli/package.json
   last_updated_by: Jan Oberhauser
   last_updated_on: 2019-06-23 10:35:23.000000000 Z
@@ -266,7 +284,7 @@ tools:
   category: Build, Test, Deploy
   sub_category: Javascript Testing Framework
   image_url: https://img.stackshare.io/service/9231/default_66c5c1a197dcd0232e41e4ab6299d119b4e165b3.png
-  detection_source_url: package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/package.json
   detection_source: package.json
   last_updated_by: OlegIvaniv
   last_updated_on: 2023-03-24 15:12:26.000000000 Z
@@ -279,6 +297,7 @@ tools:
   category: Build, Test, Deploy
   sub_category: Virtual Machine Platforms & Containers
   image_url: https://img.stackshare.io/service/586/n4u37v9t_400x400.png
+  detection_source_url: https://github.com/reconsumeralization/n8n
   detection_source: Repo Metadata
 - name: Dotenv
   description: Loads environment variables from .env for Nodejs projects
@@ -289,6 +308,7 @@ tools:
   category: Build, Test, Deploy
   sub_category: Server Configuration and Automation
   image_url: https://img.stackshare.io/service/8067/default_90dcb1286af7685c68df319c764b80704df1155b.png
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/cli/package.json
   detection_source: packages/cli/package.json
   last_updated_by: Jan Oberhauser
   last_updated_on: 2021-03-26 08:06:26.000000000 Z
@@ -301,6 +321,7 @@ tools:
   category: Build, Test, Deploy
   sub_category: Code Review
   image_url: https://img.stackshare.io/service/3337/Q4L7Jncy.jpg
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/@n8n_io/eslint-config/package.json
   detection_source: packages/@n8n_io/eslint-config/package.json
   last_updated_by: कारतोफ्फेलस्क्रिप्ट™
   last_updated_on: 2022-09-12 09:41:50.000000000 Z
@@ -312,6 +333,7 @@ tools:
   category: Build, Test, Deploy
   sub_category: Version Control System
   image_url: https://img.stackshare.io/service/1046/git.png
+  detection_source_url: https://github.com/reconsumeralization/n8n
   detection_source: Repo Metadata
 - name: GitHub Actions
   description: Automate your workflow from idea to production
@@ -321,7 +343,8 @@ tools:
   category: Build, Test, Deploy
   sub_category: Continuous Integration
   image_url: https://img.stackshare.io/service/11563/actions.png
-  detection_source: ".github/workflows/test-workflows.yml"
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/.github/workflows/check-documentation-urls.yml
+  detection_source: ".github/workflows/check-documentation-urls.yml"
   last_updated_by: कारतोफ्फेलस्क्रिप्ट™
   last_updated_on: 2022-12-22 16:01:29.000000000 Z
 - name: Jest
@@ -334,7 +357,7 @@ tools:
   category: Build, Test, Deploy
   sub_category: Javascript Testing Framework
   image_url: https://img.stackshare.io/service/830/jest.png
-  detection_source_url: package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/package.json
   detection_source: package.json
   last_updated_by: Jan Oberhauser
   last_updated_on: 2019-06-23 10:35:23.000000000 Z
@@ -346,7 +369,8 @@ tools:
   category: Build, Test, Deploy
   sub_category: Package Managers
   image_url: https://img.stackshare.io/service/2637/6I3oEOP4_400x400.jpg
-  detection_source: packages/nodes-base/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/.github/scripts/package.json
+  detection_source: ".github/scripts/package.json"
   last_updated_by: कारतोफ्फेलस्क्रिप्ट™
   last_updated_on: 2023-02-21 13:04:35.000000000 Z
 - name: Prettier
@@ -359,8 +383,8 @@ tools:
   category: Build, Test, Deploy
   sub_category: Code Review
   image_url: https://img.stackshare.io/service/7035/default_66f265943abed56bcdbfca1c866a4261b1fbb063.jpg
-  detection_source_url: package.json
-  detection_source: packages/editor-ui/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/package.json
+  detection_source: package.json
   last_updated_by: कारतोफ्फेलस्क्रिप्ट™
   last_updated_on: 2023-01-27 11:44:31.000000000 Z
 - name: Prometheus
@@ -373,6 +397,7 @@ tools:
   category: Monitoring
   sub_category: Monitoring Tools
   image_url: https://img.stackshare.io/service/2501/default_3cf1b307194b26782be5cb209d30360580ae5b3c.png
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/cli/package.json
   detection_source: packages/cli/package.json
   last_updated_by: Jan Oberhauser
   last_updated_on: 2019-06-23 10:35:23.000000000 Z
@@ -384,6 +409,7 @@ tools:
   category: Build, Test, Deploy
   sub_category: Hosted Package Repository
   image_url: https://img.stackshare.io/service/12572/-RIWgodF_400x400.jpg
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/workflow/package.json
   detection_source: packages/workflow/package.json
   last_updated_by: Jan Oberhauser
   last_updated_on: 2019-06-23 10:35:23.000000000 Z
@@ -395,6 +421,7 @@ tools:
   category: Monitoring
   sub_category: Exception Monitoring
   image_url: https://img.stackshare.io/service/191/default_9262326592c97828a2a4299dec085a3674dd05f4.png
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/cli/package.json
   detection_source: packages/cli/package.json
   last_updated_by: कारतोफ्फेलस्क्रिप्ट™
   last_updated_on: 2023-01-02 11:14:39.000000000 Z
@@ -408,7 +435,7 @@ tools:
   category: Build, Test, Deploy
   sub_category: Javascript Testing Framework
   image_url: https://img.stackshare.io/no-img-open-source.png
-  detection_source_url: package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/package.json
   detection_source: package.json
   last_updated_by: कारतोफ्फेलस्क्रिप्ट™
   last_updated_on: 2023-02-07 14:49:35.000000000 Z
@@ -422,7 +449,7 @@ tools:
   category: Build, Test, Deploy
   sub_category: JS Build Tools / JS Task Runners
   image_url: https://img.stackshare.io/service/844/iruTC031.png
-  detection_source_url: packages/nodes-base/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/nodes-base/package.json
   detection_source: packages/nodes-base/package.json
   last_updated_by: कारतोफ्फेलस्क्रिप्ट™
   last_updated_on: 2023-03-08 13:33:13.000000000 Z
@@ -437,7 +464,7 @@ tools:
   category: Build, Test, Deploy
   sub_category: Headless Browsers
   image_url: https://img.stackshare.io/service/7054/preview.jpeg
-  detection_source_url: packages/design-system/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/design-system/package.json
   detection_source: packages/design-system/package.json
   last_updated_by: कारतोफ्फेलस्क्रिप्ट™
   last_updated_on: 2023-02-14 11:44:13.000000000 Z
@@ -451,7 +478,7 @@ tools:
   category: Monitoring
   sub_category: node.js Application Monitoring
   image_url: https://img.stackshare.io/service/5577/preview.png
-  detection_source_url: packages/cli/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/cli/package.json
   detection_source: packages/cli/package.json
   last_updated_by: कारतोफ्फेलस्क्रिप्ट™
   last_updated_on: 2023-03-30 10:23:39.000000000 Z
@@ -463,6 +490,7 @@ tools:
   category: Build, Test, Deploy
   sub_category: Front End Package Manager
   image_url: https://img.stackshare.io/service/1120/lejvzrnlpb308aftn31u.png
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/workflow/package.json
   detection_source: packages/workflow/package.json
   last_updated_by: Jan Oberhauser
   last_updated_on: 2019-06-23 10:35:23.000000000 Z
@@ -474,7 +502,8 @@ tools:
   category: Libraries
   sub_category: Javascript Utilities & Libraries
   image_url: https://img.stackshare.io/service/2438/lodash.png
-  detection_source: packages/workflow/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/cli/package.json
+  detection_source: packages/cli/package.json
   last_updated_by: Michael Auerswald
   last_updated_on: 2023-02-24 19:37:19.000000000 Z
 - name: Moment.js
@@ -488,7 +517,7 @@ tools:
   category: Libraries
   sub_category: Javascript Utilities & Libraries
   image_url: https://img.stackshare.io/service/3643/Xrtdc94q_400x400.png
-  detection_source_url: packages/nodes-base/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/nodes-base/package.json
   detection_source: packages/nodes-base/package.json
   last_updated_by: Jan Oberhauser
   last_updated_on: 2022-04-10 10:29:19.000000000 Z
@@ -500,6 +529,7 @@ tools:
   category: Communications
   sub_category: Transactional Email
   image_url: https://img.stackshare.io/service/2862/qr2-jCLr.jpg
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/nodes-base/package.json
   detection_source: packages/nodes-base/package.json
   last_updated_by: Michael Kret
   last_updated_on: 2022-09-08 12:44:34.000000000 Z
@@ -512,6 +542,7 @@ tools:
   category: Languages & Frameworks
   sub_category: Languages
   image_url: https://img.stackshare.io/service/4631/default_c2062d40130562bdc836c13dbca02d318205a962.png
+  detection_source_url: https://github.com/reconsumeralization/n8n
   detection_source: Repo Metadata
 - name: Showdown
   description: JavaScript port of Markdown
@@ -523,7 +554,7 @@ tools:
   category: Libraries
   sub_category: Javascript Utilities & Libraries
   image_url: https://img.stackshare.io/no-img-open-source.png
-  detection_source_url: packages/nodes-base/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/nodes-base/package.json
   detection_source: packages/nodes-base/package.json
   last_updated_by: Ricardo Espinoza
   last_updated_on: 2022-04-19 07:24:10.000000000 Z
@@ -537,8 +568,8 @@ tools:
   category: Libraries
   sub_category: Javascript Utilities & Libraries
   image_url: https://img.stackshare.io/no-img-open-source.png
-  detection_source_url: packages/@n8n/client-oauth2/package.json
-  detection_source: packages/editor-ui/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/@n8n/client-oauth2/package.json
+  detection_source: packages/@n8n/client-oauth2/package.json
   last_updated_by: कारतोफ्फेलस्क्रिप्ट™
   last_updated_on: 2023-05-17 14:40:53.000000000 Z
 - name: n8n
@@ -549,6 +580,7 @@ tools:
   category: Support, Sales, and Marketing
   sub_category: Web Service Automation
   image_url: https://img.stackshare.io/service/11396/qrGCgo1C_400x400.png
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/package.json
   detection_source: package.json
   last_updated_by: Jan Oberhauser
   last_updated_on: 2019-06-23 10:35:23.000000000 Z
@@ -562,8 +594,8 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16644/default_50c9ed1615a25628505ab53def64d82450ced26b.png
-  detection_source_url: packages/design-system/package.json
-  detection_source: packages/editor-ui/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/design-system/package.json
+  detection_source: packages/design-system/package.json
   last_updated_by: कारतोफ्फेलस्क्रिप्ट™
   last_updated_on: 2023-02-14 11:44:13.000000000 Z
 - name: "@fortawesome/free-regular-svg-icons"
@@ -576,7 +608,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/18157/default_63cbe387694d6d77dde61448de98c6bd2a9b18de.png
-  detection_source_url: packages/editor-ui/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/editor-ui/package.json
   detection_source: packages/editor-ui/package.json
   last_updated_by: OlegIvaniv
   last_updated_on: 2023-04-26 07:18:10.000000000 Z
@@ -590,8 +622,8 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16683/default_6dad4e42e12d47cc6edfbdea036dae12f91abebb.png
-  detection_source_url: packages/design-system/package.json
-  detection_source: packages/editor-ui/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/design-system/package.json
+  detection_source: packages/design-system/package.json
   last_updated_by: Alex Grozav
   last_updated_on: 2023-01-27 01:09:30.000000000 Z
 - name: "@fortawesome/vue-fontawesome"
@@ -604,8 +636,8 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/18329/default_fcb0000f89932f65c58527fdec74a1b27eb78a83.png
-  detection_source_url: packages/design-system/package.json
-  detection_source: packages/editor-ui/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/design-system/package.json
+  detection_source: packages/design-system/package.json
   last_updated_by: Csaba Tuncsik
   last_updated_on: 2023-05-04 15:43:58.000000000 Z
 - name: "@oclif/command"
@@ -618,8 +650,8 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16803/default_9a5182350af29cb82b3344853e865051f508ac6c.png
-  detection_source_url: packages/cli/package.json
-  detection_source: packages/node-dev/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/cli/package.json
+  detection_source: packages/cli/package.json
   last_updated_by: कारतोफ्फेलस्क्रिप्ट™
   last_updated_on: 2022-11-09 16:32:05.000000000 Z
 - name: "@oclif/dev-cli"
@@ -632,8 +664,8 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16776/default_c6eddffbed005d007ab4638fbcac90e4b79576b2.png
-  detection_source_url: packages/cli/package.json
-  detection_source: packages/node-dev/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/cli/package.json
+  detection_source: packages/cli/package.json
   last_updated_by: Michael Auerswald
   last_updated_on: 2023-01-04 08:47:48.000000000 Z
 - name: "@sentry/node"
@@ -646,7 +678,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/18428/default_9499465ee49aaffadf126149b962e9838bc4a993.png
-  detection_source_url: packages/cli/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/cli/package.json
   detection_source: packages/cli/package.json
   last_updated_by: कारतोफ्फेलस्क्रिप्ट™
   last_updated_on: 2023-03-30 10:23:39.000000000 Z
@@ -660,7 +692,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16126/default_73326c44fbfa7369fd17573edb113e5d849468bc.png
-  detection_source_url: packages/design-system/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/design-system/package.json
   detection_source: packages/design-system/package.json
   last_updated_by: कारतोफ्फेलस्क्रिप्ट™
   last_updated_on: 2023-05-12 08:21:40.000000000 Z
@@ -674,7 +706,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/17835/default_abcc2eea82e62d338a749f334647866df76198b8.png
-  detection_source_url: packages/design-system/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/design-system/package.json
   detection_source: packages/design-system/package.json
   last_updated_by: कारतोफ्फेलस्क्रिप्ट™
   last_updated_on: 2023-05-12 08:21:40.000000000 Z
@@ -688,7 +720,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16204/default_41f04716a804e853d5c38a5b81ee0ea8a842ad82.png
-  detection_source_url: packages/design-system/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/design-system/package.json
   detection_source: packages/design-system/package.json
   last_updated_by: कारतोफ्फेलस्क्रिप्ट™
   last_updated_on: 2023-05-12 08:21:40.000000000 Z
@@ -702,7 +734,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/17492/default_2ae5beb193365eca46e337162957275ebc9c6b3b.png
-  detection_source_url: packages/design-system/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/design-system/package.json
   detection_source: packages/design-system/package.json
   last_updated_by: कारतोफ्फेलस्क्रिप्ट™
   last_updated_on: 2023-05-12 08:21:40.000000000 Z
@@ -716,8 +748,8 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/17424/default_1cdcda15ebb7caed879f8340bc212b44c4ec9dac.png
-  detection_source_url: packages/design-system/package.json
-  detection_source: packages/editor-ui/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/design-system/package.json
+  detection_source: packages/design-system/package.json
   last_updated_by: कारतोफ्फेलस्क्रिप्ट™
   last_updated_on: 2023-03-14 12:13:21.000000000 Z
 - name: "@types/amqplib"
@@ -730,7 +762,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/18378/default_b2c6032681a6747cfd45e1399143ed0d1db9b898.png
-  detection_source_url: packages/nodes-base/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/nodes-base/package.json
   detection_source: packages/nodes-base/package.json
   last_updated_by: कारतोफ्फेलस्क्रिप्ट™
   last_updated_on: 2023-04-11 13:05:56.000000000 Z
@@ -744,7 +776,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/17279/default_b2015e9577d171c4c3f12c3c8d253c01fe63ba8d.png
-  detection_source_url: packages/nodes-base/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/nodes-base/package.json
   detection_source: packages/nodes-base/package.json
   last_updated_by: कारतोफ्फेलस्क्रिप्ट™
   last_updated_on: 2023-04-11 13:05:56.000000000 Z
@@ -758,7 +790,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/18206/default_dfaa3c3f19039c5391ee1a13529324eaa2685e7f.png
-  detection_source_url: packages/cli/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/cli/package.json
   detection_source: packages/cli/package.json
   last_updated_by: github-actions[bot]
   last_updated_on: 2023-05-17 11:35:26.000000000 Z
@@ -772,7 +804,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/18195/default_5b09e8832af55b8bf88554d45d4eb65653e6ac76.png
-  detection_source_url: packages/cli/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/cli/package.json
   detection_source: packages/cli/package.json
   last_updated_by: Michael Auerswald
   last_updated_on: 2023-04-19 15:46:10.000000000 Z
@@ -786,8 +818,8 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/17916/default_ddcb3fb8ca8ccaba871e88d87465cd31ce73df71.png
-  detection_source_url: packages/core/package.json
-  detection_source: packages/workflow/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/core/package.json
+  detection_source: packages/core/package.json
   last_updated_by: agobrech
   last_updated_on: 2023-03-20 16:34:14.000000000 Z
 - name: "@types/eslint"
@@ -800,7 +832,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/18156/default_9663441986aa2be78296ccf617e43ef9e612b34e.png
-  detection_source_url: packages/@n8n_io/eslint-config/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/@n8n_io/eslint-config/package.json
   detection_source: packages/@n8n_io/eslint-config/package.json
   last_updated_by: Iván Ovejero
   last_updated_on: 2023-04-25 09:47:03.000000000 Z
@@ -814,8 +846,8 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16100/default_d947c1690e032a288145c7e2491999eab3ea8ede.png
-  detection_source_url: packages/cli/package.json
-  detection_source: packages/workflow/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/cli/package.json
+  detection_source: packages/cli/package.json
   last_updated_by: Michael Auerswald
   last_updated_on: 2023-04-19 15:46:10.000000000 Z
 - name: "@types/inquirer"
@@ -828,7 +860,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16530/default_d522554c6a41cb28d922d6d3ad32ad4afa0e3bb5.png
-  detection_source_url: packages/node-dev/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/node-dev/package.json
   detection_source: packages/node-dev/package.json
   last_updated_by: कारतोफ्फेलस्क्रिप्ट™
   last_updated_on: 2022-08-31 13:25:52.000000000 Z
@@ -842,7 +874,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/15840/default_004658cda9b38934f2871435e9dc15608c86e8be.png
-  detection_source_url: package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/package.json
   detection_source: package.json
   last_updated_by: कारतोफ्फेलस्क्रिप्ट™
   last_updated_on: 2023-05-12 08:21:40.000000000 Z
@@ -856,8 +888,8 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16959/default_caea01ce44a5fd1bb200d8fc0f8f2a1695b4e569.png
-  detection_source_url: packages/cli/package.json
-  detection_source: packages/nodes-base/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/cli/package.json
+  detection_source: packages/cli/package.json
   last_updated_by: कारतोफ्फेलस्क्रिप्ट™
   last_updated_on: 2023-04-21 07:48:59.000000000 Z
 - name: "@types/lodash"
@@ -870,7 +902,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/15945/default_54b691c123fc8979741e800e4dcd3936c0f3b246.png
-  detection_source_url: packages/nodes-base/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/nodes-base/package.json
   detection_source: packages/nodes-base/package.json
   last_updated_by: कारतोफ्फेलस्क्रिप्ट™
   last_updated_on: 2023-04-11 13:05:56.000000000 Z
@@ -884,7 +916,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/17516/default_911633508f32a5d5016c37ab38144cd661ceb682.png
-  detection_source_url: packages/editor-ui/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/editor-ui/package.json
   detection_source: packages/editor-ui/package.json
   last_updated_by: Ricardo Espinoza
   last_updated_on: 2023-04-11 16:43:47.000000000 Z
@@ -898,8 +930,8 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/18297/default_678ce8b19e8cee1dde03f165f62525a2c9d0c034.png
-  detection_source_url: packages/cli/package.json
-  detection_source: packages/workflow/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/cli/package.json
+  detection_source: packages/cli/package.json
   last_updated_by: Michael Auerswald
   last_updated_on: 2023-04-19 15:46:10.000000000 Z
 - name: "@types/redis"
@@ -912,7 +944,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/17536/default_1d2902e8f9c84259702671591379572493b9009b.png
-  detection_source_url: packages/nodes-base/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/nodes-base/package.json
   detection_source: packages/nodes-base/package.json
   last_updated_by: कारतोफ्फेलस्क्रिप्ट™
   last_updated_on: 2023-04-11 13:05:56.000000000 Z
@@ -926,8 +958,8 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/17253/default_9aa9c9d4e491c9d2d70df74bfa33cf525babb7f5.png
-  detection_source_url: packages/core/package.json
-  detection_source: packages/nodes-base/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/core/package.json
+  detection_source: packages/core/package.json
   last_updated_by: agobrech
   last_updated_on: 2023-03-20 16:34:14.000000000 Z
 - name: "@types/shelljs"
@@ -940,7 +972,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16927/default_243de814aae175a383b2d9fba99487a89879acdb.png
-  detection_source_url: packages/cli/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/cli/package.json
   detection_source: packages/cli/package.json
   last_updated_by: Michael Auerswald
   last_updated_on: 2023-04-19 15:46:10.000000000 Z
@@ -954,7 +986,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/17956/default_cc042fd7c0a9cf091d301af307c99c8b7b08b8bc.png
-  detection_source_url: packages/cli/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/cli/package.json
   detection_source: packages/cli/package.json
   last_updated_by: Michael Auerswald
   last_updated_on: 2023-04-19 15:46:10.000000000 Z
@@ -968,7 +1000,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16805/default_31a4e0e11d348225088320f3a5c5ea6fa49c27ad.png
-  detection_source_url: package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/package.json
   detection_source: package.json
   last_updated_by: कारतोफ्फेलस्क्रिप्ट™
   last_updated_on: 2023-05-12 08:21:40.000000000 Z
@@ -982,8 +1014,8 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/17575/default_661ab15cb9ea1663765f3e16ee70a1d2d50118d1.png
-  detection_source_url: packages/node-dev/package.json
-  detection_source: packages/nodes-base/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/node-dev/package.json
+  detection_source: packages/node-dev/package.json
   last_updated_by: कारतोफ्फेलस्क्रिप्ट™
   last_updated_on: 2022-08-31 13:25:52.000000000 Z
 - name: "@types/uuid"
@@ -996,8 +1028,8 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16257/default_ab17554b7e80af3d234b14168ed61e75d43f8eee.png
-  detection_source_url: packages/cli/package.json
-  detection_source: packages/nodes-base/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/cli/package.json
+  detection_source: packages/cli/package.json
   last_updated_by: Michael Auerswald
   last_updated_on: 2023-04-19 15:46:10.000000000 Z
 - name: "@types/validator"
@@ -1010,7 +1042,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/17698/default_52c11a434d2ce37281914a7f804e07cf95ab96f7.png
-  detection_source_url: packages/cli/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/cli/package.json
   detection_source: packages/cli/package.json
   last_updated_by: Michael Auerswald
   last_updated_on: 2023-04-19 15:46:10.000000000 Z
@@ -1024,7 +1056,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16711/default_9cd376f2200c8f6c32ebd690bb6c290852dee64d.png
-  detection_source_url: packages/cli/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/cli/package.json
   detection_source: packages/cli/package.json
   last_updated_by: Michael Auerswald
   last_updated_on: 2023-04-19 15:46:10.000000000 Z
@@ -1038,8 +1070,8 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/17763/default_b527ab15473225ca7c2e9b197c9726e92ac97de8.png
-  detection_source_url: packages/nodes-base/package.json
-  detection_source: packages/workflow/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/nodes-base/package.json
+  detection_source: packages/nodes-base/package.json
   last_updated_by: कारतोफ्फेलस्क्रिप्ट™
   last_updated_on: 2023-04-11 13:05:56.000000000 Z
 - name: "@typescript-eslint/eslint-plugin"
@@ -1052,7 +1084,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/15982/default_8b5680d4e916298d08363c291a0d6e34c07ceb15.png
-  detection_source_url: packages/@n8n_io/eslint-config/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/@n8n_io/eslint-config/package.json
   detection_source: packages/@n8n_io/eslint-config/package.json
   last_updated_by: Iván Ovejero
   last_updated_on: 2023-04-25 09:47:03.000000000 Z
@@ -1066,7 +1098,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/15980/default_732016a20524708efe7a4c77497fe9bfeea19ba6.png
-  detection_source_url: packages/@n8n_io/eslint-config/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/@n8n_io/eslint-config/package.json
   detection_source: packages/@n8n_io/eslint-config/package.json
   last_updated_by: Iván Ovejero
   last_updated_on: 2023-04-25 09:47:03.000000000 Z
@@ -1080,7 +1112,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/18076/image.png
-  detection_source_url: packages/@n8n_io/eslint-config/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/@n8n_io/eslint-config/package.json
   detection_source: packages/@n8n_io/eslint-config/package.json
   last_updated_by: Iván Ovejero
   last_updated_on: 2023-04-25 09:47:03.000000000 Z
@@ -1094,7 +1126,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16639/default_5a21421012fa20e57fe0aeab31228f42e7118abc.png
-  detection_source_url: packages/nodes-base/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/nodes-base/package.json
   detection_source: packages/nodes-base/package.json
   last_updated_by: कारतोफ्फेलस्क्रिप्ट™
   last_updated_on: 2022-12-19 16:01:27.000000000 Z
@@ -1108,7 +1140,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/18421/default_fec2a16e3d4fd2d8184d454d72a65ab5133ec4ae.png
-  detection_source_url: packages/nodes-base/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/nodes-base/package.json
   detection_source: packages/nodes-base/package.json
   last_updated_by: shraddha shaligram
   last_updated_on: 2020-06-11 22:57:32.000000000 Z
@@ -1122,8 +1154,8 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/17338/default_b39374c3a74b433364bfdbff07be26214bf186fd.png
-  detection_source_url: packages/cli/package.json
-  detection_source: packages/nodes-base/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/cli/package.json
+  detection_source: packages/cli/package.json
   last_updated_by: कारतोफ्फेलस्क्रिप्ट™
   last_updated_on: 2023-05-17 14:40:53.000000000 Z
 - name: bcryptjs
@@ -1136,7 +1168,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16857/default_627f05e6a07ce29fc9f119417270f38e8aa5c5e2.png
-  detection_source_url: packages/cli/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/cli/package.json
   detection_source: packages/cli/package.json
   last_updated_by: Iván Ovejero
   last_updated_on: 2022-07-24 15:13:01.000000000 Z
@@ -1150,7 +1182,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/15906/default_7c39a83d4acd952df89b1ebfdb94c8646324fbf1.png
-  detection_source_url: packages/cli/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/cli/package.json
   detection_source: packages/cli/package.json
   last_updated_by: कारतोफ्फेलस्क्रिप्ट™
   last_updated_on: 2023-01-26 11:10:09.000000000 Z
@@ -1164,8 +1196,8 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16612/default_9cd376f2200c8f6c32ebd690bb6c290852dee64d.png
-  detection_source_url: packages/cli/package.json
-  detection_source: packages/nodes-base/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/cli/package.json
+  detection_source: packages/cli/package.json
   last_updated_by: कारतोफ्फेलस्क्रिप्ट™
   last_updated_on: 2022-12-07 14:13:36.000000000 Z
 - name: cheerio
@@ -1178,7 +1210,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/15949/default_54b691c123fc8979741e800e4dcd3936c0f3b246.png
-  detection_source_url: packages/nodes-base/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/nodes-base/package.json
   detection_source: packages/nodes-base/package.json
   last_updated_by: Jan Oberhauser
   last_updated_on: 2021-05-07 23:27:33.000000000 Z
@@ -1192,8 +1224,8 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16043/default_5fd43aeff4d6a935abc13737de01a0355210499d.png
-  detection_source_url: packages/cli/package.json
-  detection_source: packages/nodes-base/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/cli/package.json
+  detection_source: packages/cli/package.json
   last_updated_by: Valya
   last_updated_on: 2023-02-08 18:26:07.000000000 Z
 - name: class-transformer
@@ -1207,7 +1239,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/17651/default_eb9caf7d7fb4d231f7e3b04a8c1fbef6fcd9fd73.png
-  detection_source_url: packages/cli/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/cli/package.json
   detection_source: packages/cli/package.json
   last_updated_by: Michael Auerswald
   last_updated_on: 2023-03-06 08:44:25.000000000 Z
@@ -1222,7 +1254,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/17583/default_661ab15cb9ea1663765f3e16ee70a1d2d50118d1.png
-  detection_source_url: packages/cli/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/cli/package.json
   detection_source: packages/cli/package.json
   last_updated_by: Michael Auerswald
   last_updated_on: 2023-03-06 08:44:25.000000000 Z
@@ -1236,7 +1268,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16187/default_9a7a7dcd69c12c746dc4000dc4d1b75758079c9f.png
-  detection_source_url: packages/cli/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/cli/package.json
   detection_source: packages/cli/package.json
   last_updated_by: github-actions[bot]
   last_updated_on: 2023-05-17 11:35:26.000000000 Z
@@ -1251,7 +1283,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16269/default_9924e5da1d50ea01e52b48e4fae4b1347af5e4ff.png
-  detection_source_url: packages/core/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/core/package.json
   detection_source: packages/core/package.json
   last_updated_by: कारतोफ्फेलस्क्रिप्ट™
   last_updated_on: 2023-01-02 16:07:10.000000000 Z
@@ -1265,7 +1297,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16041/default_5fd43aeff4d6a935abc13737de01a0355210499d.png
-  detection_source_url: packages/cli/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/cli/package.json
   detection_source: packages/cli/package.json
   last_updated_by: Michael Auerswald
   last_updated_on: 2023-02-17 09:54:07.000000000 Z
@@ -1280,7 +1312,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16214/default_180418c6fa6cdb8f7a3500f84a8fedb884fcb3fa.png
-  detection_source_url: packages/cli/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/cli/package.json
   detection_source: packages/cli/package.json
   last_updated_by: कारतोफ्फेलस्क्रिप्ट™
   last_updated_on: 2023-02-21 18:21:56.000000000 Z
@@ -1294,7 +1326,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16260/default_9924e5da1d50ea01e52b48e4fae4b1347af5e4ff.png
-  detection_source_url: ".github/scripts/package.json"
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/.github/scripts/package.json
   detection_source: ".github/scripts/package.json"
   last_updated_by: कारतोफ्फेलस्क्रिप्ट™
   last_updated_on: 2023-02-21 13:04:35.000000000 Z
@@ -1308,7 +1340,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/18550/default_75ad0a13c8e7d0c14ad6ccc34241bb40a4c387ca.png
-  detection_source_url: packages/cli/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/cli/package.json
   detection_source: packages/cli/package.json
   last_updated_by: कारतोफ्फेलस्क्रिप्ट™
   last_updated_on: 2023-03-21 08:47:50.000000000 Z
@@ -1322,7 +1354,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16136/default_def3edb85d7fbd20200a5cd7d0a1679e31bc8b3d.png
-  detection_source_url: packages/cli/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/cli/package.json
   detection_source: packages/cli/package.json
   last_updated_by: कारतोफ्फेलस्क्रिप्ट™
   last_updated_on: 2023-01-26 11:10:09.000000000 Z
@@ -1336,7 +1368,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/15869/default_7c39a83d4acd952df89b1ebfdb94c8646324fbf1.png
-  detection_source_url: packages/design-system/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/design-system/package.json
   detection_source: packages/design-system/package.json
   last_updated_by: कारतोफ्फेलस्क्रिप्ट™
   last_updated_on: 2023-02-14 11:44:13.000000000 Z
@@ -1350,7 +1382,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/15828/default_14fd11531839d935f920b6d55bd6f3528c890ad7.png
-  detection_source_url: package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/package.json
   detection_source: package.json
   last_updated_by: कारतोफ्फेलस्क्रिप्ट™
   last_updated_on: 2023-03-17 16:24:05.000000000 Z
@@ -1364,8 +1396,8 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16283/default_9924e5da1d50ea01e52b48e4fae4b1347af5e4ff.png
-  detection_source_url: packages/cli/package.json
-  detection_source: packages/workflow/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/cli/package.json
+  detection_source: packages/cli/package.json
   last_updated_by: Iván Ovejero
   last_updated_on: 2022-07-24 15:13:01.000000000 Z
   vulnerabilities:
@@ -1386,7 +1418,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16480/default_55f3303d620c93eecbee69c43373d484f2be492f.png
-  detection_source_url: packages/editor-ui/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/editor-ui/package.json
   detection_source: packages/editor-ui/package.json
   last_updated_by: Iván Ovejero
   last_updated_on: 2022-12-14 09:04:10.000000000 Z
@@ -1400,7 +1432,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16405/default_5ffcf8d02a3454bd25d27d236025c6d078c3b672.png
-  detection_source_url: packages/workflow/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/workflow/package.json
   detection_source: packages/workflow/package.json
   last_updated_by: Milorad FIlipović
   last_updated_on: 2023-02-15 09:50:16.000000000 Z
@@ -1414,7 +1446,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16240/default_5dfc1810d0882ab844578a326bb8bf19e45e7227.png
-  detection_source_url: packages/design-system/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/design-system/package.json
   detection_source: packages/design-system/package.json
   last_updated_by: कारतोफ्फेलस्क्रिप्ट™
   last_updated_on: 2022-11-25 09:51:51.000000000 Z
@@ -1428,7 +1460,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/15879/default_0b10af8ca19c215f781dc07442e75bdc831089d0.png
-  detection_source_url: packages/@n8n_io/eslint-config/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/@n8n_io/eslint-config/package.json
   detection_source: packages/@n8n_io/eslint-config/package.json
   last_updated_by: Iván Ovejero
   last_updated_on: 2023-04-25 09:47:03.000000000 Z
@@ -1442,7 +1474,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/18380/default_d0ba753d47207ad8f04b02befcab81c50f38718f.png
-  detection_source_url: packages/@n8n_io/eslint-config/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/@n8n_io/eslint-config/package.json
   detection_source: packages/@n8n_io/eslint-config/package.json
   last_updated_by: Iván Ovejero
   last_updated_on: 2023-04-25 09:47:03.000000000 Z
@@ -1456,7 +1488,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/15806/default_98aa227f51aa9d787815ec3fd98d0ab2bfebbb91.png
-  detection_source_url: packages/@n8n_io/eslint-config/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/@n8n_io/eslint-config/package.json
   detection_source: packages/@n8n_io/eslint-config/package.json
   last_updated_by: Iván Ovejero
   last_updated_on: 2023-04-25 09:47:03.000000000 Z
@@ -1470,7 +1502,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/15896/default_6e6e1d6bb189c8bb26c6410618bd597979578f39.png
-  detection_source_url: packages/@n8n_io/eslint-config/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/@n8n_io/eslint-config/package.json
   detection_source: packages/@n8n_io/eslint-config/package.json
   last_updated_by: Iván Ovejero
   last_updated_on: 2023-04-25 09:47:03.000000000 Z
@@ -1484,7 +1516,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16871/default_2e3ed47575edcaf407097e6171e3d4cb8681a6b3.png
-  detection_source_url: packages/@n8n_io/eslint-config/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/@n8n_io/eslint-config/package.json
   detection_source: packages/@n8n_io/eslint-config/package.json
   last_updated_by: Iván Ovejero
   last_updated_on: 2023-04-25 09:47:03.000000000 Z
@@ -1498,7 +1530,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/15950/default_f49d4c116f8ea0155f4d92673b084378bba02760.png
-  detection_source_url: packages/@n8n_io/eslint-config/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/@n8n_io/eslint-config/package.json
   detection_source: packages/@n8n_io/eslint-config/package.json
   last_updated_by: Iván Ovejero
   last_updated_on: 2023-04-25 09:47:03.000000000 Z
@@ -1512,7 +1544,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/15818/default_db4a7791d2f1174547374b9b587bc10fec088a5a.png
-  detection_source_url: packages/cli/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/cli/package.json
   detection_source: packages/cli/package.json
   last_updated_by: Michael Auerswald
   last_updated_on: 2023-04-19 15:46:10.000000000 Z
@@ -1526,7 +1558,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/17718/default_7ff152b9bcf219fad0d56c78a016d5bad6a2a526.png
-  detection_source_url: packages/cli/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/cli/package.json
   detection_source: packages/cli/package.json
   last_updated_by: Michael Auerswald
   last_updated_on: 2023-04-19 15:46:10.000000000 Z
@@ -1540,8 +1572,8 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/17033/default_50357c490b205882dcfb608fd3c74b446186c21e.png
-  detection_source_url: packages/cli/package.json
-  detection_source: packages/nodes-base/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/cli/package.json
+  detection_source: packages/cli/package.json
   last_updated_by: Omar Ajoue
   last_updated_on: 2021-08-20 21:48:02.000000000 Z
 - name: file-saver
@@ -1554,7 +1586,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16795/default_6e51a44775c61dcb2888547ad406a2f0cf2c344e.png
-  detection_source_url: packages/editor-ui/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/editor-ui/package.json
   detection_source: packages/editor-ui/package.json
   last_updated_by: Alex Grozav
   last_updated_on: 2022-09-23 14:14:28.000000000 Z
@@ -1568,7 +1600,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/17196/default_21a9522c66101ebad0e63609af74acb35fe29a0a.png
-  detection_source_url: packages/core/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/core/package.json
   detection_source: packages/core/package.json
   last_updated_by: agobrech
   last_updated_on: 2023-03-20 16:34:14.000000000 Z
@@ -1582,7 +1614,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16415/default_aa91da3cee4d961f0eea8ca5de77f399ec7ec794.png
-  detection_source_url: packages/core/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/core/package.json
   detection_source: packages/core/package.json
   last_updated_by: Iván Ovejero
   last_updated_on: 2022-11-22 13:11:29.000000000 Z
@@ -1596,7 +1628,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16761/default_c11d90814ded8fcd305b22fdc42b42a3111f1f6d.png
-  detection_source_url: packages/nodes-base/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/nodes-base/package.json
   detection_source: packages/nodes-base/package.json
   last_updated_by: Michael Kret
   last_updated_on: 2023-05-04 10:17:22.000000000 Z
@@ -1610,7 +1642,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16804/default_55e3ea76a7929df1b71c5ea0c9b4130cc87323a4.png
-  detection_source_url: packages/nodes-base/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/nodes-base/package.json
   detection_source: packages/nodes-base/package.json
   last_updated_by: Jan Oberhauser
   last_updated_on: 2019-06-23 10:35:23.000000000 Z
@@ -1625,7 +1657,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16013/default_f8be85789693a9901dbcfa43c135c60525ae49a1.png
-  detection_source_url: packages/cli/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/cli/package.json
   detection_source: packages/cli/package.json
   last_updated_by: Michael Auerswald
   last_updated_on: 2023-04-19 15:46:10.000000000 Z
@@ -1639,7 +1671,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16350/default_4cc3f31b8c64a6268fc123f0965a09d1b11180af.png
-  detection_source_url: packages/nodes-base/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/nodes-base/package.json
   detection_source: packages/nodes-base/package.json
   last_updated_by: कारतोफ्फेलस्क्रिप्ट™
   last_updated_on: 2023-03-08 13:33:13.000000000 Z
@@ -1653,8 +1685,8 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/15911/default_4dc9671df0093fd7061f6455afdf054e6cc9dacb.png
-  detection_source_url: packages/cli/package.json
-  detection_source: packages/node-dev/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/cli/package.json
+  detection_source: packages/cli/package.json
   last_updated_by: Jan Oberhauser
   last_updated_on: 2021-03-26 08:06:26.000000000 Z
 - name: ioredis
@@ -1667,7 +1699,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16522/default_4e3259350c525d1d859fa80a938000081d7c9db8.png
-  detection_source_url: packages/cli/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/cli/package.json
   detection_source: packages/cli/package.json
   last_updated_by: कारतोफ्फेलस्क्रिप्ट™
   last_updated_on: 2023-01-02 11:14:39.000000000 Z
@@ -1681,7 +1713,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/18413/default_867ef7396016341fd213fa568d6de11cc98fefff.png
-  detection_source_url: package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/package.json
   detection_source: package.json
   last_updated_by: Marcus
   last_updated_on: 2023-05-05 15:50:10.000000000 Z
@@ -1695,7 +1727,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16984/default_caea01ce44a5fd1bb200d8fc0f8f2a1695b4e569.png
-  detection_source_url: packages/workflow/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/workflow/package.json
   detection_source: packages/workflow/package.json
   last_updated_by: Valya
   last_updated_on: 2023-01-10 13:06:12.000000000 Z
@@ -1709,7 +1741,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/17674/default_894a45ad01fa93ac472db719cb1ef1b89f2924f0.png
-  detection_source_url: packages/editor-ui/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/editor-ui/package.json
   detection_source: packages/editor-ui/package.json
   last_updated_by: कारतोफ्फेलस्क्रिप्ट™
   last_updated_on: 2023-04-25 14:57:21.000000000 Z
@@ -1723,7 +1755,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16875/default_ebf16e0c8af5e95030933d9e01479224b6665289.png
-  detection_source_url: packages/cli/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/cli/package.json
   detection_source: packages/cli/package.json
   last_updated_by: कारतोफ्फेलस्क्रिप्ट™
   last_updated_on: 2023-04-21 07:48:59.000000000 Z
@@ -1737,8 +1769,8 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16155/default_77b54a203c743d16eddb6b6390cba17218454fa0.png
-  detection_source_url: packages/cli/package.json
-  detection_source: packages/nodes-base/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/cli/package.json
+  detection_source: packages/cli/package.json
   last_updated_by: कारतोफ्फेलस्क्रिप्ट™
   last_updated_on: 2023-04-21 07:48:59.000000000 Z
 - name: lodash-es
@@ -1751,7 +1783,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16587/default_ebd83b4f0415be108d977ea72558b13fd7c5283d.png
-  detection_source_url: packages/editor-ui/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/editor-ui/package.json
   detection_source: packages/editor-ui/package.json
   last_updated_by: OlegIvaniv
   last_updated_on: 2022-12-09 09:56:36.000000000 Z
@@ -1764,6 +1796,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16642/default_783b9b6c17b863f264c1418b0eb831316f741afd.png
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/nodes-base/package.json
   detection_source: packages/nodes-base/package.json
   last_updated_by: Alex Grozav
   last_updated_on: 2023-02-23 15:16:05.000000000 Z
@@ -1776,6 +1809,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/17978/default_72dbba22ca96f25f78f55f8ea5393222efca5494.png
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/nodes-base/package.json
   detection_source: packages/nodes-base/package.json
   last_updated_by: Alex Grozav
   last_updated_on: 2023-02-23 15:16:05.000000000 Z
@@ -1789,7 +1823,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16481/default_73c88a18b684e01cbdbf945631a40a44aff5a777.png
-  detection_source_url: packages/cli/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/cli/package.json
   detection_source: packages/cli/package.json
   last_updated_by: Michael Auerswald
   last_updated_on: 2023-02-24 19:37:19.000000000 Z
@@ -1802,6 +1836,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/18369/default_0af6490274b5a036f3c8f06302acc539142987d3.png
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/nodes-base/package.json
   detection_source: packages/nodes-base/package.json
   last_updated_by: Alex Grozav
   last_updated_on: 2023-02-23 15:16:05.000000000 Z
@@ -1814,6 +1849,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/17602/default_c568d958091a8b1b28f9f12f4501e181afd1b19f.png
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/nodes-base/package.json
   detection_source: packages/nodes-base/package.json
   last_updated_by: Alex Grozav
   last_updated_on: 2023-02-23 15:16:05.000000000 Z
@@ -1827,8 +1863,8 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16377/default_b5c8f3c8e46d368f74a982d06d7f13291fe651ea.png
-  detection_source_url: packages/cli/package.json
-  detection_source: packages/workflow/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/cli/package.json
+  detection_source: packages/cli/package.json
   last_updated_by: Michael Auerswald
   last_updated_on: 2023-02-24 19:37:19.000000000 Z
 - name: lodash.isarray
@@ -1840,6 +1876,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/17533/default_1922051267fa78212ab6eb1238cdf6aab8771493.png
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/nodes-base/package.json
   detection_source: packages/nodes-base/package.json
   last_updated_by: Alex Grozav
   last_updated_on: 2023-02-23 15:16:05.000000000 Z
@@ -1852,6 +1889,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/17346/default_2f1b682e838d69744876821bf705f0b2974318b1.png
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/nodes-base/package.json
   detection_source: packages/nodes-base/package.json
   last_updated_by: Alex Grozav
   last_updated_on: 2023-02-23 15:16:05.000000000 Z
@@ -1865,8 +1903,8 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16523/default_28df1e698b81279fa78b702212cd6185de706683.png
-  detection_source_url: packages/workflow/package.json
-  detection_source: packages/workflow/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/workflow/package.json
+  detection_source: packages/nodes-base/package.json
   last_updated_by: Alex Grozav
   last_updated_on: 2023-02-23 15:16:05.000000000 Z
 - name: lodash.isobject
@@ -1878,6 +1916,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/17499/default_1d2902e8f9c84259702671591379572493b9009b.png
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/nodes-base/package.json
   detection_source: packages/nodes-base/package.json
   last_updated_by: Alex Grozav
   last_updated_on: 2023-02-23 15:16:05.000000000 Z
@@ -1890,6 +1929,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/17270/default_9b05b1c3b13fc328bf76b8d3fea01ff4688c0c1d.png
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/nodes-base/package.json
   detection_source: packages/nodes-base/package.json
   last_updated_by: Alex Grozav
   last_updated_on: 2023-02-23 15:16:05.000000000 Z
@@ -1902,6 +1942,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/17357/default_2613a99266d0023b6108b16e4d6613c439a64039.png
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/nodes-base/package.json
   detection_source: packages/nodes-base/package.json
   last_updated_by: Alex Grozav
   last_updated_on: 2023-02-23 15:16:05.000000000 Z
@@ -1915,8 +1956,8 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16314/default_c47f6a56d74fae4d4404d77067b2fa35da6f1924.png
-  detection_source_url: packages/cli/package.json
-  detection_source: packages/workflow/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/cli/package.json
+  detection_source: packages/cli/package.json
   last_updated_by: Michael Auerswald
   last_updated_on: 2023-02-24 19:37:19.000000000 Z
 - name: lodash.mergewith
@@ -1928,6 +1969,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/18656/default_f228716e0e2054736b7cef03e48c321d920064dc.png
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/nodes-base/package.json
   detection_source: packages/nodes-base/package.json
   last_updated_by: Alex Grozav
   last_updated_on: 2023-02-23 15:16:05.000000000 Z
@@ -1941,8 +1983,8 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16887/default_e65289f03a07faa8d49ce16c483f18c4f8a98db9.png
-  detection_source_url: packages/cli/package.json
-  detection_source: packages/nodes-base/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/cli/package.json
+  detection_source: packages/cli/package.json
   last_updated_by: Michael Auerswald
   last_updated_on: 2023-02-24 19:37:19.000000000 Z
 - name: lodash.pick
@@ -1955,8 +1997,8 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16970/default_277303773c2bdb575ee8f4bfe869f0a33d6755b2.png
-  detection_source_url: packages/cli/package.json
-  detection_source: packages/nodes-base/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/cli/package.json
+  detection_source: packages/cli/package.json
   last_updated_by: Michael Auerswald
   last_updated_on: 2023-02-24 19:37:19.000000000 Z
 - name: lodash.reduce
@@ -1968,6 +2010,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/18588/default_3e32df88460fecb641a66eef3844367bcb37f592.png
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/nodes-base/package.json
   detection_source: packages/nodes-base/package.json
   last_updated_by: Alex Grozav
   last_updated_on: 2023-02-23 15:16:05.000000000 Z
@@ -1981,8 +2024,8 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16998/default_3823aba25646a3f105cc15ee9df24fdf78972314.png
-  detection_source_url: packages/cli/package.json
-  detection_source: packages/workflow/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/cli/package.json
+  detection_source: packages/cli/package.json
   last_updated_by: Michael Auerswald
   last_updated_on: 2023-02-24 19:37:19.000000000 Z
 - name: lodash.sortby
@@ -1994,6 +2037,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/17688/default_9693d58c90f5c726ee648423687212d2a94266da.png
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/nodes-base/package.json
   detection_source: packages/nodes-base/package.json
   last_updated_by: Alex Grozav
   last_updated_on: 2023-02-23 15:16:05.000000000 Z
@@ -2007,7 +2051,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/17115/default_1dbf402c11ef653fcaedc84e608a244e30ebfb87.png
-  detection_source_url: packages/cli/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/cli/package.json
   detection_source: packages/cli/package.json
   last_updated_by: Michael Auerswald
   last_updated_on: 2023-02-24 19:37:19.000000000 Z
@@ -2021,8 +2065,8 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/17375/default_c1932d441699b98abea6098c6f8f65e2acb4f5ed.png
-  detection_source_url: packages/cli/package.json
-  detection_source: packages/workflow/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/cli/package.json
+  detection_source: packages/cli/package.json
   last_updated_by: कारतोफ्फेलस्क्रिप्ट™
   last_updated_on: 2023-03-21 08:50:29.000000000 Z
 - name: markdown-it
@@ -2035,7 +2079,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16277/default_ab17554b7e80af3d234b14168ed61e75d43f8eee.png
-  detection_source_url: packages/design-system/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/design-system/package.json
   detection_source: packages/design-system/package.json
   last_updated_by: Alex Grozav
   last_updated_on: 2023-01-27 01:09:30.000000000 Z
@@ -2049,7 +2093,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16448/default_89ba91277e3434b03295bb11d22736632df1d04f.png
-  detection_source_url: packages/core/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/core/package.json
   detection_source: packages/core/package.json
   last_updated_by: agobrech
   last_updated_on: 2023-03-20 16:34:14.000000000 Z
@@ -2063,7 +2107,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/15847/default_4479dbac220be99e50e724b2df6cf415241d71fd.png
-  detection_source_url: packages/nodes-base/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/nodes-base/package.json
   detection_source: packages/nodes-base/package.json
   last_updated_by: Jan Oberhauser
   last_updated_on: 2022-04-10 10:29:19.000000000 Z
@@ -2084,7 +2128,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16298/default_8b65a873fd3277d73483d6846fa38192391abf23.png
-  detection_source_url: packages/nodes-base/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/nodes-base/package.json
   detection_source: packages/nodes-base/package.json
   last_updated_by: Iván Ovejero
   last_updated_on: 2022-06-20 14:54:01.000000000 Z
@@ -2111,8 +2155,8 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16671/default_4b738bf1758d38dddd276589bbea47fca5a990df.png
-  detection_source_url: packages/cli/package.json
-  detection_source: packages/nodes-base/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/cli/package.json
+  detection_source: packages/cli/package.json
   last_updated_by: कारतोफ्फेलस्क्रिप्ट™
   last_updated_on: 2023-03-30 13:09:13.000000000 Z
 - name: nock
@@ -2125,7 +2169,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16036/default_5fd43aeff4d6a935abc13737de01a0355210499d.png
-  detection_source_url: package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/package.json
   detection_source: package.json
   last_updated_by: कारतोफ्फेलस्क्रिप्ट™
   last_updated_on: 2022-12-14 14:28:41.000000000 Z
@@ -2139,7 +2183,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/15978/default_f49d4c116f8ea0155f4d92673b084378bba02760.png
-  detection_source_url: package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/package.json
   detection_source: package.json
   last_updated_by: कारतोफ्फेलस्क्रिप्ट™
   last_updated_on: 2023-03-21 13:49:27.000000000 Z
@@ -2153,7 +2197,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16245/default_5dfc1810d0882ab844578a326bb8bf19e45e7227.png
-  detection_source_url: packages/cli/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/cli/package.json
   detection_source: packages/cli/package.json
   last_updated_by: Ricardo Espinoza
   last_updated_on: 2022-06-08 18:53:12.000000000 Z
@@ -2167,7 +2211,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/18388/default_404701144cd8e1becf3aec789202840caee4d78e.png
-  detection_source_url: package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/package.json
   detection_source: package.json
   last_updated_by: कारतोफ्फेलस्क्रिप्ट™
   last_updated_on: 2023-02-14 12:00:15.000000000 Z
@@ -2181,7 +2225,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/17347/default_b8b4be8bd54f9619446b80b2bf448c0891101f2a.png
-  detection_source_url: packages/cli/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/cli/package.json
   detection_source: packages/cli/package.json
   last_updated_by: कारतोफ्फेलस्क्रिप्ट™
   last_updated_on: 2023-01-26 11:10:09.000000000 Z
@@ -2195,7 +2239,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16304/default_1baba0e6ece19a38adfb211f686c83c781ff703a.png
-  detection_source_url: packages/cli/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/cli/package.json
   detection_source: packages/cli/package.json
   last_updated_by: कारतोफ्फेलस्क्रिप्ट™
   last_updated_on: 2022-12-06 11:16:49.000000000 Z
@@ -2209,7 +2253,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/18238/default_d0bdfc944c04fa7e84198f9a2784cc716a3d91a3.png
-  detection_source_url: packages/cli/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/cli/package.json
   detection_source: packages/cli/package.json
   last_updated_by: कारतोफ्फेलस्क्रिप्ट™
   last_updated_on: 2022-12-06 11:16:49.000000000 Z
@@ -2223,8 +2267,8 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16197/default_3d197518f6bb529bfcc1b685e2cefbdfe83ff108.png
-  detection_source_url: packages/cli/package.json
-  detection_source: packages/nodes-base/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/cli/package.json
+  detection_source: packages/cli/package.json
   last_updated_by: Jan Oberhauser
   last_updated_on: 2019-06-23 10:35:23.000000000 Z
 - name: pg-promise
@@ -2237,7 +2281,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/18538/default_e75c3c83e4af96462c99ddf6aabdef371444ed62.png
-  detection_source_url: packages/nodes-base/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/nodes-base/package.json
   detection_source: packages/nodes-base/package.json
   last_updated_by: कारतोफ्फेलस्क्रिप्ट™
   last_updated_on: 2022-08-31 13:25:52.000000000 Z
@@ -2251,8 +2295,8 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16763/default_6dc099b12d47e378ae121fb53c336fe5d8f0ffc8.png
-  detection_source_url: packages/core/package.json
-  detection_source: packages/nodes-base/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/core/package.json
+  detection_source: packages/core/package.json
   last_updated_by: कारतोफ्फेलस्क्रिप्ट™
   last_updated_on: 2022-11-24 15:54:43.000000000 Z
 - name: prom-client
@@ -2265,7 +2309,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/18412/default_863e53b96f84b4092f7c0ba36b8cee4bf60d33fe.png
-  detection_source_url: packages/cli/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/cli/package.json
   detection_source: packages/cli/package.json
   last_updated_by: कारतोफ्फेलस्क्रिप्ट™
   last_updated_on: 2023-05-17 14:40:53.000000000 Z
@@ -2279,7 +2323,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16125/default_def3edb85d7fbd20200a5cd7d0a1679e31bc8b3d.png
-  detection_source_url: packages/core/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/core/package.json
   detection_source: packages/core/package.json
   last_updated_by: Jan Oberhauser
   last_updated_on: 2019-06-23 10:35:23.000000000 Z
@@ -2300,7 +2344,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/17195/default_183829c5079b84333a720d8590a328efc043ba0e.png
-  detection_source_url: packages/workflow/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/workflow/package.json
   detection_source: packages/workflow/package.json
   last_updated_by: Valya
   last_updated_on: 2023-01-10 13:06:12.000000000 Z
@@ -2314,7 +2358,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16019/default_7a88bebb451873cc63bd99007de5bd3bb8ef85de.png
-  detection_source_url: packages/cli/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/cli/package.json
   detection_source: packages/cli/package.json
   last_updated_by: कारतोफ्फेलस्क्रिप्ट™
   last_updated_on: 2023-02-21 18:21:56.000000000 Z
@@ -2328,7 +2372,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16434/default_d73092129e1cde5ea9f47f22e2d7c3db7bd6da8d.png
-  detection_source_url: packages/node-dev/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/node-dev/package.json
   detection_source: packages/node-dev/package.json
   last_updated_by: Jan Oberhauser
   last_updated_on: 2021-03-26 08:06:26.000000000 Z
@@ -2342,8 +2386,8 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/15823/default_5e5e8ac63beda29f31f1844df64d4b8247570a66.png
-  detection_source_url: packages/core/package.json
-  detection_source: packages/nodes-base/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/core/package.json
+  detection_source: packages/core/package.json
   last_updated_by: Ahsan Virani
   last_updated_on: 2021-12-23 21:29:04.000000000 Z
   vulnerabilities:
@@ -2363,7 +2407,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16305/default_f130429ee56156823c8c6e94da6fb7aa07f07ba5.png
-  detection_source_url: packages/core/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/core/package.json
   detection_source: packages/core/package.json
   last_updated_by: Ahsan Virani
   last_updated_on: 2021-12-23 21:29:04.000000000 Z
@@ -2377,7 +2421,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/15807/default_db4a7791d2f1174547374b9b587bc10fec088a5a.png
-  detection_source_url: package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/package.json
   detection_source: package.json
   last_updated_by: Chris Lonardo
   last_updated_on: 2020-04-06 18:04:59.000000000 Z
@@ -2391,7 +2435,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/17508/default_1d2902e8f9c84259702671591379572493b9009b.png
-  detection_source_url: packages/design-system/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/design-system/package.json
   detection_source: packages/design-system/package.json
   last_updated_by: Jan Oberhauser
   last_updated_on: 2023-03-21 15:38:48.000000000 Z
@@ -2405,7 +2449,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16057/default_5fd43aeff4d6a935abc13737de01a0355210499d.png
-  detection_source_url: packages/design-system/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/design-system/package.json
   detection_source: packages/design-system/package.json
   last_updated_by: कारतोफ्फेलस्क्रिप्ट™
   last_updated_on: 2023-02-14 11:44:13.000000000 Z
@@ -2419,7 +2463,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/15842/default_b71c906aeda030a5e2f1fe40bf12a93be52404ab.png
-  detection_source_url: packages/design-system/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/design-system/package.json
   detection_source: packages/design-system/package.json
   last_updated_by: कारतोफ्फेलस्क्रिप्ट™
   last_updated_on: 2023-02-14 11:44:13.000000000 Z
@@ -2433,7 +2477,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/15897/default_1d65e37e65b7f80761374f0202776043277d505d.png
-  detection_source_url: packages/cli/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/cli/package.json
   detection_source: packages/cli/package.json
   last_updated_by: कारतोफ्फेलस्क्रिप्ट™
   last_updated_on: 2022-08-31 13:25:52.000000000 Z
@@ -2447,7 +2491,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16567/default_d6ff16957d0b119d673d5ec0eb21b08d8d5008f4.png
-  detection_source_url: packages/nodes-base/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/nodes-base/package.json
   detection_source: packages/nodes-base/package.json
   last_updated_by: कारतोफ्फेलस्क्रिप्ट™
   last_updated_on: 2023-03-21 08:48:55.000000000 Z
@@ -2461,7 +2505,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16028/default_c7b204838197013798409fa2b4dafce450edc7fb.png
-  detection_source_url: packages/cli/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/cli/package.json
   detection_source: packages/cli/package.json
   last_updated_by: कारतोफ्फेलस्क्रिप्ट™
   last_updated_on: 2022-12-06 11:16:49.000000000 Z
@@ -2475,7 +2519,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16285/default_3b7197abc4df3d7fa7c5292f17b2e6fb0cd1c8d4.png
-  detection_source_url: packages/cli/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/cli/package.json
   detection_source: packages/cli/package.json
   last_updated_by: कारतोफ्फेलस्क्रिप्ट™
   last_updated_on: 2023-03-21 08:48:22.000000000 Z
@@ -2489,7 +2533,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16935/default_7fe969828600a90e84607bfa2a19979e53a0579d.png
-  detection_source_url: packages/workflow/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/workflow/package.json
   detection_source: packages/workflow/package.json
   last_updated_by: Valya
   last_updated_on: 2023-01-10 13:06:12.000000000 Z
@@ -2504,7 +2548,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/15864/default_6743ba96cf149a3c3c68a185199f9705d6eff80e.png
-  detection_source_url: package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/package.json
   detection_source: package.json
   last_updated_by: Marcus
   last_updated_on: 2023-05-05 15:50:10.000000000 Z
@@ -2518,7 +2562,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/18024/default_d8756eea8d13a271fb42437ffb36c0a116d72925.png
-  detection_source_url: package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/package.json
   detection_source: package.json
   last_updated_by: कारतोफ्फेलस्क्रिप्ट™
   last_updated_on: 2023-04-24 12:47:13.000000000 Z
@@ -2532,7 +2576,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16810/default_55e3ea76a7929df1b71c5ea0c9b4130cc87323a4.png
-  detection_source_url: packages/cli/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/cli/package.json
   detection_source: packages/cli/package.json
   last_updated_by: कारतोफ्फेलस्क्रिप्ट™
   last_updated_on: 2023-02-09 12:52:41.000000000 Z
@@ -2546,8 +2590,8 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/15916/default_e0a4fb1126d7400f419f0931cf1669947a5bc552.png
-  detection_source_url: packages/cli/package.json
-  detection_source: packages/nodes-base/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/cli/package.json
+  detection_source: packages/cli/package.json
   last_updated_by: Iván Ovejero
   last_updated_on: 2022-07-24 15:13:01.000000000 Z
 - name: validator
@@ -2560,7 +2604,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16255/default_fef27d1523ac1844fc00e83e47bddd8898ff8a89.png
-  detection_source_url: packages/cli/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/cli/package.json
   detection_source: packages/cli/package.json
   last_updated_by: Michael Auerswald
   last_updated_on: 2023-03-06 08:44:25.000000000 Z
@@ -2574,8 +2618,8 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/15844/default_b71c906aeda030a5e2f1fe40bf12a93be52404ab.png
-  detection_source_url: packages/design-system/package.json
-  detection_source: packages/editor-ui/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/design-system/package.json
+  detection_source: packages/design-system/package.json
   last_updated_by: Mutasem Aldmour
   last_updated_on: 2021-08-29 11:36:17.000000000 Z
 - name: vue-i18n
@@ -2588,7 +2632,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16963/default_ebf16e0c8af5e95030933d9e01479224b6665289.png
-  detection_source_url: packages/editor-ui/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/editor-ui/package.json
   detection_source: packages/editor-ui/package.json
   last_updated_by: OlegIvaniv
   last_updated_on: 2023-04-26 07:18:10.000000000 Z
@@ -2602,7 +2646,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/15969/default_261820f5687b4c88a3e8f95c71b5e8dccd34c1d7.png
-  detection_source_url: packages/editor-ui/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/editor-ui/package.json
   detection_source: packages/editor-ui/package.json
   last_updated_by: OlegIvaniv
   last_updated_on: 2023-04-26 07:18:10.000000000 Z
@@ -2616,7 +2660,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/15850/default_0b10af8ca19c215f781dc07442e75bdc831089d0.png
-  detection_source_url: package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/package.json
   detection_source: package.json
   last_updated_by: कारतोफ्फेलस्क्रिप्ट™
   last_updated_on: 2023-05-12 08:21:40.000000000 Z
@@ -2630,7 +2674,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16003/default_261820f5687b4c88a3e8f95c71b5e8dccd34c1d7.png
-  detection_source_url: packages/cli/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/cli/package.json
   detection_source: packages/cli/package.json
   last_updated_by: Ricardo Espinoza
   last_updated_on: 2022-06-08 18:53:12.000000000 Z
@@ -2643,6 +2687,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16781/default_c6eddffbed005d007ab4638fbcac90e4b79576b2.png
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/nodes-base/package.json
   detection_source: packages/nodes-base/package.json
   last_updated_by: कारतोफ्फेलस्क्रिप्ट™
   last_updated_on: 2023-05-11 10:55:29.000000000 Z
@@ -2656,8 +2701,8 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16122/default_efe4f0184d007a28e793d89a59e058b742bc9177.png
-  detection_source_url: packages/nodes-base/package.json
-  detection_source: packages/workflow/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/nodes-base/package.json
+  detection_source: packages/nodes-base/package.json
   last_updated_by: कारतोफ्फेलस्क्रिप्ट™
   last_updated_on: 2023-04-11 13:05:56.000000000 Z
 - name: yamljs
@@ -2670,7 +2715,7 @@ tools:
   category: Libraries
   sub_category: npm Packages
   image_url: https://img.stackshare.io/package/16676/default_4b738bf1758d38dddd276589bbea47fca5a990df.png
-  detection_source_url: packages/cli/package.json
+  detection_source_url: https://github.com/reconsumeralization/n8n/blob/master/packages/cli/package.json
   detection_source: packages/cli/package.json
   last_updated_by: कारतोफ्फेलस्क्रिप्ट™
   last_updated_on: 2022-08-31 13:25:52.000000000 Z
