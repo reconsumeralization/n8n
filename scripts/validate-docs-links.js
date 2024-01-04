@@ -15,18 +15,15 @@ const validateUrl = async (kind, name, documentationUrl) =>
 				? documentationUrl
 				: `https://docs.n8n.io/integrations/builtin/${kind}/${documentationUrl.toLowerCase()}/`,
 		);
-		https
-			.request(
-				{
-					hostname: url.hostname,
-					port: 443,
-					path: url.pathname,
-					method: 'HEAD',
-				},
-				(res) => resolve([name, res.statusCode]),
-			)
-			.on('error', (e) => reject(e))
-			.end();
+		const req = https.request(url, { method: 'HEAD' }, (res) => {
+			if (res.statusCode !== 200) {
+				resolve([name, res.statusCode]);
+			} else {
+				resolve([name, null]);
+			}
+		});
+		req.on('error', (e) => reject(e));
+		req.end();
 	});
 
 const checkLinks = async (kind) => {
@@ -50,7 +47,7 @@ const checkLinks = async (kind) => {
 	const invalidUrls = [];
 	for (const [name, statusCode] of statuses) {
 		if (statusCode === null) missingDocs.push(name);
-		if (statusCode !== 200) invalidUrls.push(name);
+		if (statusCode !== null && statusCode !== 200) invalidUrls.push(name);
 	}
 
 	if (missingDocs.length) console.log('Documentation URL missing for %s', kind, missingDocs);
