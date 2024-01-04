@@ -7,6 +7,8 @@ import { senderFields, senderOperations } from './SenderDescrition';
 
 export class SendInBlue implements INodeType {
 	description: INodeTypeDescription = {
+    documentationUrl: 'https://docs.sendinblue.com',
+    documentationUrl: 'https://docs.sendinblue.com',
 		displayName: 'SendInBlue',
 		name: 'sendInBlue',
 		icon: 'file:sendinblue.svg',
