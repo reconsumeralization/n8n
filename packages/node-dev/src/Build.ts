@@ -98,7 +98,11 @@ export async function buildFiles({
 		process.on('exit', () => buildProcess.kill());
 
 		await new Promise<void>((resolve) => {
-			buildProcess.on('exit', resolve);
+			try {
+    buildProcess.on('exit', resolve);
+  } catch (error) {
+    console.error('Error occurred during buildFiles:', error);
+  }
 		});
 	} catch (error) {
 		// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
