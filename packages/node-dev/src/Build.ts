@@ -17,30 +17,35 @@ import type { IBuildOptions } from './Interfaces';
  */
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export async function createCustomTsconfig() {
-	// Get path to simple tsconfig file which should be used for build
-	const tsconfigPath = join(dirname(require.resolve('n8n-node-dev/src')), 'tsconfig-build.json');
+	try {
+		// Get path to simple tsconfig file which should be used for build
+		const tsconfigPath = join(dirname(require.resolve('n8n-node-dev/src')), 'tsconfig-build.json');
 
-	// Read the tsconfig file
-	const tsConfigString = await readFile(tsconfigPath, { encoding: 'utf8' });
-	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-	const tsConfig = jsonParse<{ include: string[] }>(tsConfigString);
+		// Read the tsconfig file
+		const tsConfigString = await readFile(tsconfigPath, { encoding: 'utf8' });
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+		const tsConfig = jsonParse<{ include: string[] }>(tsConfigString);
 
-	// Set absolute include paths
-	const newIncludeFiles = [];
-	// eslint-disable-next-line no-restricted-syntax
-	for (const includeFile of tsConfig.include) {
-		newIncludeFiles.push(join(process.cwd(), includeFile));
+		// Set absolute include paths
+		const newIncludeFiles = [];
+		// eslint-disable-next-line no-restricted-syntax
+		for (const includeFile of tsConfig.include) {
+			newIncludeFiles.push(join(process.cwd(), includeFile));
+		}
+		tsConfig.include = newIncludeFiles;
+
+		// Write new custom tsconfig file
+		const { path, cleanup } = await tmpFile();
+		await writeFile(path, JSON.stringify(tsConfig, null, 2));
+
+		return {
+			path,
+			cleanup,
+		};
+	} catch (error) {
+		console.error('Error occurred while creating custom tsconfig:', error);
+		throw error;
 	}
-	tsConfig.include = newIncludeFiles;
-
-	// Write new custom tsconfig file
-	const { path, cleanup } = await tmpFile();
-	await writeFile(path, JSON.stringify(tsConfig, null, 2));
-
-	return {
-		path,
-		cleanup,
-	};
 }
 
 /**
@@ -54,7 +59,6 @@ export async function buildFiles({
 }: IBuildOptions): Promise<string> {
 	const tscPath = join(dirname(require.resolve('typescript')), 'tsc');
 	const tsconfigData = await createCustomTsconfig();
-
 	await Promise.all(
 		['*.svg', '*.png', '*.node.json'].map(async (filenamePattern) => {
 			const files = await glob(`**/${filenamePattern}`);
