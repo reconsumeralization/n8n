@@ -17,7 +17,7 @@ import type { ICredentialsEncrypted } from 'n8n-workflow';
 import { jsonParse } from 'n8n-workflow';
 
 export class ImportCredentialsCommand extends BaseCommand {
-	static description = 'Import credentials';
+	static description = 'Import credentials - Modified';
 
 	static examples = [
 		'$ n8n import:credentials --input=file.json',
@@ -49,7 +49,7 @@ export class ImportCredentialsCommand extends BaseCommand {
 		await super.init();
 	}
 
-	async run(): Promise<void> {
+	async run(command: ImportCredentialsCommand): Promise<void> {
 		// eslint-disable-next-line @typescript-eslint/no-shadow
 		const { flags } = this.parse(ImportCredentialsCommand);
 
