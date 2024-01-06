@@ -142,9 +142,9 @@ export class ImportCredentialsCommand extends BaseCommand {
 	}
 
 	private reportSuccess(total: number) {
-		this.logger.info(
-			`Successfully imported ${total} ${total === 1 ? 'credential.' : 'credentials.'}`,
-		);
+    this.logger.info(
+        `Successfully imported ${total} ${total === 1 ? 'credential.' : 'credentials.'}`
+    );
 	}
 
 	private async initOwnerCredentialRole() {
@@ -196,7 +196,6 @@ export class ImportCredentialsCommand extends BaseCommand {
 		if (!user) {
 			throw new Error(`Failed to find user with ID ${userId}`);
 		}
-
 		return user;
 	}
 }
