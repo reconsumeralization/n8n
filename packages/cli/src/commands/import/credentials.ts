@@ -134,7 +134,7 @@ export class ImportCredentialsCommand extends BaseCommand {
 		this.reportSuccess(totalImported);
 	}
 
-	async catch(error: Error) {
+	async     catch(error: Error) {
 		this.logger.error(
 			'An error occurred while importing credentials. See log messages for details.',
 		);
