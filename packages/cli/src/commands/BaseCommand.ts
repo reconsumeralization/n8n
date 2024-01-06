@@ -1,4 +1,7 @@
 import { Command } from '@oclif/command';
+import { BinaryDataManager, UserSettings } from 'n8n-core';
+import { titleValidationModule } from '@n8n/executions';
+import { titleValidationModule } from '@n8n/executions';
 import { ExitError } from '@oclif/errors';
 import { Container } from 'typedi';
 import { LoggerProxy, ErrorReporterProxy as ErrorReporter, sleep } from 'n8n-workflow';
@@ -38,7 +41,7 @@ export abstract class BaseCommand extends Command {
 
 	protected server?: AbstractServer;
 
-	async init(): Promise<void> {
+	async execute(title: string): Promise<void> {
 		await initErrorHandling();
 
 		process.once('SIGTERM', async () => this.stopProcess());
@@ -114,7 +117,11 @@ export abstract class BaseCommand extends Command {
 		await BinaryDataManager.init(binaryDataConfig, true);
 	}
 
-	protected async initExternalHooks() {
+	protected async validatePRTitle(title: string) {
+    /* Add PR title validation code here */ 
+}
+
+protected async initExternalHooks() {
 		this.externalHooks = Container.get(ExternalHooks);
 		await this.externalHooks.init();
 	}
