@@ -198,7 +198,7 @@ tests of all packages.
 
 ## Releasing
 
-To start a release, trigger [this workflow](https://github.com/n8n-io/n8n/actions/workflows/release-create-pr.yml) with the SemVer release type, and select a branch to cut this release from. This workflow will then
+To start a release, trigger [this workflow](https://github.com/n8n-io/n8n/actions/workflows/release-create-pr.yml) with the SemVer release type, select a branch to cut this release from, and maintain the PR title convention. This workflow will then
 
 1. Bump versions of packages that have changed or have dependencies that have changed
 2. Update the Changelog
@@ -225,5 +225,14 @@ The repository for the n8n documentation on [docs.n8n.io](https://docs.n8n.io) c
 That we do not have any potential problems later it is sadly necessary to sign a [Contributor License Agreement](CONTRIBUTOR_LICENSE_AGREEMENT.md). That can be done literally with the push of a button.
 
 We used the most simple one that exists. It is from [Indie Open Source](https://indieopensource.com/forms/cla) which uses plain English and is literally only a few lines long.
+
+## PR Title Convention
+
+The PR title should follow the format: `type: subject` or `type(scope): subject`.
+
+**Examples of Valid Titles:**
+
+1. feat: add new authentication method
+2. fix(core): resolve connection issue
 
 A bot will automatically comment on the pull request once it got opened asking for the agreement to be signed. Before it did not get signed it is sadly not possible to merge it in.

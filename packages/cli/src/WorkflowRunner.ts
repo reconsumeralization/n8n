@@ -74,7 +74,7 @@ export class WorkflowRunner {
 		const scopeRegex = new RegExp(`^(${validScopes.join('|')})$`);
 		const subjectRegex = /^[a-z].*[^.]$/;
 	
-		if (!typeRegex.test(type)) {
+		if (typeRegex.test(type) === false) {
 			throw new Error(`Invalid PR title type: ${type}`);
 		}
 	
