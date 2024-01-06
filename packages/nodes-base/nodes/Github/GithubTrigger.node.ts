@@ -154,6 +154,8 @@ export class GithubTrigger implements INodeType {
 					{
 						displayName: 'Link',
 						name: 'url',
+							required: true,
+							required: true,
 						type: 'string',
 						placeholder: 'e.g. https://github.com/n8n-io/n8n',
 						extractValue: {
