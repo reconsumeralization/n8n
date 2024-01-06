@@ -7,7 +7,14 @@ jobs:
     name: Install & Build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: Set up node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+      - name: Install dependencies
+        run: npm install
+      - name: Validate Pull Request Title
+        run: node scripts/validate-pull-request-title.js
         with:
           repository: n8n-io/n8n
           ref: ${{ inputs.branch }}
