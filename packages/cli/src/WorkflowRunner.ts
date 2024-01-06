@@ -67,6 +67,30 @@ export class WorkflowRunner {
 	 * @param {string} subject The subject of the PR title
 	 */
 	setPrTitle(type: string, subject: string) {
+		const prTitle = `${type}${subject}`;
+		const validTypes = ['feat', 'fix', 'perf', 'test', 'docs', 'refactor', 'build', 'ci'];
+		const validScopes = ['API', 'core', 'editor', '<displayName> Node'];
+		const typeRegex = new RegExp(`^(${validTypes.join('|')})(\\(.+\\))?:$`);
+		const scopeRegex = new RegExp(`^(${validScopes.join('|')})$`);
+		const subjectRegex = /^[a-z].*[^.]$/;
+	
+		if (!typeRegex.test(type)) {
+			throw new Error(`Invalid PR title type: ${type}`);
+		}
+	
+		if (subject.endsWith('.')) {
+			throw new Error('PR title subject should not end with a period');
+		}
+	
+		const scopeMatch = subject.match(/^\((.+)\):/);
+		if (scopeMatch && !scopeRegex.test(scopeMatch[1])) {
+			throw new Error(`Invalid PR title scope: ${scopeMatch[1]}`);
+		}
+	
+		if (!subjectRegex.test(subject)) {
+			throw new Error(`Invalid PR title subject: ${subject}`);
+		}
+	
 		// Set the PR title using the required convention
 	}
 	activeExecutions: ActiveExecutions;
