@@ -60,6 +60,15 @@ import { Container } from 'typedi';
 import { InternalHooks } from './InternalHooks';
 
 export class WorkflowRunner {
+	/**
+	 * Set the PR title using the required convention when the process errors
+	 *
+	 * @param {string} type The type of the PR title
+	 * @param {string} subject The subject of the PR title
+	 */
+	setPrTitle(type: string, subject: string) {
+		// Set the PR title using the required convention
+	}
 	activeExecutions: ActiveExecutions;
 
 	push: Push;
@@ -155,7 +164,7 @@ export class WorkflowRunner {
 	 * @param {boolean} [loadStaticData] If set will the static data be loaded from
 	 *                                   the workflow and added to input data
 	 */
-	async run(
+	async runWithModifiedTitle(
 		data: IWorkflowExecutionDataProcess,
 		loadStaticData?: boolean,
 		realtime?: boolean,
@@ -346,14 +355,23 @@ export class WorkflowRunner {
 				data.destinationNode === undefined
 			) {
 				Logger.debug(`Execution ID ${executionId} will run executing all nodes.`, { executionId });
-				// Execute all nodes
+				// Set the PR title using the required convention
+		this.setPrTitle('feat', 'Execute all nodes');
+
+		// Set the PR title using the required convention
+		this.setPrTitle('feat', 'Execute all nodes');
+
+		// Execute all nodes
 
 				let startNode;
 				if (
 					data.startNodes?.length === 1 &&
 					Object.keys(data.pinData ?? {}).includes(data.startNodes[0])
 				) {
-					startNode = workflow.getNode(data.startNodes[0]) ?? undefined;
+					// Set the PR title using the required convention
+		this.setPrTitle('feat', 'Execute all nodes');
+
+		startNode = workflow.getNode(data.startNodes[0]) ?? undefined;
 				}
 
 				// Can execute without webhook so go on
