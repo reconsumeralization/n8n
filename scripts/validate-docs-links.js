@@ -30,6 +30,26 @@ const validateUrl = async (kind, name, documentationUrl) =>
 	});
 
 const checkLinks = async (kind) => {
+  if (kind === 'credentials' && name === 'SendInBlue') {
+    const documentationUrl =
+      kind === 'credentials'
+        ? type.documentationUrl
+        : type.codex?.resources?.primaryDocumentation?.[0]?.url;
+    if (documentationUrl) {
+      const [name, statusCode] = await validateUrl(kind, type.displayName, documentationUrl);
+      if (statusCode !== 200) invalidUrls.push(name);
+    }
+  }
+  if (kind === 'credentials' && name === 'SendInBlue') {
+    const documentationUrl =
+      kind === 'credentials'
+        ? type.documentationUrl
+        : type.codex?.resources?.primaryDocumentation?.[0]?.url;
+    if (documentationUrl) {
+      const [name, statusCode] = await validateUrl(kind, type.displayName, documentationUrl);
+      if (statusCode !== 200) invalidUrls.push(name);
+    }
+  }
 	let types = require(path.join(nodesBaseDir, `dist/types/${kind}.json`));
 	if (kind === 'nodes')
 		types = types.filter(({ codex }) => !!codex?.resources?.primaryDocumentation);
