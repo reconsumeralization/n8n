@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
-import { initErrorHandling } from './ErrorReporting';
+import { initErrorHandling, ErrorReporting } from './ErrorReporting';
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable no-console */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
@@ -93,7 +93,7 @@ export class WorkflowRunner {
 		executionId: string,
 		hooks?: WorkflowHooks,
 	) {
-		ErrorReporter.error(error);
+		ErrorReporting.error(error);
 
 		const fullRunData: IRun = {
 			data: {
