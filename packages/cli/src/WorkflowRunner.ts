@@ -78,7 +78,7 @@ export class WorkflowRunner {
 	/**
 	 * The process did send a hook message so execute the appropriate hook
 	 */
-	processHookMessage(workflowHooks: WorkflowHooks, hookData: IProcessMessageDataHook) {
+	processHookMessage(workflowHooks: WorkflowHooks, hookData: IProcessMessageDataHook | IProcessMessageDataHook[]) {
 		// eslint-disable-next-line @typescript-eslint/no-floating-promises
 		workflowHooks.executeHookFunctions(hookData.hook, hookData.parameters);
 	}
