@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
+import { initErrorHandling } from './ErrorReporting';
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable no-console */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
@@ -51,7 +52,7 @@ import * as WebhookHelpers from '@/WebhookHelpers';
 import * as WorkflowHelpers from '@/WorkflowHelpers';
 import * as WorkflowExecuteAdditionalData from '@/WorkflowExecuteAdditionalData';
 import { generateFailedExecutionFromError } from '@/WorkflowHelpers';
-import { initErrorHandling } from '@/ErrorReporting';
+import { initErrorHandling } from './ErrorReporting';
 import { PermissionChecker } from '@/UserManagement/PermissionChecker';
 import { Push } from '@/push';
 import { eventBus } from './eventbus';
@@ -67,8 +68,11 @@ export class WorkflowRunner {
 	jobQueue: JobQueue;
 
 	constructor() {
+    this.errorReporting = initErrorHandling();
+    
 		this.push = Container.get(Push);
-		this.activeExecutions = Container.get(ActiveExecutions);
+		this.errorReporting = initErrorHandling();
+    this.activeExecutions = Container.get(ActiveExecutions);
 	}
 
 	/**
