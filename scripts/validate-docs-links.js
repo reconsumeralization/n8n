@@ -6,6 +6,7 @@ const glob = require('fast-glob');
 const pLimit = require('p-limit');
 
 const nodesBaseDir = path.resolve(__dirname, '../packages/nodes-base');
+const sendInBlueCredentials = await import('../Credentials/SendInBlue.credentials');
 
 const validateUrl = async (kind, name, documentationUrl) =>
 	new Promise((resolve, reject) => {
@@ -29,7 +30,7 @@ const validateUrl = async (kind, name, documentationUrl) =>
 			.end();
 	});
 
-const checkLinks = async (kind) => {
+const checkLinks = async (kind, excludeSendInBlue = false) => {
 	let types = require(path.join(nodesBaseDir, `dist/types/${kind}.json`));
 	if (kind === 'nodes')
 		types = types.filter(({ codex }) => !!codex?.resources?.primaryDocumentation);
