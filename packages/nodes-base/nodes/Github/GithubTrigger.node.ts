@@ -566,7 +566,7 @@ export class GithubTrigger implements INodeType {
 					const body = {};
 
 					try {
-						await githubApiRequest.call(this, 'DELETE', endpoint, body);
+						await githubApiRequest.call(this, 'DELETE', endpoint, body, username, password);
 					} catch (error) {
 						return false;
 					}
