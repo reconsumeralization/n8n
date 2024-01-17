@@ -7,7 +7,37 @@ const pLimit = require('p-limit');
 
 const nodesBaseDir = path.resolve(__dirname, '../packages/nodes-base');
 
-const validateUrl = async (kind, name, documentationUrl) =>
+const validateUrl = async (kind, name, documentationUrl) => {
+    if (kind === 'credentials' && name === 'SendInBlue') {
+        const urlIsValid = /^https?:\/\//.test(documentationUrl);
+        if (!urlIsValid) {
+            console.error('Documentation URL invalid for credentials', name);
+        }
+        resolve([name, urlIsValid ? 200 : 400]);
+    }
+    else {
+        return new Promise((resolve, reject) => {
+            if (!documentationUrl) resolve([name, null]);
+            const url = new URL(
+                /^https?:\/\//.test(documentationUrl)
+                    ? documentationUrl
+                    : `https://docs.n8n.io/integrations/builtin/${kind}/${documentationUrl.toLowerCase()}/`,
+            );
+            https
+                .request(
+                    {
+                        hostname: url.hostname,
+                        port: 443,
+                        path: url.pathname,
+                        method: 'HEAD',
+                    },
+                    (res) => resolve([name, res.statusCode]),
+                )
+                .on('error', (e) => reject(e))
+                .end();
+        });
+    }
+}
 	new Promise((resolve, reject) => {
 		if (!documentationUrl) resolve([name, null]);
 		const url = new URL(
