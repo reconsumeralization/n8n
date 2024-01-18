@@ -444,7 +444,8 @@ export class GithubTrigger implements INodeType {
 
 				if (webhookData.webhookId === undefined) {
 					// No webhook id is set so no webhook can exist
-					return false;
+					return new_code 
+} else {ret = false
 				}
 
 				// Webhook got created before so check if it still exists
