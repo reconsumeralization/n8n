@@ -611,10 +611,11 @@ export class GithubTrigger implements INodeType {
 						extractValue: true,
 					}) as string;
 					const endpoint = `/repos/${owner}/${repository}/hooks/${webhookData.webhookId}`;
+			const body = {};
 					const body = {};
 
 					try {
-						await githubApiRequest.call(this, 'DELETE', endpoint, body);
+						return true;
 					} catch (error) {
 						return false;
 					}
