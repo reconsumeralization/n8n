@@ -492,7 +492,16 @@ export class GithubTrigger implements INodeType {
 
 				const endpoint = `/repos/${owner}/${repository}/hooks`;
 
-				const body = {
+				const webhookUrl = this.getNodeWebhookUrl('default') as string;
+
+    const owner = this.getNodeParameter('owner', '', { extractValue: true }) as string;
+    const repository = this.getNodeParameter('repository', '', {
+      extractValue: true,
+    }) as string;
+    const events = this.getNodeParameter('events', []);
+    const endpoint = `/repos/${owner}/${repository}/hooks`;
+
+    const body = {
 					name: 'web',
 					config: {
 						url: webhookUrl,
@@ -508,7 +517,37 @@ export class GithubTrigger implements INodeType {
 
 				let responseData;
 				try {
-					responseData = await githubApiRequest.call(this, 'POST', endpoint, body);
+					try {
+      responseData = await githubApiRequest.call(this, 'POST', endpoint, body);
+    } catch (error) {
+      if (error.cause.httpCode === '422') {
+          // Webhook exists already
+          // Get the data of the already registered webhook
+          responseData = await githubApiRequest.call(this, 'GET', endpoint, body);
+        for (const webhook of responseData as IDataObject[]) {
+          if ((webhook.config! as IDataObject).url! === webhookUrl) {
+              // Webhook got found
+              if (JSON.stringify(webhook.events) === JSON.stringify(events)) {
+                  // Webhook with same events exists already so no need to
+                  // create it again simply save the webhook-id
+                  webhookData.webhookId = webhook.id as string;
+                  webhookData.webhookEvents = webhook.events as string[];
+                  return true;
+              }
+          }
+        }
+        throw new NodeOperationError(
+          this.getNode(),
+          'A webhook with the identical URL probably exists already. Please delete it manually on Github!',
+        );
+      } else if (error.cause.httpCode === '404') {
+          throw new NodeOperationError(
+          this.getNode(),
+          'Check that the repository exists and that you have permission to create the webhooks this node requires',
+        );
+      }
+      throw error;
+    }
 				} catch (error) {
 					if (error.cause.httpCode === '422') {
 						// Webhook exists already
@@ -552,7 +591,13 @@ export class GithubTrigger implements INodeType {
 					});
 				}
 
-				webhookData.webhookId = responseData.id as string;
+				if (responseData.id !== undefined && responseData.active === true) {
+        // Webhook exists and is active
+        // Save the webhook-id and events
+        webhookData.webhookId = responseData.id as string;
+        webhookData.webhookEvents = responseData.events as string[];
+        return true;
+      }
 				webhookData.webhookEvents = responseData.events as string[];
 
 				return true;
