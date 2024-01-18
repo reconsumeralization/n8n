@@ -1,0 +1,31 @@
+// main.ts
+
+import * as fs from 'fs';
+
+function updateDockerLoginAction(username: string, password: string): void {
+  const workflowFilePath = '.github/workflows/main.yml';
+  const workflowFileContent = fs.readFileSync(workflowFilePath, 'utf8');
+
+  // Update the "docker/login-action@v2" command with the provided username and password
+  const updatedWorkflowFileContent = workflowFileContent.replace(
+    'docker/login-action@v2',
+    `docker/login-action@v2\n      with:\n        username: ${{ secrets.DOCKER_USERNAME }}\n        password: ${{ secrets.DOCKER_PASSWORD }}`
+  );
+
+  fs.writeFileSync(workflowFilePath, updatedWorkflowFileContent);
+}
+
+function storeSecret(name: string, value: string): void {
+  // Store the secret securely
+  // Implementation details depend on the platform being used
+  // For example, in GitHub Actions, you can use the `actions/secrets` package
+  // to store the secret as a repository secret
+}
+
+// Usage example
+const username = 'your_username';
+const password = 'your_password';
+
+storeSecret('DOCKER_USERNAME', username);
+storeSecret('DOCKER_PASSWORD', password);
+updateDockerLoginAction(username, password);
