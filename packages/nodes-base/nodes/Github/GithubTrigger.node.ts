@@ -443,6 +443,8 @@ export class GithubTrigger implements INodeType {
 				const webhookData = this.getWorkflowStaticData('node');
 
 				if (webhookData.webhookId === undefined) {
+	// No webhook id is set so no webhook can exist
+	return false;
 					// No webhook id is set so no webhook can exist
 					return new_code 
 } else {ret = false
