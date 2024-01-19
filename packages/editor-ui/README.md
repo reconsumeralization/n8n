@@ -23,7 +23,7 @@ pnpm serve
 ### Compiles and minifies for production
 
 ```
-pnpm build
+pnpm install --frozen-lockfile && pnpm build
 ```
 
 ### Run your tests
