@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia';
 import { STORES } from '@/constants';
 import type {
+	INodeUi,
 	ITemplatesCategory,
 	ITemplatesCollection,
 	ITemplatesCollectionFull,
@@ -10,7 +11,6 @@ import type {
 	ITemplatesWorkflowFull,
 	IWorkflowTemplate,
 } from '@/Interface';
-import Vue from 'vue';
 import { useSettingsStore } from './settings.store';
 import {
 	getCategories,
@@ -20,16 +20,19 @@ import {
 	getWorkflows,
 	getWorkflowTemplate,
 } from '@/api/templates';
+import { getFixedNodesList } from '@/utils/nodeViewUtils';
 
-const TEMPLATES_PAGE_SIZE = 10;
+const TEMPLATES_PAGE_SIZE = 20;
 
 function getSearchKey(query: ITemplatesQuery): string {
 	return JSON.stringify([query.search || '', [...query.categories].sort()]);
 }
 
+export type TemplatesStore = ReturnType<typeof useTemplatesStore>;
+
 export const useTemplatesStore = defineStore(STORES.TEMPLATES, {
 	state: (): ITemplateState => ({
-		categories: {},
+		categories: [],
 		collections: {},
 		workflows: {},
 		collectionSearches: {},
@@ -45,6 +48,12 @@ export const useTemplatesStore = defineStore(STORES.TEMPLATES, {
 		},
 		getTemplateById() {
 			return (id: string): null | ITemplatesWorkflow => this.workflows[id];
+		},
+		getFullTemplateById() {
+			return (id: string): null | ITemplatesWorkflowFull => {
+				const template = this.workflows[id];
+				return template && 'full' in template && template.full ? template : null;
+			};
 		},
 		getCollectionById() {
 			return (id: string): null | ITemplatesCollection => this.collections[id];
@@ -104,38 +113,53 @@ export const useTemplatesStore = defineStore(STORES.TEMPLATES, {
 	actions: {
 		addCategories(categories: ITemplatesCategory[]): void {
 			categories.forEach((category: ITemplatesCategory) => {
-				Vue.set(this.categories, category.id, category);
+				this.categories = {
+					...this.categories,
+					[category.id]: category,
+				};
 			});
 		},
 		addCollections(collections: Array<ITemplatesCollection | ITemplatesCollectionFull>): void {
 			collections.forEach((collection) => {
 				const workflows = (collection.workflows || []).map((workflow) => ({ id: workflow.id }));
 				const cachedCollection = this.collections[collection.id] || {};
-				Vue.set(this.collections, collection.id, {
-					...cachedCollection,
-					...collection,
-					workflows,
-				});
+
+				this.collections = {
+					...this.collections,
+					[collection.id]: {
+						...cachedCollection,
+						...collection,
+						workflows,
+					},
+				};
 			});
 		},
 		addWorkflows(workflows: Array<ITemplatesWorkflow | ITemplatesWorkflowFull>): void {
 			workflows.forEach((workflow: ITemplatesWorkflow) => {
 				const cachedWorkflow = this.workflows[workflow.id] || {};
-				Vue.set(this.workflows, workflow.id, {
-					...cachedWorkflow,
-					...workflow,
-				});
+
+				this.workflows = {
+					...this.workflows,
+					[workflow.id]: {
+						...cachedWorkflow,
+						...workflow,
+					},
+				};
 			});
 		},
 		addCollectionSearch(data: {
 			collections: ITemplatesCollection[];
 			query: ITemplatesQuery;
 		}): void {
-			const collectionIds = data.collections.map((collection) => collection.id);
+			const collectionIds = data.collections.map((collection) => String(collection.id));
 			const searchKey = getSearchKey(data.query);
-			Vue.set(this.collectionSearches, searchKey, {
-				collectionIds,
-			});
+
+			this.collectionSearches = {
+				...this.collectionSearches,
+				[searchKey]: {
+					collectionIds,
+				},
+			};
 		},
 		addWorkflowsSearch(data: {
 			totalWorkflows: number;
@@ -146,18 +170,26 @@ export const useTemplatesStore = defineStore(STORES.TEMPLATES, {
 			const searchKey = getSearchKey(data.query);
 			const cachedResults = this.workflowSearches[searchKey];
 			if (!cachedResults) {
-				Vue.set(this.workflowSearches, searchKey, {
-					workflowIds,
-					totalWorkflows: data.totalWorkflows,
-				});
+				this.workflowSearches = {
+					...this.workflowSearches,
+					[searchKey]: {
+						workflowIds: workflowIds as unknown as string[],
+						totalWorkflows: data.totalWorkflows,
+						categories: this.categories,
+					},
+				};
 
 				return;
 			}
 
-			Vue.set(this.workflowSearches, searchKey, {
-				workflowIds: [...cachedResults.workflowIds, ...workflowIds],
-				totalWorkflows: data.totalWorkflows,
-			});
+			this.workflowSearches = {
+				...this.workflowSearches,
+				[searchKey]: {
+					workflowIds: [...cachedResults.workflowIds, ...workflowIds] as string[],
+					totalWorkflows: data.totalWorkflows,
+					categories: this.categories,
+				},
+			};
 		},
 		setWorkflowSearchLoading(query: ITemplatesQuery): void {
 			const searchKey = getSearchKey(query);
@@ -166,7 +198,10 @@ export const useTemplatesStore = defineStore(STORES.TEMPLATES, {
 				return;
 			}
 
-			Vue.set(this.workflowSearches[searchKey], 'loadingMore', true);
+			this.workflowSearches[searchKey] = {
+				...this.workflowSearches[searchKey],
+				loadingMore: true,
+			};
 		},
 		setWorkflowSearchLoaded(query: ITemplatesQuery): void {
 			const searchKey = getSearchKey(query);
@@ -175,7 +210,10 @@ export const useTemplatesStore = defineStore(STORES.TEMPLATES, {
 				return;
 			}
 
-			Vue.set(this.workflowSearches[searchKey], 'loadingMore', false);
+			this.workflowSearches[searchKey] = {
+				...this.workflowSearches[searchKey],
+				loadingMore: false,
+			};
 		},
 		resetSessionId(): void {
 			this.previousSessionId = this.currentSessionId;
@@ -186,9 +224,7 @@ export const useTemplatesStore = defineStore(STORES.TEMPLATES, {
 				this.currentSessionId = `templates-${Date.now()}`;
 			}
 		},
-		async fetchTemplateById(
-			templateId: string,
-		): Promise<ITemplatesWorkflow | ITemplatesWorkflowFull> {
+		async fetchTemplateById(templateId: string): Promise<ITemplatesWorkflowFull> {
 			const settingsStore = useSettingsStore();
 			const apiEndpoint: string = settingsStore.templatesHost;
 			const versionCli: string = settingsStore.versionCli;
@@ -257,6 +293,7 @@ export const useTemplatesStore = defineStore(STORES.TEMPLATES, {
 		async getWorkflows(query: ITemplatesQuery): Promise<ITemplatesWorkflow[]> {
 			const cachedResults = this.getSearchedWorkflows(query);
 			if (cachedResults) {
+				this.categories = this.workflowSearches[getSearchKey(query)].categories ?? [];
 				return cachedResults;
 			}
 
@@ -266,7 +303,7 @@ export const useTemplatesStore = defineStore(STORES.TEMPLATES, {
 
 			const payload = await getWorkflows(
 				apiEndpoint,
-				{ ...query, skip: 0, limit: TEMPLATES_PAGE_SIZE },
+				{ ...query, page: 1, limit: TEMPLATES_PAGE_SIZE },
 				{ 'n8n-version': versionCli },
 			);
 
@@ -286,7 +323,7 @@ export const useTemplatesStore = defineStore(STORES.TEMPLATES, {
 			try {
 				const payload = await getWorkflows(apiEndpoint, {
 					...query,
-					skip: cachedResults.length,
+					page: cachedResults.length / TEMPLATES_PAGE_SIZE + 1,
 					limit: TEMPLATES_PAGE_SIZE,
 				});
 
@@ -304,7 +341,21 @@ export const useTemplatesStore = defineStore(STORES.TEMPLATES, {
 			const settingsStore = useSettingsStore();
 			const apiEndpoint: string = settingsStore.templatesHost;
 			const versionCli: string = settingsStore.versionCli;
-			return getWorkflowTemplate(apiEndpoint, templateId, { 'n8n-version': versionCli });
+			return await getWorkflowTemplate(apiEndpoint, templateId, { 'n8n-version': versionCli });
+		},
+
+		async getFixedWorkflowTemplate(templateId: string): Promise<IWorkflowTemplate | undefined> {
+			const template = await this.getWorkflowTemplate(templateId);
+			if (template?.workflow?.nodes) {
+				template.workflow.nodes = getFixedNodesList(template.workflow.nodes) as INodeUi[];
+				template.workflow.nodes?.forEach((node) => {
+					if (node.credentials) {
+						delete node.credentials;
+					}
+				});
+			}
+
+			return template;
 		},
 	},
 });

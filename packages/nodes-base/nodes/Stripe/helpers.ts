@@ -1,6 +1,6 @@
-import flow from 'lodash.flow';
-import isEmpty from 'lodash.isempty';
-import omit from 'lodash.omit';
+import flow from 'lodash/flow';
+import isEmpty from 'lodash/isEmpty';
+import omit from 'lodash/omit';
 import type {
 	IExecuteFunctions,
 	IHookFunctions,
@@ -32,7 +32,7 @@ export async function stripeApiRequest(
 		delete options.qs;
 	}
 
-	return this.helpers.requestWithAuthentication.call(this, 'stripeApi', options);
+	return await this.helpers.requestWithAuthentication.call(this, 'stripeApi', options);
 }
 
 /**

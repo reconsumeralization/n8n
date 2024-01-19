@@ -5,7 +5,6 @@ import type {
 	ICredentialTestFunctions,
 	IDataObject,
 	IExecuteFunctions,
-	IExecuteSingleFunctions,
 	IHookFunctions,
 	ILoadOptionsFunctions,
 	JsonObject,
@@ -13,7 +12,7 @@ import type {
 import { NodeApiError } from 'n8n-workflow';
 
 export async function dhlApiRequest(
-	this: IHookFunctions | IExecuteFunctions | IExecuteSingleFunctions | ILoadOptionsFunctions,
+	this: IHookFunctions | IExecuteFunctions | ILoadOptionsFunctions,
 	method: string,
 	path: string,
 
@@ -68,5 +67,5 @@ export async function validateCredentials(
 		json: true,
 	};
 
-	return this.helpers.request(options);
+	return await this.helpers.request(options);
 }

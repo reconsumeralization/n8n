@@ -1,7 +1,7 @@
 <template>
 	<div
-		:class="['executions-sidebar', $style.container]"
 		ref="container"
+		:class="['executions-sidebar', $style.container]"
 		data-test-id="executions-sidebar"
 	>
 		<div :class="$style.heading">
@@ -11,17 +11,17 @@
 		</div>
 		<div :class="$style.controls">
 			<el-checkbox
-				v-model="autoRefresh"
-				@change="onAutoRefreshToggle"
+				:model-value="autoRefresh"
 				data-test-id="auto-refresh-checkbox"
+				@update:modelValue="$emit('update:autoRefresh', $event)"
 			>
 				{{ $locale.baseText('executionsList.autoRefresh') }}
 			</el-checkbox>
-			<execution-filter popover-placement="left-start" @filterChanged="onFilterChanged" />
+			<ExecutionFilter popover-placement="left-start" @filterChanged="onFilterChanged" />
 		</div>
 		<div
-			:class="$style.executionList"
 			ref="executionList"
+			:class="$style.executionList"
 			data-test-id="current-executions-list"
 			@scroll="loadMore(20)"
 		>
@@ -33,22 +33,20 @@
 					{{ $locale.baseText('executionsLandingPage.noResults') }}
 				</n8n-text>
 			</div>
-			<execution-card
+			<ExecutionCard
 				v-else-if="temporaryExecution"
-				:execution="temporaryExecution"
 				:ref="`execution-${temporaryExecution.id}`"
+				:execution="temporaryExecution"
 				:data-test-id="`execution-details-${temporaryExecution.id}`"
-				:showGap="true"
-				@refresh="onRefresh"
+				:show-gap="true"
 				@retryExecution="onRetryExecution"
 			/>
-			<execution-card
+			<ExecutionCard
 				v-for="execution in executions"
 				:key="execution.id"
-				:execution="execution"
 				:ref="`execution-${execution.id}`"
+				:execution="execution"
 				:data-test-id="`execution-details-${execution.id}`"
-				@refresh="onRefresh"
 				@retryExecution="onRetryExecution"
 			/>
 			<div v-if="loadingMore" class="mr-m">
@@ -56,7 +54,7 @@
 			</div>
 		</div>
 		<div :class="$style.infoAccordion">
-			<executions-info-accordion :initiallyExpanded="false" />
+			<ExecutionsInfoAccordion :initially-expanded="false" />
 		</div>
 	</div>
 </template>
@@ -78,13 +76,17 @@ import type { ExecutionFilterType } from '@/Interface';
 type ExecutionCardRef = InstanceType<typeof ExecutionCard>;
 
 export default defineComponent({
-	name: 'executions-sidebar',
+	name: 'ExecutionsSidebar',
 	components: {
 		ExecutionCard,
 		ExecutionsInfoAccordion,
 		ExecutionFilter,
 	},
 	props: {
+		autoRefresh: {
+			type: Boolean,
+			default: false,
+		},
 		executions: {
 			type: Array as PropType<IExecutionsSummary[]>,
 			required: true,
@@ -106,8 +108,6 @@ export default defineComponent({
 		return {
 			VIEWS,
 			filter: {} as ExecutionFilterType,
-			autoRefresh: false,
-			autoRefreshInterval: undefined as undefined | NodeJS.Timer,
 		};
 	},
 	computed: {
@@ -120,26 +120,12 @@ export default defineComponent({
 				this.$router.go(-1);
 			}
 		},
-		'workflowsStore.activeWorkflowExecution'() {
-			this.checkListSize();
-			this.scrollToActiveCard();
-		},
 	},
 	mounted() {
-		this.autoRefresh = this.uiStore.executionSidebarAutoRefresh === true;
-		if (this.autoRefresh) {
-			this.autoRefreshInterval = setInterval(() => this.onRefresh(), 4000);
-		}
 		// On larger screens, we need to load more then first page of executions
 		// for the scroll bar to appear and infinite scrolling is enabled
 		this.checkListSize();
 		this.scrollToActiveCard();
-	},
-	beforeDestroy() {
-		if (this.autoRefreshInterval) {
-			clearInterval(this.autoRefreshInterval);
-			this.autoRefreshInterval = undefined;
-		}
 	},
 	methods: {
 		loadMore(limit = 20): void {
@@ -155,7 +141,7 @@ export default defineComponent({
 				}
 			}
 		},
-		onRetryExecution(payload: Object) {
+		onRetryExecution(payload: object) {
 			this.$emit('retryExecution', payload);
 		},
 		onRefresh(): void {
@@ -166,17 +152,6 @@ export default defineComponent({
 		},
 		reloadExecutions(): void {
 			this.$emit('reloadExecutions');
-		},
-		onAutoRefreshToggle(): void {
-			this.uiStore.executionSidebarAutoRefresh = this.autoRefresh;
-			if (this.autoRefreshInterval) {
-				// Clear any previously existing intervals (if any - there shouldn't)
-				clearInterval(this.autoRefreshInterval);
-				this.autoRefreshInterval = undefined;
-			}
-			if (this.autoRefresh) {
-				this.autoRefreshInterval = setInterval(() => this.onRefresh(), 4 * 1000); // refresh data every 4 secs
-			}
 		},
 		checkListSize(): void {
 			const sidebarContainerRef = this.$refs.container as HTMLElement | undefined;
@@ -225,6 +200,8 @@ export default defineComponent({
 	border-right: var(--border-base);
 	padding: var(--spacing-l) 0 var(--spacing-l) var(--spacing-l);
 	z-index: 1;
+	display: flex;
+	flex-direction: column;
 	overflow: hidden;
 }
 
@@ -249,7 +226,7 @@ export default defineComponent({
 }
 
 .executionList {
-	height: calc(100% - 10.5em);
+	flex: 1;
 	overflow: auto;
 	margin-bottom: var(--spacing-m);
 	background-color: var(--color-background-xlight) !important;
@@ -291,8 +268,10 @@ export default defineComponent({
 </style>
 
 <style lang="scss" scoped>
-:deep(.el-skeleton__item) {
-	height: 60px;
-	border-radius: 0;
+.executions-sidebar {
+	:deep(.el-skeleton__item) {
+		height: 60px;
+		border-radius: 0;
+	}
 }
 </style>

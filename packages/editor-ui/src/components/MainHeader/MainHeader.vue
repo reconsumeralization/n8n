@@ -1,12 +1,12 @@
 <template>
 	<div>
-		<div :class="{ 'main-header': true, expanded: !this.uiStore.sidebarMenuCollapsed }">
+		<div :class="{ 'main-header': true, expanded: !uiStore.sidebarMenuCollapsed }">
 			<div v-show="!hideMenuBar" class="top-menu">
-				<WorkflowDetails />
-				<tab-bar
+				<WorkflowDetails :read-only="readOnly" />
+				<TabBar
 					v-if="onWorkflowPage"
 					:items="tabBarItems"
-					:activeTab="activeHeaderTab"
+					:active-tab="activeHeaderTab"
 					@select="onTabSelected"
 				/>
 			</div>
@@ -18,6 +18,7 @@
 import { defineComponent } from 'vue';
 import type { Route } from 'vue-router';
 import { mapStores } from 'pinia';
+import type { IExecutionsSummary } from 'n8n-workflow';
 import { pushConnection } from '@/mixins/pushConnection';
 import WorkflowDetails from '@/components/MainHeader/WorkflowDetails.vue';
 import TabBar from '@/components/MainHeader/TabBar.vue';
@@ -27,10 +28,11 @@ import {
 	STICKY_NODE_TYPE,
 	VIEWS,
 } from '@/constants';
-import type { IExecutionsSummary, INodeUi, ITabBarItem } from '@/Interface';
+import type { INodeUi, ITabBarItem } from '@/Interface';
 import { workflowHelpers } from '@/mixins/workflowHelpers';
-import { useUIStore } from '@/stores/ui.store';
 import { useNDVStore } from '@/stores/ndv.store';
+import { useSourceControlStore } from '@/stores/sourceControl.store';
+import { useUIStore } from '@/stores/ui.store';
 
 export default defineComponent({
 	name: 'MainHeader',
@@ -39,10 +41,12 @@ export default defineComponent({
 		TabBar,
 	},
 	mixins: [pushConnection, workflowHelpers],
-	setup(props) {
+	setup(props, ctx) {
 		return {
-			...pushConnection.setup?.(props),
-			...workflowHelpers.setup?.(props),
+			// eslint-disable-next-line @typescript-eslint/no-misused-promises
+			...pushConnection.setup?.(props, ctx),
+			// eslint-disable-next-line @typescript-eslint/no-misused-promises
+			...workflowHelpers.setup?.(props, ctx),
 		};
 	},
 	data() {
@@ -53,7 +57,7 @@ export default defineComponent({
 		};
 	},
 	computed: {
-		...mapStores(useNDVStore, useUIStore),
+		...mapStores(useNDVStore, useUIStore, useSourceControlStore),
 		tabBarItems(): ITabBarItem[] {
 			return [
 				{ value: MAIN_HEADER_TABS.WORKFLOW, label: this.$locale.baseText('generic.editor') },
@@ -81,20 +85,18 @@ export default defineComponent({
 		activeExecution(): IExecutionsSummary {
 			return this.workflowsStore.activeWorkflowExecution as IExecutionsSummary;
 		},
-	},
-	mounted() {
-		this.dirtyState = this.uiStore.stateIsDirty;
-		this.syncTabsWithRoute(this.$route);
-		// Initialize the push connection
-		this.pushConnect();
-	},
-	beforeDestroy() {
-		this.pushDisconnect();
+		readOnly(): boolean {
+			return this.sourceControlStore.preferences.branchReadOnly;
+		},
 	},
 	watch: {
 		$route(to, from) {
 			this.syncTabsWithRoute(to);
 		},
+	},
+	mounted() {
+		this.dirtyState = this.uiStore.stateIsDirty;
+		this.syncTabsWithRoute(this.$route);
 	},
 	methods: {
 		syncTabsWithRoute(route: Route): void {
@@ -104,7 +106,11 @@ export default defineComponent({
 				route.name === VIEWS.EXECUTION_PREVIEW
 			) {
 				this.activeHeaderTab = MAIN_HEADER_TABS.EXECUTIONS;
-			} else if (route.name === VIEWS.WORKFLOW || route.name === VIEWS.NEW_WORKFLOW) {
+			} else if (
+				route.name === VIEWS.WORKFLOW ||
+				route.name === VIEWS.NEW_WORKFLOW ||
+				route.name === VIEWS.EXECUTION_DEBUG
+			) {
 				this.activeHeaderTab = MAIN_HEADER_TABS.WORKFLOW;
 			}
 			const workflowName = route.params.name;
@@ -148,7 +154,6 @@ export default defineComponent({
 							params: { name: routeWorkflowId },
 						});
 					}
-					// this.modalBus.emit('closeAll');
 					this.activeHeaderTab = MAIN_HEADER_TABS.EXECUTIONS;
 					break;
 				default:
@@ -169,6 +174,7 @@ export default defineComponent({
 }
 
 .top-menu {
+	position: relative;
 	display: flex;
 	align-items: center;
 	font-size: 0.9em;

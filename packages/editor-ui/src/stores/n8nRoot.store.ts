@@ -1,21 +1,21 @@
 import { CLOUD_BASE_URL_PRODUCTION, CLOUD_BASE_URL_STAGING, STORES } from '@/constants';
 import type { IRestApiContext, RootState } from '@/Interface';
-import type { IDataObject } from 'n8n-workflow';
+import { setGlobalState, type IDataObject } from 'n8n-workflow';
 import { defineStore } from 'pinia';
-import Vue from 'vue';
-import { useNodeTypesStore } from './nodeTypes.store';
 
 const { VUE_APP_URL_BASE_API } = import.meta.env;
 
 export const useRootStore = defineStore(STORES.ROOT, {
 	state: (): RootState => ({
-		baseUrl:
-			VUE_APP_URL_BASE_API ?? (window.BASE_PATH === '/{{BASE_PATH}}/' ? '/' : window.BASE_PATH),
+		baseUrl: VUE_APP_URL_BASE_API ?? window.BASE_PATH,
 		restEndpoint:
 			!window.REST_ENDPOINT || window.REST_ENDPOINT === '{{REST_ENDPOINT}}'
 				? 'rest'
 				: window.REST_ENDPOINT,
 		defaultLocale: 'en',
+		endpointForm: 'form',
+		endpointFormTest: 'form-test',
+		endpointFormWaiting: 'form-waiting',
 		endpointWebhook: 'webhook',
 		endpointWebhookTest: 'webhook-test',
 		pushConnectionActive: true,
@@ -34,6 +34,18 @@ export const useRootStore = defineStore(STORES.ROOT, {
 	getters: {
 		getBaseUrl(): string {
 			return this.baseUrl;
+		},
+
+		getFormUrl(): string {
+			return `${this.urlBaseWebhook}${this.endpointForm}`;
+		},
+
+		getFormTestUrl(): string {
+			return `${this.urlBaseEditor}${this.endpointFormTest}`;
+		},
+
+		getFormWaitingUrl(): string {
+			return `${this.baseUrl}${this.endpointFormWaiting}`;
 		},
 
 		getWebhookUrl(): string {
@@ -63,57 +75,58 @@ export const useRootStore = defineStore(STORES.ROOT, {
 				sessionId: this.sessionId,
 			};
 		},
-		/**
-		 * Getter for node default names ending with a number: `'S3'`, `'Magento 2'`, etc.
-		 */
-		nativelyNumberSuffixedDefaults: (): string[] => {
-			return useNodeTypesStore().allNodeTypes.reduce<string[]>((acc, cur) => {
-				if (/\d$/.test(cur.defaults.name as string)) acc.push(cur.defaults.name as string);
-				return acc;
-			}, []);
-		},
 	},
 	actions: {
 		setUrlBaseWebhook(urlBaseWebhook: string): void {
 			const url = urlBaseWebhook.endsWith('/') ? urlBaseWebhook : `${urlBaseWebhook}/`;
-			Vue.set(this, 'urlBaseWebhook', url);
+			this.urlBaseWebhook = url;
 		},
 		setUrlBaseEditor(urlBaseEditor: string): void {
 			const url = urlBaseEditor.endsWith('/') ? urlBaseEditor : `${urlBaseEditor}/`;
-			Vue.set(this, 'urlBaseEditor', url);
+			this.urlBaseEditor = url;
+		},
+		setEndpointForm(endpointForm: string): void {
+			this.endpointForm = endpointForm;
+		},
+		setEndpointFormTest(endpointFormTest: string): void {
+			this.endpointFormTest = endpointFormTest;
+		},
+		setEndpointFormWaiting(endpointFormWaiting: string): void {
+			this.endpointFormWaiting = endpointFormWaiting;
 		},
 		setEndpointWebhook(endpointWebhook: string): void {
-			Vue.set(this, 'endpointWebhook', endpointWebhook);
+			this.endpointWebhook = endpointWebhook;
 		},
 		setEndpointWebhookTest(endpointWebhookTest: string): void {
-			Vue.set(this, 'endpointWebhookTest', endpointWebhookTest);
+			this.endpointWebhookTest = endpointWebhookTest;
 		},
 		setTimezone(timezone: string): void {
-			Vue.set(this, 'timezone', timezone);
+			this.timezone = timezone;
+			setGlobalState({ defaultTimezone: timezone });
 		},
 		setExecutionTimeout(executionTimeout: number): void {
-			Vue.set(this, 'executionTimeout', executionTimeout);
+			this.executionTimeout = executionTimeout;
 		},
 		setMaxExecutionTimeout(maxExecutionTimeout: number): void {
-			Vue.set(this, 'maxExecutionTimeout', maxExecutionTimeout);
+			this.maxExecutionTimeout = maxExecutionTimeout;
 		},
 		setVersionCli(version: string): void {
-			Vue.set(this, 'versionCli', version);
+			this.versionCli = version;
 		},
 		setInstanceId(instanceId: string): void {
-			Vue.set(this, 'instanceId', instanceId);
+			this.instanceId = instanceId;
 		},
 		setOauthCallbackUrls(urls: IDataObject): void {
-			Vue.set(this, 'oauthCallbackUrls', urls);
+			this.oauthCallbackUrls = urls;
 		},
 		setN8nMetadata(metadata: IDataObject): void {
-			Vue.set(this, 'n8nMetadata', metadata);
+			this.n8nMetadata = metadata as RootState['n8nMetadata'];
 		},
 		setDefaultLocale(locale: string): void {
-			Vue.set(this, 'defaultLocale', locale);
+			this.defaultLocale = locale;
 		},
 		setIsNpmAvailable(isNpmAvailable: boolean): void {
-			Vue.set(this, 'isNpmAvailable', isNpmAvailable);
+			this.isNpmAvailable = isNpmAvailable;
 		},
 	},
 });

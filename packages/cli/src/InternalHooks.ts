@@ -1,9 +1,5 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { Service } from 'typedi';
 import { snakeCase } from 'change-case';
-import { BinaryDataManager } from 'n8n-core';
 import type {
 	AuthenticationMethod,
 	ExecutionStatus,
@@ -17,7 +13,6 @@ import { TelemetryHelpers } from 'n8n-workflow';
 import { get as pslGet } from 'psl';
 import type {
 	IDiagnosticInfo,
-	IInternalHooksClass,
 	ITelemetryUserDeletionData,
 	IWorkflowDb,
 	IExecutionTrackProperties,
@@ -25,12 +20,16 @@ import type {
 } from '@/Interfaces';
 import { Telemetry } from '@/telemetry';
 import type { AuthProviderType } from '@db/entities/AuthIdentity';
-import { RoleService } from './role/role.service';
 import { eventBus } from './eventbus';
+import { EventsService } from '@/services/events.service';
 import type { User } from '@db/entities/User';
 import { N8N_VERSION } from '@/constants';
-import * as Db from '@/Db';
 import { NodeTypes } from './NodeTypes';
+import type { ExecutionMetadata } from '@db/entities/ExecutionMetadata';
+import { RoleService } from './services/role.service';
+import type { EventPayloadWorkflow } from './eventbus/EventMessageClasses/EventMessageWorkflow';
+import { determineFinalExecutionStatus } from './executionLifecycleHooks/shared/sharedHookFunctions';
+import { InstanceSettings } from 'n8n-core';
 
 function userToPayload(user: User): {
 	userId: string;
@@ -49,18 +48,25 @@ function userToPayload(user: User): {
 }
 
 @Service()
-export class InternalHooks implements IInternalHooksClass {
-	private instanceId: string;
-
+export class InternalHooks {
 	constructor(
 		private telemetry: Telemetry,
 		private nodeTypes: NodeTypes,
 		private roleService: RoleService,
-	) {}
+		eventsService: EventsService,
+		private readonly instanceSettings: InstanceSettings,
+	) {
+		eventsService.on(
+			'telemetry.onFirstProductionWorkflowSuccess',
+			async (metrics) => await this.onFirstProductionWorkflowSuccess(metrics),
+		);
+		eventsService.on(
+			'telemetry.onFirstWorkflowDataLoad',
+			async (metrics) => await this.onFirstWorkflowDataLoad(metrics),
+		);
+	}
 
-	async init(instanceId: string) {
-		this.instanceId = instanceId;
-		this.telemetry.setInstanceId(instanceId);
+	async init() {
 		await this.telemetry.init();
 	}
 
@@ -73,18 +79,18 @@ export class InternalHooks implements IInternalHooksClass {
 			db_type: diagnosticInfo.databaseType,
 			n8n_version_notifications_enabled: diagnosticInfo.notificationsEnabled,
 			n8n_disable_production_main_process: diagnosticInfo.disableProductionWebhooksOnMainProcess,
-			n8n_basic_auth_active: diagnosticInfo.basicAuthActive,
 			system_info: diagnosticInfo.systemInfo,
 			execution_variables: diagnosticInfo.executionVariables,
 			n8n_deployment_type: diagnosticInfo.deploymentType,
 			n8n_binary_data_mode: diagnosticInfo.binaryDataMode,
-			n8n_multi_user_allowed: diagnosticInfo.n8n_multi_user_allowed,
 			smtp_set_up: diagnosticInfo.smtp_set_up,
 			ldap_allowed: diagnosticInfo.ldap_allowed,
 			saml_enabled: diagnosticInfo.saml_enabled,
+			license_plan_name: diagnosticInfo.licensePlanName,
+			license_tenant_id: diagnosticInfo.licenseTenantId,
 		};
 
-		return Promise.all([
+		return await Promise.all([
 			this.telemetry.identify(info),
 			this.telemetry.track('Instance started', {
 				...info,
@@ -94,7 +100,7 @@ export class InternalHooks implements IInternalHooksClass {
 	}
 
 	async onFrontendSettingsAPI(sessionId?: string): Promise<void> {
-		return this.telemetry.track('Session started', { session_id: sessionId });
+		return await this.telemetry.track('Session started', { session_id: sessionId });
 	}
 
 	async onPersonalizationSurveySubmitted(
@@ -107,10 +113,9 @@ export class InternalHooks implements IInternalHooksClass {
 			personalizationSurveyData[snakeCase(camelCaseKey)] = answers[camelCaseKey];
 		});
 
-		return this.telemetry.track(
+		return await this.telemetry.track(
 			'User responded to personalization questions',
 			personalizationSurveyData,
-			{ withPostHog: true },
 		);
 	}
 
@@ -161,7 +166,7 @@ export class InternalHooks implements IInternalHooksClass {
 
 		let userRole: 'owner' | 'sharee' | undefined = undefined;
 		if (user.id && workflow.id) {
-			const role = await this.roleService.getUserRoleForWorkflow(user.id, workflow.id);
+			const role = await this.roleService.findRoleByUserAndWorkflow(user.id, workflow.id);
 			if (role) {
 				userRole = role.name === 'owner' ? 'owner' : 'sharee';
 			}
@@ -176,21 +181,17 @@ export class InternalHooks implements IInternalHooksClass {
 					workflowName: workflow.name,
 				},
 			}),
-			this.telemetry.track(
-				'User saved workflow',
-				{
-					user_id: user.id,
-					workflow_id: workflow.id,
-					node_graph_string: JSON.stringify(nodeGraph),
-					notes_count_overlapping: overlappingCount,
-					notes_count_non_overlapping: notesCount - overlappingCount,
-					version_cli: N8N_VERSION,
-					num_tags: workflow.tags?.length ?? 0,
-					public_api: publicApi,
-					sharing_role: userRole,
-				},
-				{ withPostHog: true },
-			),
+			this.telemetry.track('User saved workflow', {
+				user_id: user.id,
+				workflow_id: workflow.id,
+				node_graph_string: JSON.stringify(nodeGraph),
+				notes_count_overlapping: overlappingCount,
+				notes_count_non_overlapping: notesCount - overlappingCount,
+				version_cli: N8N_VERSION,
+				num_tags: workflow.tags?.length ?? 0,
+				public_api: publicApi,
+				sharing_role: userRole,
+			}),
 		]);
 	}
 
@@ -232,28 +233,49 @@ export class InternalHooks implements IInternalHooksClass {
 
 	async onWorkflowBeforeExecute(
 		executionId: string,
-		data: IWorkflowExecutionDataProcess,
+		data: IWorkflowExecutionDataProcess | IWorkflowBase,
 	): Promise<void> {
-		void Promise.all([
-			Db.collections.Execution.update(executionId, { status: 'running' }),
-			eventBus.sendWorkflowEvent({
-				eventName: 'n8n.workflow.started',
-				payload: {
-					executionId,
-					userId: data.userId,
-					workflowId: data.workflowData.id?.toString(),
-					isManual: data.executionMode === 'manual',
-					workflowName: data.workflowData.name,
-				},
-			}),
-		]);
+		let payload: EventPayloadWorkflow;
+		// this hook is called slightly differently depending on whether it's from a worker or the main instance
+		// in the worker context, meaning in queue mode, only IWorkflowBase is available
+		if ('executionData' in data) {
+			payload = {
+				executionId,
+				userId: data.userId ?? undefined,
+				workflowId: data.workflowData.id?.toString(),
+				isManual: data.executionMode === 'manual',
+				workflowName: data.workflowData.name,
+			};
+		} else {
+			payload = {
+				executionId,
+				userId: undefined,
+				workflowId: (data as IWorkflowBase).id?.toString(),
+				isManual: false,
+				workflowName: (data as IWorkflowBase).name,
+			};
+		}
+		void eventBus.sendWorkflowEvent({
+			eventName: 'n8n.workflow.started',
+			payload,
+		});
 	}
 
 	async onWorkflowCrashed(
 		executionId: string,
 		executionMode: WorkflowExecuteMode,
 		workflowData?: IWorkflowBase,
+		executionMetadata?: ExecutionMetadata[],
 	): Promise<void> {
+		let metaData;
+		try {
+			if (executionMetadata) {
+				metaData = executionMetadata.reduce((acc, meta) => {
+					return { ...acc, [meta.key]: meta.value };
+				}, {});
+			}
+		} catch {}
+
 		void Promise.all([
 			eventBus.sendWorkflowEvent({
 				eventName: 'n8n.workflow.crashed',
@@ -262,6 +284,7 @@ export class InternalHooks implements IInternalHooksClass {
 					isManual: executionMode === 'manual',
 					workflowId: workflowData?.id?.toString(),
 					workflowName: workflowData?.name,
+					metaData,
 				},
 			}),
 		]);
@@ -279,7 +302,7 @@ export class InternalHooks implements IInternalHooksClass {
 
 		const promises = [];
 
-		const properties: IExecutionTrackProperties = {
+		const telemetryProperties: IExecutionTrackProperties = {
 			workflow_id: workflow.id,
 			is_manual: false,
 			version_cli: N8N_VERSION,
@@ -287,39 +310,33 @@ export class InternalHooks implements IInternalHooksClass {
 		};
 
 		if (userId) {
-			properties.user_id = userId;
+			telemetryProperties.user_id = userId;
 		}
 
 		if (runData?.data.resultData.error?.message?.includes('canceled')) {
 			runData.status = 'canceled';
 		}
 
-		properties.success = !!runData?.finished;
+		telemetryProperties.success = !!runData?.finished;
 
-		let executionStatus: ExecutionStatus;
-		if (runData?.status === 'crashed') {
-			executionStatus = 'crashed';
-		} else if (runData?.status === 'waiting' || runData?.data?.waitTill) {
-			executionStatus = 'waiting';
-		} else if (runData?.status === 'canceled') {
-			executionStatus = 'canceled';
-		} else {
-			executionStatus = properties.success ? 'success' : 'failed';
-		}
+		// const executionStatus: ExecutionStatus = runData?.status ?? 'unknown';
+		const executionStatus: ExecutionStatus = runData
+			? determineFinalExecutionStatus(runData)
+			: 'unknown';
 
 		if (runData !== undefined) {
-			properties.execution_mode = runData.mode;
-			properties.is_manual = runData.mode === 'manual';
+			telemetryProperties.execution_mode = runData.mode;
+			telemetryProperties.is_manual = runData.mode === 'manual';
 
 			let nodeGraphResult: INodesGraphResult | null = null;
 
-			if (!properties.success && runData?.data.resultData.error) {
-				properties.error_message = runData?.data.resultData.error.message;
+			if (!telemetryProperties.success && runData?.data.resultData.error) {
+				telemetryProperties.error_message = runData?.data.resultData.error.message;
 				let errorNodeName =
 					'node' in runData?.data.resultData.error
 						? runData?.data.resultData.error.node?.name
 						: undefined;
-				properties.error_node_type =
+				telemetryProperties.error_node_type =
 					'node' in runData?.data.resultData.error
 						? runData?.data.resultData.error.node?.type
 						: undefined;
@@ -331,30 +348,30 @@ export class InternalHooks implements IInternalHooksClass {
 					);
 
 					if (lastNode !== undefined) {
-						properties.error_node_type = lastNode.type;
+						telemetryProperties.error_node_type = lastNode.type;
 						errorNodeName = lastNode.name;
 					}
 				}
 
-				if (properties.is_manual) {
+				if (telemetryProperties.is_manual) {
 					nodeGraphResult = TelemetryHelpers.generateNodesGraph(workflow, this.nodeTypes);
-					properties.node_graph = nodeGraphResult.nodeGraph;
-					properties.node_graph_string = JSON.stringify(nodeGraphResult.nodeGraph);
+					telemetryProperties.node_graph = nodeGraphResult.nodeGraph;
+					telemetryProperties.node_graph_string = JSON.stringify(nodeGraphResult.nodeGraph);
 
 					if (errorNodeName) {
-						properties.error_node_id = nodeGraphResult.nameIndices[errorNodeName];
+						telemetryProperties.error_node_id = nodeGraphResult.nameIndices[errorNodeName];
 					}
 				}
 			}
 
-			if (properties.is_manual) {
+			if (telemetryProperties.is_manual) {
 				if (!nodeGraphResult) {
 					nodeGraphResult = TelemetryHelpers.generateNodesGraph(workflow, this.nodeTypes);
 				}
 
 				let userRole: 'owner' | 'sharee' | undefined = undefined;
 				if (userId) {
-					const role = await this.roleService.getUserRoleForWorkflow(userId, workflow.id);
+					const role = await this.roleService.findRoleByUserAndWorkflow(userId, workflow.id);
 					if (role) {
 						userRole = role.name === 'owner' ? 'owner' : 'sharee';
 					}
@@ -365,10 +382,10 @@ export class InternalHooks implements IInternalHooksClass {
 					workflow_id: workflow.id,
 					status: executionStatus,
 					executionStatus: runData?.status ?? 'unknown',
-					error_message: properties.error_message as string,
-					error_node_type: properties.error_node_type,
-					node_graph_string: properties.node_graph_string as string,
-					error_node_id: properties.error_node_id as string,
+					error_message: telemetryProperties.error_message as string,
+					error_node_type: telemetryProperties.error_node_type,
+					node_graph_string: telemetryProperties.node_graph_string as string,
+					error_node_id: telemetryProperties.error_node_id as string,
 					webhook_domain: null,
 					sharing_role: userRole,
 				};
@@ -388,11 +405,7 @@ export class InternalHooks implements IInternalHooksClass {
 						node_id: nodeGraphResult.nameIndices[runData.data.startData?.destinationNode],
 					};
 
-					promises.push(
-						this.telemetry.track('Manual node exec finished', telemetryPayload, {
-							withPostHog: true,
-						}),
-					);
+					promises.push(this.telemetry.track('Manual node exec finished', telemetryPayload));
 				} else {
 					nodeGraphResult.webhookNodeNames.forEach((name: string) => {
 						const execJson = runData.data.resultData.runData[name]?.[0]?.data?.main?.[0]?.[0]
@@ -405,53 +418,40 @@ export class InternalHooks implements IInternalHooksClass {
 					});
 
 					promises.push(
-						this.telemetry.track('Manual workflow exec finished', manualExecEventProperties, {
-							withPostHog: true,
-						}),
+						this.telemetry.track('Manual workflow exec finished', manualExecEventProperties),
 					);
 				}
 			}
 		}
 
+		const sharedEventPayload: EventPayloadWorkflow = {
+			executionId,
+			success: telemetryProperties.success,
+			userId: telemetryProperties.user_id,
+			workflowId: workflow.id,
+			isManual: telemetryProperties.is_manual,
+			workflowName: workflow.name,
+			metaData: runData?.data?.resultData?.metadata,
+		};
 		promises.push(
-			Db.collections.Execution.update(executionId, {
-				status: executionStatus,
-			}) as unknown as Promise<void>,
-		);
-
-		promises.push(
-			properties.success
+			telemetryProperties.success
 				? eventBus.sendWorkflowEvent({
 						eventName: 'n8n.workflow.success',
-						payload: {
-							executionId,
-							success: properties.success,
-							userId: properties.user_id,
-							workflowId: properties.workflow_id,
-							isManual: properties.is_manual,
-							workflowName: workflow.name,
-						},
+						payload: sharedEventPayload,
 				  })
 				: eventBus.sendWorkflowEvent({
 						eventName: 'n8n.workflow.failed',
 						payload: {
-							executionId,
-							success: properties.success,
-							userId: properties.user_id,
-							workflowId: properties.workflow_id,
+							...sharedEventPayload,
 							lastNodeExecuted: runData?.data.resultData.lastNodeExecuted,
-							errorNodeType: properties.error_node_type,
-							errorNodeId: properties.error_node_id?.toString(),
-							errorMessage: properties.error_message?.toString(),
-							isManual: properties.is_manual,
-							workflowName: workflow.name,
+							errorNodeType: telemetryProperties.error_node_type,
+							errorNodeId: telemetryProperties.error_node_id?.toString(),
+							errorMessage: telemetryProperties.error_message?.toString(),
 						},
 				  }),
 		);
 
-		await BinaryDataManager.getInstance().persistBinaryDataForExecutionId(executionId);
-
-		void Promise.all([...promises, this.telemetry.trackWorkflowExecution(properties)]);
+		void Promise.all([...promises, this.telemetry.trackWorkflowExecution(telemetryProperties)]);
 	}
 
 	async onWorkflowSharingUpdate(workflowId: string, userId: string, userList: string[]) {
@@ -461,7 +461,7 @@ export class InternalHooks implements IInternalHooksClass {
 			user_id_list: userList,
 		};
 
-		return this.telemetry.track('User updated workflow sharing', properties, { withPostHog: true });
+		return await this.telemetry.track('User updated workflow sharing', properties);
 	}
 
 	async onN8nStop(): Promise<void> {
@@ -471,7 +471,7 @@ export class InternalHooks implements IInternalHooksClass {
 			}, 3000);
 		});
 
-		return Promise.race([timeoutPromise, this.telemetry.trackN8nStop()]);
+		return await Promise.race([timeoutPromise, this.telemetry.trackN8nStop()]);
 	}
 
 	async onUserDeletion(userDeletionData: {
@@ -499,6 +499,7 @@ export class InternalHooks implements IInternalHooksClass {
 		target_user_id: string[];
 		public_api: boolean;
 		email_sent: boolean;
+		invitee_role: string;
 	}): Promise<void> {
 		void Promise.all([
 			eventBus.sendAuditEvent({
@@ -508,13 +509,26 @@ export class InternalHooks implements IInternalHooksClass {
 					targetUserId: userInviteData.target_user_id,
 				},
 			}),
+
 			this.telemetry.track('User invited new user', {
 				user_id: userInviteData.user.id,
 				target_user_id: userInviteData.target_user_id,
 				public_api: userInviteData.public_api,
 				email_sent: userInviteData.email_sent,
+				invitee_role: userInviteData.invitee_role,
 			}),
 		]);
+	}
+
+	async onUserRoleChange(userRoleChangeData: {
+		user: User;
+		target_user_id: string;
+		public_api: boolean;
+		target_user_new_role: string;
+	}) {
+		const { user, ...rest } = userRoleChangeData;
+
+		void this.telemetry.track('User changed role', { user_id: user.id, ...rest });
 	}
 
 	async onUserReinvite(userReinviteData: {
@@ -542,42 +556,42 @@ export class InternalHooks implements IInternalHooksClass {
 		user_id: string;
 		public_api: boolean;
 	}): Promise<void> {
-		return this.telemetry.track('User retrieved user', userRetrievedData);
+		return await this.telemetry.track('User retrieved user', userRetrievedData);
 	}
 
 	async onUserRetrievedAllUsers(userRetrievedData: {
 		user_id: string;
 		public_api: boolean;
 	}): Promise<void> {
-		return this.telemetry.track('User retrieved all users', userRetrievedData);
+		return await this.telemetry.track('User retrieved all users', userRetrievedData);
 	}
 
 	async onUserRetrievedExecution(userRetrievedData: {
 		user_id: string;
 		public_api: boolean;
 	}): Promise<void> {
-		return this.telemetry.track('User retrieved execution', userRetrievedData);
+		return await this.telemetry.track('User retrieved execution', userRetrievedData);
 	}
 
 	async onUserRetrievedAllExecutions(userRetrievedData: {
 		user_id: string;
 		public_api: boolean;
 	}): Promise<void> {
-		return this.telemetry.track('User retrieved all executions', userRetrievedData);
+		return await this.telemetry.track('User retrieved all executions', userRetrievedData);
 	}
 
 	async onUserRetrievedWorkflow(userRetrievedData: {
 		user_id: string;
 		public_api: boolean;
 	}): Promise<void> {
-		return this.telemetry.track('User retrieved workflow', userRetrievedData);
+		return await this.telemetry.track('User retrieved workflow', userRetrievedData);
 	}
 
 	async onUserRetrievedAllWorkflows(userRetrievedData: {
 		user_id: string;
 		public_api: boolean;
 	}): Promise<void> {
-		return this.telemetry.track('User retrieved all workflows', userRetrievedData);
+		return await this.telemetry.track('User retrieved all workflows', userRetrievedData);
 	}
 
 	async onUserUpdate(userUpdateData: { user: User; fields_changed: string[] }): Promise<void> {
@@ -637,7 +651,7 @@ export class InternalHooks implements IInternalHooksClass {
 		message_type: 'Reset password' | 'New user invite' | 'Resend invite';
 		public_api: boolean;
 	}): Promise<void> {
-		return this.telemetry.track(
+		return await this.telemetry.track(
 			'Instance sent transactional email to user',
 			userTransactionalEmailData,
 		);
@@ -649,7 +663,7 @@ export class InternalHooks implements IInternalHooksClass {
 		method: string;
 		api_version: string;
 	}): Promise<void> {
-		return this.telemetry.track('User invoked API', userInvokedApiData);
+		return await this.telemetry.track('User invoked API', userInvokedApiData);
 	}
 
 	async onApiKeyDeleted(apiKeyDeletedData: { user: User; public_api: boolean }): Promise<void> {
@@ -697,7 +711,7 @@ export class InternalHooks implements IInternalHooksClass {
 	}
 
 	async onInstanceOwnerSetup(instanceOwnerSetupData: { user_id: string }): Promise<void> {
-		return this.telemetry.track('Owner finished instance setup', instanceOwnerSetupData);
+		return await this.telemetry.track('Owner finished instance setup', instanceOwnerSetupData);
 	}
 
 	async onUserSignup(
@@ -797,7 +811,7 @@ export class InternalHooks implements IInternalHooksClass {
 				user_id: userCreatedCredentialsData.user.id,
 				credential_type: userCreatedCredentialsData.credential_type,
 				credential_id: userCreatedCredentialsData.credential_id,
-				instance_id: this.instanceId,
+				instance_id: this.instanceSettings.instanceId,
 			}),
 		]);
 	}
@@ -831,7 +845,7 @@ export class InternalHooks implements IInternalHooksClass {
 				user_id_sharer: userSharedCredentialsData.user_id_sharer,
 				user_ids_sharees_added: userSharedCredentialsData.user_ids_sharees_added,
 				sharees_removed: userSharedCredentialsData.sharees_removed,
-				instance_id: this.instanceId,
+				instance_id: this.instanceSettings.instanceId,
 			}),
 		]);
 	}
@@ -951,15 +965,7 @@ export class InternalHooks implements IInternalHooksClass {
 		users_synced: number;
 		error: string;
 	}): Promise<void> {
-		return this.telemetry.track('Ldap general sync finished', data);
-	}
-
-	async onLdapUsersDisabled(data: {
-		reason: 'ldap_update' | 'ldap_feature_deactivated';
-		users: number;
-		user_ids: string[];
-	}): Promise<void> {
-		return this.telemetry.track('Ldap users disabled', data);
+		return await this.telemetry.track('Ldap general sync finished', data);
 	}
 
 	async onUserUpdatedLdapSettings(data: {
@@ -976,15 +982,15 @@ export class InternalHooks implements IInternalHooksClass {
 		loginLabel: string;
 		loginEnabled: boolean;
 	}): Promise<void> {
-		return this.telemetry.track('Ldap general sync finished', data);
+		return await this.telemetry.track('Ldap general sync finished', data);
 	}
 
 	async onLdapLoginSyncFailed(data: { error: string }): Promise<void> {
-		return this.telemetry.track('Ldap login sync failed', data);
+		return await this.telemetry.track('Ldap login sync failed', data);
 	}
 
 	async userLoginFailedDueToLdapDisabled(data: { user_id: string }): Promise<void> {
-		return this.telemetry.track('User login failed since ldap disabled', data);
+		return await this.telemetry.track('User login failed since ldap disabled', data);
 	}
 
 	/*
@@ -994,7 +1000,7 @@ export class InternalHooks implements IInternalHooksClass {
 		user_id: string;
 		workflow_id: string;
 	}): Promise<void> {
-		return this.telemetry.track('Workflow first prod success', data, { withPostHog: true });
+		return await this.telemetry.track('Workflow first prod success', data);
 	}
 
 	async onFirstWorkflowDataLoad(data: {
@@ -1005,7 +1011,7 @@ export class InternalHooks implements IInternalHooksClass {
 		credential_type?: string;
 		credential_id?: string;
 	}): Promise<void> {
-		return this.telemetry.track('Workflow first data fetched', data, { withPostHog: true });
+		return await this.telemetry.track('Workflow first data fetched', data);
 	}
 
 	/**
@@ -1019,10 +1025,69 @@ export class InternalHooks implements IInternalHooksClass {
 	 * Audit
 	 */
 	async onAuditGeneratedViaCli() {
-		return this.telemetry.track('Instance generated security audit via CLI command');
+		return await this.telemetry.track('Instance generated security audit via CLI command');
 	}
 
 	async onVariableCreated(createData: { variable_type: string }): Promise<void> {
-		return this.telemetry.track('User created variable', createData);
+		return await this.telemetry.track('User created variable', createData);
+	}
+
+	async onSourceControlSettingsUpdated(data: {
+		branch_name: string;
+		read_only_instance: boolean;
+		repo_type: 'github' | 'gitlab' | 'other';
+		connected: boolean;
+	}): Promise<void> {
+		return await this.telemetry.track('User updated source control settings', data);
+	}
+
+	async onSourceControlUserStartedPullUI(data: {
+		workflow_updates: number;
+		workflow_conflicts: number;
+		cred_conflicts: number;
+	}): Promise<void> {
+		return await this.telemetry.track('User started pull via UI', data);
+	}
+
+	async onSourceControlUserFinishedPullUI(data: { workflow_updates: number }): Promise<void> {
+		return await this.telemetry.track('User finished pull via UI', {
+			workflow_updates: data.workflow_updates,
+		});
+	}
+
+	async onSourceControlUserPulledAPI(data: {
+		workflow_updates: number;
+		forced: boolean;
+	}): Promise<void> {
+		return await this.telemetry.track('User pulled via API', data);
+	}
+
+	async onSourceControlUserStartedPushUI(data: {
+		workflows_eligible: number;
+		workflows_eligible_with_conflicts: number;
+		creds_eligible: number;
+		creds_eligible_with_conflicts: number;
+		variables_eligible: number;
+	}): Promise<void> {
+		return await this.telemetry.track('User started push via UI', data);
+	}
+
+	async onSourceControlUserFinishedPushUI(data: {
+		workflows_eligible: number;
+		workflows_pushed: number;
+		creds_pushed: number;
+		variables_pushed: number;
+	}): Promise<void> {
+		return await this.telemetry.track('User finished push via UI', data);
+	}
+
+	async onExternalSecretsProviderSettingsSaved(saveData: {
+		user_id?: string | undefined;
+		vault_type: string;
+		is_valid: boolean;
+		is_new: boolean;
+		error_message?: string | undefined;
+	}): Promise<void> {
+		return await this.telemetry.track('User updated external secrets settings', saveData);
 	}
 }

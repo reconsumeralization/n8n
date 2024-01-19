@@ -1,10 +1,11 @@
 import type { ISettingsState } from '@/Interface';
 import { UserManagementAuthenticationMethod } from '@/Interface';
-import { render } from '@testing-library/vue';
-import { PiniaVuePlugin } from 'pinia';
 
-export const retry = async (assertion: () => any, { interval = 20, timeout = 200 } = {}) => {
-	return new Promise((resolve, reject) => {
+export const retry = async (
+	assertion: () => ReturnType<typeof expect>,
+	{ interval = 20, timeout = 1000 } = {},
+) => {
+	return await new Promise((resolve, reject) => {
 		const startTime = Date.now();
 
 		const tryAgain = () => {
@@ -21,20 +22,16 @@ export const retry = async (assertion: () => any, { interval = 20, timeout = 200
 	});
 };
 
-type RenderParams = Parameters<typeof render>;
-export const renderComponent = (Component: RenderParams[0], renderOptions: RenderParams[1] = {}) =>
-	render(Component, renderOptions, (vue) => {
-		vue.use(PiniaVuePlugin);
-	});
-
-export const waitAllPromises = async () => new Promise((resolve) => setTimeout(resolve));
+export const waitAllPromises = async () => await new Promise((resolve) => setTimeout(resolve));
 
 export const SETTINGS_STORE_DEFAULT_STATE: ISettingsState = {
 	settings: {
-		userActivationSurveyEnabled: false,
 		allowedModules: {},
 		communityNodesEnabled: false,
 		defaultLocale: '',
+		endpointForm: '',
+		endpointFormTest: '',
+		endpointFormWaiting: '',
 		endpointWebhook: '',
 		endpointWebhookTest: '',
 		enterprise: {
@@ -44,7 +41,8 @@ export const SETTINGS_STORE_DEFAULT_STATE: ISettingsState = {
 			saml: false,
 			logStreaming: false,
 			variables: false,
-			versionControl: false,
+			sourceControl: false,
+			auditLogs: false,
 		},
 		executionMode: 'regular',
 		executionTimeout: 0,
@@ -98,6 +96,19 @@ export const SETTINGS_STORE_DEFAULT_STATE: ISettingsState = {
 		},
 		variables: {
 			limit: 100,
+		},
+		expressions: {
+			evaluator: 'tournament',
+		},
+		banners: {
+			dismissed: [],
+		},
+		ai: {
+			enabled: false,
+		},
+		workflowHistory: {
+			pruneTime: -1,
+			licensePruneTime: -1,
 		},
 	},
 	promptsData: {

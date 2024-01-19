@@ -8,7 +8,7 @@ import type {
 	INodePropertyOptions,
 } from 'n8n-workflow';
 
-import get from 'lodash.get';
+import get from 'lodash/get';
 
 /**
  * Make an API request to Asana
@@ -27,14 +27,14 @@ export async function asanaApiRequest(
 	const options: IHttpRequestOptions = {
 		headers: {},
 		method,
-		body: { data: body },
+		body: method === 'GET' || method === 'HEAD' || method === 'DELETE' ? null : { data: body },
 		qs: query,
 		url: uri || `https://app.asana.com/api/1.0${endpoint}`,
 		json: true,
 	};
 
 	const credentialType = authenticationMethod === 'accessToken' ? 'asanaApi' : 'asanaOAuth2Api';
-	return this.helpers.requestWithAuthentication.call(this, credentialType, options);
+	return await this.helpers.requestWithAuthentication.call(this, credentialType, options);
 }
 
 export async function asanaApiRequestAllItems(

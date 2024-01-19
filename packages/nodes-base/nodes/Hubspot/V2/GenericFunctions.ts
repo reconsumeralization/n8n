@@ -5,17 +5,16 @@ import type {
 	ICredentialTestFunctions,
 	IDataObject,
 	IExecuteFunctions,
-	IExecuteSingleFunctions,
 	IHookFunctions,
 	ILoadOptionsFunctions,
 	JsonObject,
 } from 'n8n-workflow';
 import { NodeApiError } from 'n8n-workflow';
 
-import moment from 'moment';
+import moment from 'moment-timezone';
 
 export async function hubspotApiRequest(
-	this: IHookFunctions | IExecuteFunctions | IExecuteSingleFunctions | ILoadOptionsFunctions,
+	this: IHookFunctions | IExecuteFunctions | ILoadOptionsFunctions,
 	method: string,
 	endpoint: string,
 
@@ -2005,5 +2004,5 @@ export async function validateCredentials(
 		options.headers = { Authorization: `Bearer ${appToken}` };
 	}
 
-	return this.helpers.request(options);
+	return await this.helpers.request(options);
 }

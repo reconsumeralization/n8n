@@ -18,22 +18,24 @@
 		<n8n-menu :items="mainMenuItems" :collapsed="isCollapsed" @select="handleSelect">
 			<template #header>
 				<div :class="$style.logo">
-					<img
-						:src="basePath + (isCollapsed ? 'n8n-logo-collapsed.svg' : 'n8n-logo-expanded.svg')"
-						:class="$style.icon"
-						alt="n8n"
-					/>
+					<img :src="logoPath" data-test-id="n8n-logo" :class="$style.icon" alt="n8n" />
 				</div>
 			</template>
 
 			<template #beforeLowerMenu>
+				<BecomeTemplateCreatorCta v-if="fullyExpanded && !userIsTrialing" />
 				<ExecutionsUsage
+					v-if="fullyExpanded && userIsTrialing"
 					:cloud-plan-data="currentPlanAndUsageData"
-					v-if="!isCollapsed && userIsTrialing"
 			/></template>
 			<template #menuSuffix>
-				<div v-if="hasVersionUpdates || versionControlStore.state.currentBranch">
-					<div v-if="hasVersionUpdates" :class="$style.updates" @click="openUpdatesPanel">
+				<div>
+					<div
+						v-if="hasVersionUpdates"
+						data-test-id="version-updates-panel-button"
+						:class="$style.updates"
+						@click="openUpdatesPanel"
+					>
 						<div :class="$style.giftContainer">
 							<GiftNotificationIcon />
 						</div>
@@ -46,27 +48,10 @@
 							}}
 						</n8n-text>
 					</div>
-					<div :class="$style.sync" v-if="versionControlStore.state.currentBranch">
-						<span>
-							<n8n-icon icon="code-branch" class="mr-xs" />
-							{{ currentBranch }}
-						</span>
-						<n8n-button
-							:title="
-								$locale.baseText('settings.versionControl.sync.prompt.title', {
-									interpolate: { branch: currentBranch },
-								})
-							"
-							icon="sync"
-							type="tertiary"
-							:size="isCollapsed ? 'mini' : 'small'"
-							square
-							@click="sync"
-						/>
-					</div>
+					<MainSidebarSourceControl :is-collapsed="isCollapsed" />
 				</div>
 			</template>
-			<template #footer v-if="showUserArea">
+			<template v-if="showUserArea" #footer>
 				<div :class="$style.userArea">
 					<div class="ml-3xs" data-test-id="main-sidebar-user-menu">
 						<!-- This dropdown is only enabled when sidebar is collapsed -->
@@ -78,8 +63,8 @@
 						>
 							<div :class="{ [$style.avatar]: true, ['clickable']: isCollapsed }">
 								<n8n-avatar
-									:firstName="usersStore.currentUser.firstName"
-									:lastName="usersStore.currentUser.lastName"
+									:first-name="usersStore.currentUser.firstName"
+									:last-name="usersStore.currentUser.lastName"
 									size="small"
 								/>
 							</div>
@@ -106,6 +91,7 @@
 						<n8n-action-dropdown
 							:items="userMenuItems"
 							placement="top-start"
+							data-test-id="user-menu"
 							@select="onUserActionToggle"
 						/>
 					</div>
@@ -117,41 +103,47 @@
 
 <script lang="ts">
 import type { CloudPlanAndUsageData, IExecutionResponse, IMenuItem, IVersion } from '@/Interface';
-import type { MessageBoxInputData } from 'element-ui/types/message-box';
 import GiftNotificationIcon from './GiftNotificationIcon.vue';
 
-import { genericHelpers } from '@/mixins/genericHelpers';
-import { useMessage } from '@/composables';
-import { workflowHelpers } from '@/mixins/workflowHelpers';
-import { workflowRun } from '@/mixins/workflowRun';
-
+import { useMessage } from '@/composables/useMessage';
 import { ABOUT_MODAL_KEY, VERSIONS_MODAL_KEY, VIEWS } from '@/constants';
 import { userHelpers } from '@/mixins/userHelpers';
-import { debounceHelper } from '@/mixins/debounce';
-import Vue, { defineComponent } from 'vue';
+import { defineComponent } from 'vue';
 import { mapStores } from 'pinia';
-import { useUIStore } from '@/stores/ui.store';
-import { useSettingsStore } from '@/stores/settings.store';
-import { useUsersStore } from '@/stores/users.store';
-import { useWorkflowsStore } from '@/stores/workflows.store';
-import { useRootStore } from '@/stores/n8nRoot.store';
-import { useVersionsStore } from '@/stores/versions.store';
-import { isNavigationFailure } from 'vue-router';
-import { useVersionControlStore } from '@/stores/versionControl.store';
-import ExecutionsUsage from '@/components/ExecutionsUsage.vue';
 import { useCloudPlanStore } from '@/stores/cloudPlan.store';
+import { useRootStore } from '@/stores/n8nRoot.store';
+import { useSettingsStore } from '@/stores/settings.store';
+import { useSourceControlStore } from '@/stores/sourceControl.store';
+import { useUIStore } from '@/stores/ui.store';
+import { useUsersStore } from '@/stores/users.store';
+import { useVersionsStore } from '@/stores/versions.store';
+import { useWorkflowsStore } from '@/stores/workflows.store';
+import { isNavigationFailure } from 'vue-router';
+import ExecutionsUsage from '@/components/ExecutionsUsage.vue';
+import BecomeTemplateCreatorCta from '@/components/BecomeTemplateCreatorCta/BecomeTemplateCreatorCta.vue';
+import MainSidebarSourceControl from '@/components/MainSidebarSourceControl.vue';
+import { hasPermission } from '@/rbac/permissions';
+import { useExternalHooks } from '@/composables/useExternalHooks';
+import { useDebounce } from '@/composables/useDebounce';
+import { useBecomeTemplateCreatorStore } from '@/components/BecomeTemplateCreatorCta/becomeTemplateCreatorStore';
 
 export default defineComponent({
 	name: 'MainSidebar',
 	components: {
 		GiftNotificationIcon,
 		ExecutionsUsage,
+		MainSidebarSourceControl,
+		BecomeTemplateCreatorCta,
 	},
-	mixins: [genericHelpers, workflowHelpers, workflowRun, userHelpers, debounceHelper],
-	setup(props) {
+	mixins: [userHelpers],
+	setup(props, ctx) {
+		const externalHooks = useExternalHooks();
+		const { callDebounced } = useDebounce();
+
 		return {
+			externalHooks,
+			callDebounced,
 			...useMessage(),
-			...workflowRun.setup?.(props),
 		};
 	},
 	data() {
@@ -168,14 +160,20 @@ export default defineComponent({
 			useUsersStore,
 			useVersionsStore,
 			useWorkflowsStore,
-			useVersionControlStore,
 			useCloudPlanStore,
+			useSourceControlStore,
+			useBecomeTemplateCreatorStore,
 		),
-		currentBranch(): string {
-			return this.versionControlStore.state.currentBranch;
+		logoPath(): string {
+			if (this.isCollapsed) return this.basePath + 'n8n-logo-collapsed.svg';
+
+			return this.basePath + this.uiStore.logo;
 		},
 		hasVersionUpdates(): boolean {
-			return this.versionsStore.hasVersionUpdates;
+			return (
+				this.settingsStore.settings.releaseChannel === 'stable' &&
+				this.versionsStore.hasVersionUpdates
+			);
 		},
 		nextVersions(): IVersion[] {
 			return this.versionsStore.nextVersions;
@@ -188,11 +186,7 @@ export default defineComponent({
 			return accessibleRoute !== null;
 		},
 		showUserArea(): boolean {
-			return (
-				this.settingsStore.isUserManagementEnabled &&
-				this.usersStore.canUserAccessSidebarUserInfo &&
-				this.usersStore.currentUser !== null
-			);
+			return hasPermission(['authenticated']);
 		},
 		workflowExecution(): IExecutionResponse | null {
 			return this.workflowsStore.getWorkflowExecution;
@@ -213,14 +207,29 @@ export default defineComponent({
 			const items: IMenuItem[] = [];
 			const injectedItems = this.uiStore.sidebarMenuItems;
 
+			const workflows: IMenuItem = {
+				id: 'workflows',
+				icon: 'network-wired',
+				label: this.$locale.baseText('mainSidebar.workflows'),
+				position: 'top',
+				activateOnRouteNames: [VIEWS.WORKFLOWS],
+			};
+
+			if (this.sourceControlStore.preferences.branchReadOnly) {
+				workflows.secondaryIcon = {
+					name: 'lock',
+					tooltip: {
+						content: this.$locale.baseText('mainSidebar.workflows.readOnlyEnv.tooltip'),
+					},
+				};
+			}
+
 			if (injectedItems && injectedItems.length > 0) {
 				for (const item of injectedItems) {
 					items.push({
 						id: item.id,
-						// @ts-ignore
-						icon: item.properties ? item.properties.icon : '',
-						// @ts-ignore
-						label: item.properties ? item.properties.title : '',
+						icon: item.icon || '',
+						label: item.label || '',
 						position: item.position,
 						type: item.properties?.href ? 'link' : 'regular',
 						properties: item.properties,
@@ -229,13 +238,7 @@ export default defineComponent({
 			}
 
 			const regularItems: IMenuItem[] = [
-				{
-					id: 'workflows',
-					icon: 'network-wired',
-					label: this.$locale.baseText('mainSidebar.workflows'),
-					position: 'top',
-					activateOnRouteNames: [VIEWS.WORKFLOWS],
-				},
+				workflows,
 				{
 					id: 'templates',
 					icon: 'box-open',
@@ -268,6 +271,14 @@ export default defineComponent({
 					activateOnRouteNames: [VIEWS.EXECUTIONS],
 				},
 				{
+					id: 'cloud-admin',
+					type: 'link',
+					position: 'bottom',
+					label: 'Admin Panel',
+					icon: 'home',
+					available: this.settingsStore.isCloudDeployment && hasPermission(['instanceOwner']),
+				},
+				{
 					id: 'settings',
 					icon: 'cog',
 					label: this.$locale.baseText('settings'),
@@ -297,7 +308,7 @@ export default defineComponent({
 							label: this.$locale.baseText('mainSidebar.helpMenuItems.documentation'),
 							type: 'link',
 							properties: {
-								href: 'https://docs.n8n.io',
+								href: 'https://docs.n8n.io?utm_source=n8n_app&utm_medium=app_sidebar',
 								newWindow: true,
 							},
 						},
@@ -307,7 +318,7 @@ export default defineComponent({
 							label: this.$locale.baseText('mainSidebar.helpMenuItems.forum'),
 							type: 'link',
 							properties: {
-								href: 'https://community.n8n.io',
+								href: 'https://community.n8n.io?utm_source=n8n_app&utm_medium=app_sidebar',
 								newWindow: true,
 							},
 						},
@@ -348,20 +359,28 @@ export default defineComponent({
 	async mounted() {
 		this.basePath = this.rootStore.baseUrl;
 		if (this.$refs.user) {
-			void this.$externalHooks().run('mainSidebar.mounted', { userRef: this.$refs.user });
+			void this.externalHooks.run('mainSidebar.mounted', {
+				userRef: this.$refs.user as Element,
+			});
 		}
-		if (window.innerWidth < 900 || this.uiStore.isNodeView) {
-			this.uiStore.sidebarMenuCollapsed = true;
-		} else {
-			this.uiStore.sidebarMenuCollapsed = false;
-		}
-		await Vue.nextTick();
-		this.fullyExpanded = !this.isCollapsed;
+
+		void this.$nextTick(() => {
+			if (window.innerWidth < 900 || this.uiStore.isNodeView) {
+				this.uiStore.sidebarMenuCollapsed = true;
+			} else {
+				this.uiStore.sidebarMenuCollapsed = false;
+			}
+
+			this.fullyExpanded = !this.isCollapsed;
+		});
+
+		this.becomeTemplateCreatorStore.startMonitoringCta();
 	},
 	created() {
 		window.addEventListener('resize', this.onResize);
 	},
-	destroyed() {
+	beforeUnmount() {
+		this.becomeTemplateCreatorStore.stopMonitoringCta();
 		window.removeEventListener('resize', this.onResize);
 	},
 	methods: {
@@ -403,31 +422,31 @@ export default defineComponent({
 		async handleSelect(key: string) {
 			switch (key) {
 				case 'workflows': {
-					if (this.$router.currentRoute.name !== VIEWS.WORKFLOWS) {
+					if (this.$router.currentRoute.value.name !== VIEWS.WORKFLOWS) {
 						this.goToRoute({ name: VIEWS.WORKFLOWS });
 					}
 					break;
 				}
 				case 'templates': {
-					if (this.$router.currentRoute.name !== VIEWS.TEMPLATES) {
+					if (this.$router.currentRoute.value.name !== VIEWS.TEMPLATES) {
 						this.goToRoute({ name: VIEWS.TEMPLATES });
 					}
 					break;
 				}
 				case 'credentials': {
-					if (this.$router.currentRoute.name !== VIEWS.CREDENTIALS) {
+					if (this.$router.currentRoute.value.name !== VIEWS.CREDENTIALS) {
 						this.goToRoute({ name: VIEWS.CREDENTIALS });
 					}
 					break;
 				}
 				case 'variables': {
-					if (this.$router.currentRoute.name !== VIEWS.VARIABLES) {
+					if (this.$router.currentRoute.value.name !== VIEWS.VARIABLES) {
 						this.goToRoute({ name: VIEWS.VARIABLES });
 					}
 					break;
 				}
 				case 'executions': {
-					if (this.$router.currentRoute.name !== VIEWS.EXECUTIONS) {
+					if (this.$router.currentRoute.value.name !== VIEWS.EXECUTIONS) {
 						this.goToRoute({ name: VIEWS.EXECUTIONS });
 					}
 					break;
@@ -435,9 +454,9 @@ export default defineComponent({
 				case 'settings': {
 					const defaultRoute = this.findFirstAccessibleSettingsRoute();
 					if (defaultRoute) {
-						const routeProps = this.$router.resolve({ name: defaultRoute });
-						if (this.$router.currentRoute.name !== defaultRoute) {
-							this.goToRoute(routeProps.route.path);
+						const route = this.$router.resolve({ name: defaultRoute });
+						if (this.$router.currentRoute.value.name !== defaultRoute) {
+							this.goToRoute(route.path);
 						}
 					}
 					break;
@@ -445,6 +464,10 @@ export default defineComponent({
 				case 'about': {
 					this.trackHelpItemClick('about');
 					this.uiStore.openModal(ABOUT_MODAL_KEY);
+					break;
+				}
+				case 'cloud-admin': {
+					void this.cloudPlanStore.redirectToDashboard();
 					break;
 				}
 				case 'quickstart':
@@ -460,6 +483,7 @@ export default defineComponent({
 		},
 		goToRoute(route: string | { name: string }) {
 			this.$router.push(route).catch((failure) => {
+				console.log(failure);
 				// Catch navigation failures caused by route guards
 				if (!isNavigationFailure(failure)) {
 					console.error(failure);
@@ -467,60 +491,33 @@ export default defineComponent({
 			});
 		},
 		findFirstAccessibleSettingsRoute() {
-			// Get all settings rotes by filtering them by pageCategory property
 			const settingsRoutes = this.$router
 				.getRoutes()
-				.filter(
-					(category) =>
-						category.meta.telemetry && category.meta.telemetry.pageCategory === 'settings',
-				)
-				.map((route) => route.name || '');
-			let defaultSettingsRoute = null;
+				.find((route) => route.path === '/settings')!
+				.children.map((route) => route.name || '');
 
+			let defaultSettingsRoute = null;
 			for (const route of settingsRoutes) {
-				if (this.canUserAccessRouteByName(route)) {
+				if (this.canUserAccessRouteByName(route.toString())) {
 					defaultSettingsRoute = route;
 					break;
 				}
 			}
+
 			return defaultSettingsRoute;
 		},
 		onResize(event: UIEvent) {
-			void this.callDebounced('onResizeEnd', { debounceTime: 100 }, event);
+			void this.callDebounced(this.onResizeEnd, { debounceTime: 100 }, event);
 		},
-		onResizeEnd(event: UIEvent) {
+		async onResizeEnd(event: UIEvent) {
 			const browserWidth = (event.target as Window).outerWidth;
-			this.checkWidthAndAdjustSidebar(browserWidth);
+			await this.checkWidthAndAdjustSidebar(browserWidth);
 		},
-		checkWidthAndAdjustSidebar(width: number) {
+		async checkWidthAndAdjustSidebar(width: number) {
 			if (width < 900) {
 				this.uiStore.sidebarMenuCollapsed = true;
-				Vue.nextTick(() => {
-					this.fullyExpanded = !this.isCollapsed;
-				});
-			}
-		},
-		async sync() {
-			const prompt = (await this.prompt(
-				this.$locale.baseText('settings.versionControl.sync.prompt.description', {
-					interpolate: { branch: this.versionControlStore.state.currentBranch },
-				}),
-				this.$locale.baseText('settings.versionControl.sync.prompt.title', {
-					interpolate: { branch: this.versionControlStore.state.currentBranch },
-				}),
-				{
-					confirmButtonText: 'Sync',
-					cancelButtonText: 'Cancel',
-					inputPlaceholder: this.$locale.baseText(
-						'settings.versionControl.sync.prompt.placeholder',
-					),
-					inputPattern: /^.+$/,
-					inputErrorMessage: this.$locale.baseText('settings.versionControl.sync.prompt.error'),
-				},
-			)) as MessageBoxInputData;
-
-			if (prompt.value) {
-				await this.versionControlStore.sync({ commitMessage: prompt.value });
+				await this.$nextTick();
+				this.fullyExpanded = !this.isCollapsed;
 			}
 		},
 	},
@@ -579,8 +576,9 @@ export default defineComponent({
 .updates {
 	display: flex;
 	align-items: center;
-	height: 26px;
 	cursor: pointer;
+	padding: var(--spacing-2xs) var(--spacing-l);
+	margin: var(--spacing-2xs) 0 0;
 
 	svg {
 		color: var(--color-text-base) !important;
@@ -636,29 +634,6 @@ export default defineComponent({
 @media screen and (max-height: 470px) {
 	:global(#help) {
 		display: none;
-	}
-}
-
-.sync {
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	padding: var(--spacing-s) var(--spacing-s) var(--spacing-s) var(--spacing-l);
-	margin: 0 calc(var(--spacing-l) * -1) calc(var(--spacing-m) * -1);
-	background: var(--color-background-light);
-	border-top: 1px solid var(--color-foreground-light);
-	font-size: var(--font-size-2xs);
-
-	span {
-		color: var(--color-text-light);
-	}
-
-	.sideMenuCollapsed & {
-		justify-content: center;
-		margin-left: calc(var(--spacing-xl) * -1);
-		> span {
-			display: none;
-		}
 	}
 }
 </style>

@@ -1,7 +1,9 @@
-/* eslint-disable n8n-nodes-base/node-filename-against-convention */
-import type { IExecuteFunctions } from 'n8n-core';
-
-import type { INodeType, INodeTypeBaseDescription, INodeTypeDescription } from 'n8n-workflow';
+import type {
+	IExecuteFunctions,
+	INodeType,
+	INodeTypeBaseDescription,
+	INodeTypeDescription,
+} from 'n8n-workflow';
 
 import { listSearch, loadOptions } from './methods';
 import { versionDescription } from './actions/versionDescription';
@@ -20,6 +22,6 @@ export class MicrosoftExcelV2 implements INodeType {
 	methods = { listSearch, loadOptions };
 
 	async execute(this: IExecuteFunctions) {
-		return router.call(this);
+		return await router.call(this);
 	}
 }

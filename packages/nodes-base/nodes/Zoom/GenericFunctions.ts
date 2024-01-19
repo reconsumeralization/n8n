@@ -2,7 +2,6 @@ import type { OptionsWithUri } from 'request';
 
 import type {
 	IExecuteFunctions,
-	IExecuteSingleFunctions,
 	ILoadOptionsFunctions,
 	IDataObject,
 	JsonObject,
@@ -10,7 +9,7 @@ import type {
 import { NodeApiError } from 'n8n-workflow';
 
 export async function zoomApiRequest(
-	this: IExecuteFunctions | IExecuteSingleFunctions | ILoadOptionsFunctions,
+	this: IExecuteFunctions | ILoadOptionsFunctions,
 	method: string,
 	resource: string,
 	body: object = {},
@@ -50,7 +49,7 @@ export async function zoomApiRequest(
 }
 
 async function wait() {
-	return new Promise((resolve, _reject) => {
+	return await new Promise((resolve, _reject) => {
 		setTimeout(() => {
 			resolve(true);
 		}, 1000);

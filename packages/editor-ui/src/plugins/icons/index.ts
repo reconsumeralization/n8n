@@ -1,5 +1,4 @@
-import Vue from 'vue';
-
+import type { Plugin } from 'vue';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import type { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import {
@@ -10,12 +9,16 @@ import {
 	faAngleUp,
 	faArrowLeft,
 	faArrowRight,
+	faArrowUp,
+	faArrowDown,
 	faAt,
 	faBan,
+	faBars,
 	faBolt,
 	faBook,
 	faBoxOpen,
 	faBug,
+	faBrain,
 	faCalculator,
 	faCalendar,
 	faChartBar,
@@ -30,6 +33,9 @@ import {
 	faCodeBranch,
 	faCog,
 	faCogs,
+	faComment,
+	faComments,
+	faClipboardList,
 	faClock,
 	faClone,
 	faCloud,
@@ -37,8 +43,10 @@ import {
 	faCopy,
 	faCube,
 	faCut,
+	faDatabase,
 	faDotCircle,
 	faEdit,
+	faEllipsisH,
 	faEllipsisV,
 	faEnvelope,
 	faEye,
@@ -64,10 +72,13 @@ import {
 	faGift,
 	faGlobe,
 	faGraduationCap,
+	faGripLinesVertical,
 	faGripVertical,
+	faHandScissors,
 	faHandPointLeft,
 	faHashtag,
 	faHdd,
+	faHistory,
 	faHome,
 	faHourglass,
 	faImage,
@@ -75,12 +86,15 @@ import {
 	faInfo,
 	faInfoCircle,
 	faKey,
+	faLanguage,
 	faLink,
 	faList,
 	faLightbulb,
+	faLock,
 	faMapSigns,
 	faMousePointer,
 	faNetworkWired,
+	faPalette,
 	faPause,
 	faPauseCircle,
 	faPen,
@@ -94,6 +108,7 @@ import {
 	faQuestion,
 	faQuestionCircle,
 	faRedo,
+	faRobot,
 	faRss,
 	faSave,
 	faSatelliteDish,
@@ -101,11 +116,11 @@ import {
 	faSearchMinus,
 	faSearchPlus,
 	faServer,
+	faScrewdriver,
 	faSignInAlt,
 	faSignOutAlt,
 	faSlidersH,
 	faSpinner,
-	faStar,
 	faStop,
 	faSun,
 	faSync,
@@ -125,13 +140,19 @@ import {
 	faUserCircle,
 	faUserFriends,
 	faUsers,
+	faVectorSquare,
 	faVideo,
 	faTree,
 	faStickyNote as faSolidStickyNote,
 	faUserLock,
 	faGem,
+	faDownload,
+	faRemoveFormat,
+	faTools,
+	faProjectDiagram,
+	faStream,
 } from '@fortawesome/free-solid-svg-icons';
-import { faVariable } from './custom';
+import { faVariable, faXmark, faVault } from './custom';
 import { faStickyNote } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
@@ -139,134 +160,162 @@ function addIcon(icon: IconDefinition) {
 	library.add(icon);
 }
 
-addIcon(faAngleDoubleLeft);
-addIcon(faAngleDown);
-addIcon(faAngleLeft);
-addIcon(faAngleRight);
-addIcon(faAngleUp);
-addIcon(faArrowLeft);
-addIcon(faArrowRight);
-addIcon(faAt);
-addIcon(faBan);
-addIcon(faBolt);
-addIcon(faBook);
-addIcon(faBoxOpen);
-addIcon(faBug);
-addIcon(faCalculator);
-addIcon(faCalendar);
-addIcon(faChartBar);
-addIcon(faCheck);
-addIcon(faCheckCircle);
-addIcon(faCheckSquare);
-addIcon(faChevronLeft);
-addIcon(faChevronRight);
-addIcon(faChevronDown);
-addIcon(faChevronUp);
-addIcon(faCode);
-addIcon(faCodeBranch);
-addIcon(faCog);
-addIcon(faCogs);
-addIcon(faClock);
-addIcon(faClone);
-addIcon(faCloud);
-addIcon(faCloudDownloadAlt);
-addIcon(faCopy);
-addIcon(faCube);
-addIcon(faCut);
-addIcon(faDotCircle);
-addIcon(faGripVertical);
-addIcon(faEdit);
-addIcon(faEllipsisV);
-addIcon(faEnvelope);
-addIcon(faEye);
-addIcon(faExclamationTriangle);
-addIcon(faExpand);
-addIcon(faExpandAlt);
-addIcon(faExternalLinkAlt);
-addIcon(faExchangeAlt);
-addIcon(faFile);
-addIcon(faFileAlt);
-addIcon(faFileArchive);
-addIcon(faFileCode);
-addIcon(faFileDownload);
-addIcon(faFileExport);
-addIcon(faFileImport);
-addIcon(faFilePdf);
-addIcon(faFilter);
-addIcon(faFingerprint);
-addIcon(faFlask);
-addIcon(faFolderOpen);
-addIcon(faFont);
-addIcon(faGift);
-addIcon(faGlobe);
-addIcon(faGlobeAmericas);
-addIcon(faGraduationCap);
-addIcon(faHandPointLeft);
-addIcon(faHashtag);
-addIcon(faHdd);
-addIcon(faHome);
-addIcon(faHourglass);
-addIcon(faImage);
-addIcon(faInbox);
-addIcon(faInfo);
-addIcon(faInfoCircle);
-addIcon(faKey);
-addIcon(faLink);
-addIcon(faList);
-addIcon(faLightbulb);
-addIcon(faMapSigns);
-addIcon(faMousePointer);
-addIcon(faNetworkWired);
-addIcon(faPause);
-addIcon(faPauseCircle);
-addIcon(faPen);
-addIcon(faPencilAlt);
-addIcon(faPlay);
-addIcon(faPlayCircle);
-addIcon(faPlug);
-addIcon(faPlus);
-addIcon(faPlusCircle);
-addIcon(faPlusSquare);
-addIcon(faQuestion);
-addIcon(faQuestionCircle);
-addIcon(faRedo);
-addIcon(faRss);
-addIcon(faSave);
-addIcon(faSatelliteDish);
-addIcon(faSearch);
-addIcon(faSearchMinus);
-addIcon(faSearchPlus);
-addIcon(faServer);
-addIcon(faSignInAlt);
-addIcon(faSignOutAlt);
-addIcon(faSlidersH);
-addIcon(faSpinner);
-addIcon(faSolidStickyNote);
-addIcon(faStickyNote as IconDefinition);
-addIcon(faStar);
-addIcon(faStop);
-addIcon(faSun);
-addIcon(faSync);
-addIcon(faSyncAlt);
-addIcon(faTable);
-addIcon(faTasks);
-addIcon(faTerminal);
-addIcon(faThLarge);
-addIcon(faThumbtack);
-addIcon(faTimes);
-addIcon(faTimesCircle);
-addIcon(faToolbox);
-addIcon(faTrash);
-addIcon(faUndo);
-addIcon(faUnlink);
-addIcon(faUser);
-addIcon(faUserCircle);
-addIcon(faUserFriends);
-addIcon(faUsers);
-addIcon(faVariable);
-addIcon(faVideo);
-addIcon(faTree);
-addIcon(faUserLock);
-addIcon(faGem);
+export const FontAwesomePlugin: Plugin<{}> = {
+	install: (app) => {
+		addIcon(faAngleDoubleLeft);
+		addIcon(faAngleDown);
+		addIcon(faAngleLeft);
+		addIcon(faAngleRight);
+		addIcon(faAngleUp);
+		addIcon(faArrowLeft);
+		addIcon(faArrowRight);
+		addIcon(faArrowUp);
+		addIcon(faArrowDown);
+		addIcon(faAt);
+		addIcon(faBan);
+		addIcon(faBars);
+		addIcon(faBolt);
+		addIcon(faBook);
+		addIcon(faBoxOpen);
+		addIcon(faBug);
+		addIcon(faBrain);
+		addIcon(faCalculator);
+		addIcon(faCalendar);
+		addIcon(faChartBar);
+		addIcon(faCheck);
+		addIcon(faCheckCircle);
+		addIcon(faCheckSquare);
+		addIcon(faChevronLeft);
+		addIcon(faChevronRight);
+		addIcon(faChevronDown);
+		addIcon(faChevronUp);
+		addIcon(faCode);
+		addIcon(faCodeBranch);
+		addIcon(faCog);
+		addIcon(faCogs);
+		addIcon(faComment);
+		addIcon(faComments);
+		addIcon(faClipboardList);
+		addIcon(faClock);
+		addIcon(faClone);
+		addIcon(faCloud);
+		addIcon(faCloudDownloadAlt);
+		addIcon(faCopy);
+		addIcon(faCube);
+		addIcon(faCut);
+		addIcon(faDatabase);
+		addIcon(faDotCircle);
+		addIcon(faGripLinesVertical);
+		addIcon(faGripVertical);
+		addIcon(faEdit);
+		addIcon(faEllipsisH);
+		addIcon(faEllipsisV);
+		addIcon(faEnvelope);
+		addIcon(faEye);
+		addIcon(faExclamationTriangle);
+		addIcon(faExpand);
+		addIcon(faExpandAlt);
+		addIcon(faExternalLinkAlt);
+		addIcon(faExchangeAlt);
+		addIcon(faFile);
+		addIcon(faFileAlt);
+		addIcon(faFileArchive);
+		addIcon(faFileCode);
+		addIcon(faFileDownload);
+		addIcon(faFileExport);
+		addIcon(faFileImport);
+		addIcon(faFilePdf);
+		addIcon(faFilter);
+		addIcon(faFingerprint);
+		addIcon(faFlask);
+		addIcon(faFolderOpen);
+		addIcon(faFont);
+		addIcon(faGift);
+		addIcon(faGlobe);
+		addIcon(faGlobeAmericas);
+		addIcon(faGraduationCap);
+		addIcon(faHandScissors);
+		addIcon(faHandPointLeft);
+		addIcon(faHashtag);
+		addIcon(faHdd);
+		addIcon(faHistory);
+		addIcon(faHome);
+		addIcon(faHourglass);
+		addIcon(faImage);
+		addIcon(faInbox);
+		addIcon(faInfo);
+		addIcon(faInfoCircle);
+		addIcon(faKey);
+		addIcon(faLanguage);
+		addIcon(faLink);
+		addIcon(faList);
+		addIcon(faLightbulb);
+		addIcon(faLock);
+		addIcon(faMapSigns);
+		addIcon(faMousePointer);
+		addIcon(faNetworkWired);
+		addIcon(faPalette);
+		addIcon(faPause);
+		addIcon(faPauseCircle);
+		addIcon(faPen);
+		addIcon(faPencilAlt);
+		addIcon(faPlay);
+		addIcon(faPlayCircle);
+		addIcon(faPlug);
+		addIcon(faPlus);
+		addIcon(faPlusCircle);
+		addIcon(faPlusSquare);
+		addIcon(faProjectDiagram);
+		addIcon(faQuestion);
+		addIcon(faQuestionCircle);
+		addIcon(faRedo);
+		addIcon(faRemoveFormat);
+		addIcon(faRobot);
+		addIcon(faRss);
+		addIcon(faSave);
+		addIcon(faSatelliteDish);
+		addIcon(faSearch);
+		addIcon(faSearchMinus);
+		addIcon(faSearchPlus);
+		addIcon(faServer);
+		addIcon(faScrewdriver);
+		addIcon(faSignInAlt);
+		addIcon(faSignOutAlt);
+		addIcon(faSlidersH);
+		addIcon(faSpinner);
+		addIcon(faSolidStickyNote);
+		addIcon(faStickyNote as IconDefinition);
+		addIcon(faStop);
+		addIcon(faStream);
+		addIcon(faSun);
+		addIcon(faSync);
+		addIcon(faSyncAlt);
+		addIcon(faTable);
+		addIcon(faTasks);
+		addIcon(faTerminal);
+		addIcon(faThLarge);
+		addIcon(faThumbtack);
+		addIcon(faTimes);
+		addIcon(faTimesCircle);
+		addIcon(faToolbox);
+		addIcon(faTools);
+		addIcon(faTrash);
+		addIcon(faUndo);
+		addIcon(faUnlink);
+		addIcon(faUser);
+		addIcon(faUserCircle);
+		addIcon(faUserFriends);
+		addIcon(faUsers);
+		addIcon(faVariable);
+		addIcon(faVault);
+		addIcon(faVectorSquare);
+		addIcon(faVideo);
+		addIcon(faTree);
+		addIcon(faUserLock);
+		addIcon(faGem);
+		addIcon(faXmark);
+		addIcon(faDownload);
 
-Vue.component('font-awesome-icon', FontAwesomeIcon);
+		app.component('FontAwesomeIcon', FontAwesomeIcon);
+	},
+};

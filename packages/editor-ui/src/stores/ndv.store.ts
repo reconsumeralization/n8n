@@ -1,14 +1,17 @@
+import { useStorage } from '@/composables/useStorage';
 import { LOCAL_STORAGE_MAPPING_IS_ONBOARDED, STORES } from '@/constants';
 import type {
 	INodeUi,
 	IRunDataDisplayMode,
 	NDVState,
 	NodePanelType,
+	TargetItem,
 	XYPosition,
 } from '@/Interface';
-import type { IRunData } from 'n8n-workflow';
+import type { INodeIssues, IRunData } from 'n8n-workflow';
+import { NodeConnectionType } from 'n8n-workflow';
 import { defineStore } from 'pinia';
-import Vue from 'vue';
+import { v4 as uuid } from 'uuid';
 import { useWorkflowsStore } from './workflows.store';
 
 export const useNDVStore = defineStore(STORES.NDV, {
@@ -43,10 +46,10 @@ export const useNDVStore = defineStore(STORES.NDV, {
 			isDragging: false,
 			type: '',
 			data: '',
-			canDrop: false,
+			activeTargetId: null,
 			stickyPosition: null,
 		},
-		isMappingOnboarded: window.localStorage.getItem(LOCAL_STORAGE_MAPPING_IS_ONBOARDED) === 'true',
+		isMappingOnboarded: useStorage(LOCAL_STORAGE_MAPPING_IS_ONBOARDED).value === 'true',
 	}),
 	getters: {
 		activeNode(): INodeUi | null {
@@ -91,7 +94,7 @@ export const useNDVStore = defineStore(STORES.NDV, {
 			return this.draggable.data;
 		},
 		canDraggableDrop(): boolean {
-			return this.draggable.canDrop;
+			return this.draggable.activeTargetId !== null;
 		},
 		outputPanelEditMode(): NDVState['output']['editMode'] {
 			return this.output.editMode;
@@ -123,50 +126,75 @@ export const useNDVStore = defineStore(STORES.NDV, {
 				return false;
 			}
 			const workflow = useWorkflowsStore().getCurrentWorkflow();
-			const parentNodes = workflow.getParentNodes(this.activeNode.name, 'main', 1);
+			const parentNodes = workflow.getParentNodes(this.activeNode.name, NodeConnectionType.Main, 1);
 			return parentNodes.includes(inputNodeName);
+		},
+		hoveringItemNumber(): number {
+			return (this.hoveringItem?.itemIndex ?? 0) + 1;
+		},
+		getHoveringItem(): TargetItem | null {
+			if (this.isInputParentOfActiveNode) {
+				return this.hoveringItem;
+			}
+
+			return null;
+		},
+		isNDVOpen(): boolean {
+			return this.activeNodeName !== null;
 		},
 	},
 	actions: {
-		setInputNodeName(name: string | undefined): void {
-			Vue.set(this.input, 'nodeName', name);
+		setActiveNodeName(nodeName: string | null): void {
+			this.activeNodeName = nodeName;
 		},
-		setInputRunIndex(run?: string): void {
-			Vue.set(this.input, 'run', run);
+		setInputNodeName(nodeName: string | undefined): void {
+			this.input = {
+				...this.input,
+				nodeName,
+			};
+		},
+		setInputRunIndex(run?: number): void {
+			this.input = {
+				...this.input,
+				run,
+			};
 		},
 		setMainPanelDimensions(params: {
 			panelType: string;
 			dimensions: { relativeLeft?: number; relativeRight?: number; relativeWidth?: number };
 		}): void {
-			Vue.set(this.mainPanelDimensions, params.panelType, {
-				...this.mainPanelDimensions[params.panelType],
-				...params.dimensions,
-			});
+			this.mainPanelDimensions = {
+				...this.mainPanelDimensions,
+				[params.panelType]: {
+					...this.mainPanelDimensions[params.panelType],
+					...params.dimensions,
+				},
+			};
 		},
 		setNDVSessionId(): void {
-			Vue.set(this, 'sessionId', `ndv-${Math.random().toString(36).slice(-8)}`);
+			this.sessionId = `ndv-${uuid()}`;
 		},
 		resetNDVSessionId(): void {
-			Vue.set(this, 'sessionId', '');
+			this.sessionId = '';
 		},
 		setPanelDisplayMode(params: { pane: NodePanelType; mode: IRunDataDisplayMode }): void {
-			Vue.set(this[params.pane], 'displayMode', params.mode);
+			this[params.pane].displayMode = params.mode;
 		},
 		setOutputPanelEditModeEnabled(isEnabled: boolean): void {
-			Vue.set(this.output.editMode, 'enabled', isEnabled);
+			this.output.editMode.enabled = isEnabled;
 		},
 		setOutputPanelEditModeValue(payload: string): void {
-			Vue.set(this.output.editMode, 'value', payload);
+			this.output.editMode.value = payload;
 		},
 		setMappableNDVInputFocus(paramName: string): void {
-			Vue.set(this, 'focusedMappableInput', paramName);
+			this.focusedMappableInput = paramName;
 		},
 		draggableStartDragging({ type, data }: { type: string; data: string }): void {
 			this.draggable = {
 				isDragging: true,
 				type,
 				data,
-				canDrop: false,
+				activeTargetId: null,
 				stickyPosition: null,
 			};
 		},
@@ -175,15 +203,15 @@ export const useNDVStore = defineStore(STORES.NDV, {
 				isDragging: false,
 				type: '',
 				data: '',
-				canDrop: false,
+				activeTargetId: null,
 				stickyPosition: null,
 			};
 		},
 		setDraggableStickyPos(position: XYPosition | null): void {
-			Vue.set(this.draggable, 'stickyPosition', position);
+			this.draggable.stickyPosition = position;
 		},
-		setDraggableCanDrop(canDrop: boolean): void {
-			Vue.set(this.draggable, 'canDrop', canDrop);
+		setDraggableTargetId(id: string | null): void {
+			this.draggable.activeTargetId = id;
 		},
 		setMappingTelemetry(telemetry: { [key: string]: string | number | boolean }): void {
 			this.mappingTelemetry = { ...this.mappingTelemetry, ...telemetry };
@@ -192,18 +220,35 @@ export const useNDVStore = defineStore(STORES.NDV, {
 			this.mappingTelemetry = {};
 		},
 		setHoveringItem(item: null | NDVState['hoveringItem']): void {
-			Vue.set(this, 'hoveringItem', item);
+			this.hoveringItem = item;
 		},
 		setNDVBranchIndex(e: { pane: 'input' | 'output'; branchIndex: number }): void {
-			Vue.set(this[e.pane], 'branch', e.branchIndex);
+			this[e.pane].branch = e.branchIndex;
 		},
 		setNDVPanelDataIsEmpty(payload: { panel: 'input' | 'output'; isEmpty: boolean }): void {
-			Vue.set(this[payload.panel].data, 'isEmpty', payload.isEmpty);
+			this[payload.panel].data.isEmpty = payload.isEmpty;
 		},
 		disableMappingHint(store = true) {
 			this.isMappingOnboarded = true;
 			if (store) {
-				window.localStorage.setItem(LOCAL_STORAGE_MAPPING_IS_ONBOARDED, 'true');
+				useStorage(LOCAL_STORAGE_MAPPING_IS_ONBOARDED).value = 'true';
+			}
+		},
+		updateNodeParameterIssues(issues: INodeIssues): void {
+			const workflowsStore = useWorkflowsStore();
+			const activeNode = workflowsStore.getNodeByName(this.activeNodeName || '');
+
+			if (activeNode) {
+				const nodeIndex = workflowsStore.workflow.nodes.findIndex((node) => {
+					return node.name === activeNode.name;
+				});
+
+				workflowsStore.updateNodeAtIndex(nodeIndex, {
+					issues: {
+						...activeNode.issues,
+						...issues,
+					},
+				});
 			}
 		},
 	},

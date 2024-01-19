@@ -8,9 +8,9 @@ import type {
 import { NodeOperationError } from 'n8n-workflow';
 
 import { CronJob } from 'cron';
-import moment from 'moment';
+import moment from 'moment-timezone';
 import type { IRecurencyRule } from './SchedulerInterface';
-import { recurencyCheck } from './GenericFunctions';
+import { convertToUnixFormat, recurencyCheck } from './GenericFunctions';
 
 export class ScheduleTrigger implements INodeType {
 	description: INodeTypeDescription = {
@@ -18,7 +18,7 @@ export class ScheduleTrigger implements INodeType {
 		name: 'scheduleTrigger',
 		icon: 'fa:clock',
 		group: ['trigger', 'schedule'],
-		version: 1,
+		version: [1, 1.1],
 		description: 'Triggers the workflow on a given schedule',
 		eventTriggerDescription: '',
 		activationMessage:
@@ -27,13 +27,13 @@ export class ScheduleTrigger implements INodeType {
 			name: 'Schedule Trigger',
 			color: '#31C49F',
 		},
-		// eslint-disable-next-line n8n-nodes-base/node-class-description-inputs-wrong-regular-node
+
 		inputs: [],
 		outputs: ['main'],
 		properties: [
 			{
 				displayName:
-					'This workflow will run on the schedule you define here once you <a data-key="activate">activate</a> it.<br><br>For testing, you can also trigger it manually: by going back to the canvas and clicking ‘execute workflow’',
+					'This workflow will run on the schedule you define here once you <a data-key="activate">activate</a> it.<br><br>For testing, you can also trigger it manually: by going back to the canvas and clicking \'test workflow\'',
 				name: 'notice',
 				type: 'notice',
 				default: '',
@@ -415,6 +415,7 @@ export class ScheduleTrigger implements INodeType {
 		const rule = this.getNodeParameter('rule', []) as IDataObject;
 		const interval = rule.interval as IDataObject[];
 		const timezone = this.getTimezone();
+		const version = this.getNode().typeVersion;
 		const cronJobs: CronJob[] = [];
 		const intervalArr: NodeJS.Timeout[] = [];
 		const staticData = this.getWorkflowStaticData('node') as {
@@ -450,11 +451,15 @@ export class ScheduleTrigger implements INodeType {
 		for (let i = 0; i < interval.length; i++) {
 			let intervalValue = 1000;
 			if (interval[i].field === 'cronExpression') {
+				if (version > 1) {
+					// ! Remove this part if we use a cron library that follows unix cron expression
+					convertToUnixFormat(interval[i]);
+				}
 				const cronExpression = interval[i].expression as string;
 				try {
 					const cronJob = new CronJob(
 						cronExpression,
-						async () => executeTrigger({ activated: false } as IRecurencyRule),
+						async () => await executeTrigger({ activated: false } as IRecurencyRule),
 						undefined,
 						true,
 						timezone,
@@ -471,7 +476,7 @@ export class ScheduleTrigger implements INodeType {
 				const seconds = interval[i].secondsInterval as number;
 				intervalValue *= seconds;
 				const intervalObj = setInterval(
-					async () => executeTrigger({ activated: false } as IRecurencyRule),
+					async () => await executeTrigger({ activated: false } as IRecurencyRule),
 					intervalValue,
 				) as NodeJS.Timeout;
 				intervalArr.push(intervalObj);
@@ -481,7 +486,7 @@ export class ScheduleTrigger implements INodeType {
 				const minutes = interval[i].minutesInterval as number;
 				intervalValue *= 60 * minutes;
 				const intervalObj = setInterval(
-					async () => executeTrigger({ activated: false } as IRecurencyRule),
+					async () => await executeTrigger({ activated: false } as IRecurencyRule),
 					intervalValue,
 				) as NodeJS.Timeout;
 				intervalArr.push(intervalObj);
@@ -495,7 +500,7 @@ export class ScheduleTrigger implements INodeType {
 				if (hour === 1) {
 					const cronJob = new CronJob(
 						cronExpression,
-						async () => executeTrigger({ activated: false } as IRecurencyRule),
+						async () => await executeTrigger({ activated: false } as IRecurencyRule),
 						undefined,
 						true,
 						timezone,
@@ -505,7 +510,7 @@ export class ScheduleTrigger implements INodeType {
 					const cronJob = new CronJob(
 						cronExpression,
 						async () =>
-							executeTrigger({
+							await executeTrigger({
 								activated: true,
 								index: i,
 								intervalSize: hour,
@@ -528,7 +533,7 @@ export class ScheduleTrigger implements INodeType {
 				if (day === 1) {
 					const cronJob = new CronJob(
 						cronExpression,
-						async () => executeTrigger({ activated: false } as IRecurencyRule),
+						async () => await executeTrigger({ activated: false } as IRecurencyRule),
 						undefined,
 						true,
 						timezone,
@@ -538,7 +543,7 @@ export class ScheduleTrigger implements INodeType {
 					const cronJob = new CronJob(
 						cronExpression,
 						async () =>
-							executeTrigger({
+							await executeTrigger({
 								activated: true,
 								index: i,
 								intervalSize: day,
@@ -563,7 +568,7 @@ export class ScheduleTrigger implements INodeType {
 				if (week === 1) {
 					const cronJob = new CronJob(
 						cronExpression,
-						async () => executeTrigger({ activated: false } as IRecurencyRule),
+						async () => await executeTrigger({ activated: false } as IRecurencyRule),
 						undefined,
 						true,
 						timezone,
@@ -573,7 +578,7 @@ export class ScheduleTrigger implements INodeType {
 					const cronJob = new CronJob(
 						cronExpression,
 						async () =>
-							executeTrigger({
+							await executeTrigger({
 								activated: true,
 								index: i,
 								intervalSize: week,
@@ -597,7 +602,7 @@ export class ScheduleTrigger implements INodeType {
 				if (month === 1) {
 					const cronJob = new CronJob(
 						cronExpression,
-						async () => executeTrigger({ activated: false } as IRecurencyRule),
+						async () => await executeTrigger({ activated: false } as IRecurencyRule),
 						undefined,
 						true,
 						timezone,
@@ -607,7 +612,7 @@ export class ScheduleTrigger implements INodeType {
 					const cronJob = new CronJob(
 						cronExpression,
 						async () =>
-							executeTrigger({
+							await executeTrigger({
 								activated: true,
 								index: i,
 								intervalSize: month,

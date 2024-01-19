@@ -3,7 +3,6 @@ import type { OptionsWithUrl } from 'request';
 import type {
 	IDataObject,
 	IExecuteFunctions,
-	IExecuteSingleFunctions,
 	IHookFunctions,
 	ILoadOptionsFunctions,
 	JsonObject,
@@ -11,7 +10,7 @@ import type {
 import { NodeApiError, NodeOperationError } from 'n8n-workflow';
 
 async function getMetadata(
-	this: IHookFunctions | IExecuteFunctions | IExecuteSingleFunctions | ILoadOptionsFunctions,
+	this: IHookFunctions | IExecuteFunctions | ILoadOptionsFunctions,
 	oauthTokenData: IDataObject,
 ) {
 	const credentials = await this.getCredentials('mailchimpOAuth2Api');
@@ -24,11 +23,11 @@ async function getMetadata(
 		url: credentials.metadataUrl as string,
 		json: true,
 	};
-	return this.helpers.request(options);
+	return await this.helpers.request(options);
 }
 
 export async function mailchimpApiRequest(
-	this: IHookFunctions | IExecuteFunctions | IExecuteSingleFunctions | ILoadOptionsFunctions,
+	this: IHookFunctions | IExecuteFunctions | ILoadOptionsFunctions,
 	endpoint: string,
 	method: string,
 

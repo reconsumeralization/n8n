@@ -1,10 +1,10 @@
+import { createHash } from 'crypto';
 import type { OptionsWithUri } from 'request';
 
 import type {
 	ICredentialDataDecryptedObject,
 	IDataObject,
 	IExecuteFunctions,
-	IExecuteSingleFunctions,
 	IHookFunctions,
 	ILoadOptionsFunctions,
 	IWebhookFunctions,
@@ -12,15 +12,8 @@ import type {
 } from 'n8n-workflow';
 import { NodeApiError, NodeOperationError } from 'n8n-workflow';
 
-import { createHash } from 'crypto';
-
 export async function getAuthorization(
-	this:
-		| IHookFunctions
-		| IExecuteFunctions
-		| IExecuteSingleFunctions
-		| ILoadOptionsFunctions
-		| IWebhookFunctions,
+	this: IHookFunctions | IExecuteFunctions | ILoadOptionsFunctions | IWebhookFunctions,
 	credentials?: ICredentialDataDecryptedObject,
 ): Promise<string> {
 	if (credentials === undefined) {
@@ -50,12 +43,7 @@ export async function getAuthorization(
 }
 
 export async function taigaApiRequest(
-	this:
-		| IHookFunctions
-		| IExecuteFunctions
-		| IExecuteSingleFunctions
-		| ILoadOptionsFunctions
-		| IWebhookFunctions,
+	this: IHookFunctions | IExecuteFunctions | ILoadOptionsFunctions | IWebhookFunctions,
 	method: string,
 	resource: string,
 	body = {},
@@ -144,7 +132,7 @@ export async function handleListing(
 	const returnAll = this.getNodeParameter('returnAll', i);
 
 	if (returnAll) {
-		return taigaApiRequestAllItems.call(this, method, endpoint, body, qs);
+		return await taigaApiRequestAllItems.call(this, method, endpoint, body, qs);
 	} else {
 		qs.limit = this.getNodeParameter('limit', i);
 		responseData = await taigaApiRequestAllItems.call(this, method, endpoint, body, qs);
@@ -163,5 +151,5 @@ export function throwOnEmptyUpdate(this: IExecuteFunctions, resource: Resource) 
 }
 
 export async function getVersionForUpdate(this: IExecuteFunctions, endpoint: string) {
-	return taigaApiRequest.call(this, 'GET', endpoint).then((response) => response.version);
+	return await taigaApiRequest.call(this, 'GET', endpoint).then((response) => response.version);
 }

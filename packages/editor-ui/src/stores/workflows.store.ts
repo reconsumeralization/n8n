@@ -10,7 +10,6 @@ import {
 } from '@/constants';
 import type {
 	ExecutionsQueryFilter,
-	IActivationError,
 	IExecutionDeleteFilter,
 	IExecutionPushResponse,
 	IExecutionResponse,
@@ -18,6 +17,7 @@ import type {
 	IExecutionsListResponse,
 	IExecutionsStopData,
 	INewWorkflowData,
+	INodeMetadata,
 	INodeUi,
 	INodeUpdatePropertiesInformation,
 	IPushDataExecutionFinished,
@@ -26,10 +26,13 @@ import type {
 	IStartRunData,
 	IUpdateInformation,
 	IUsedCredential,
+	IUser,
 	IWorkflowDataUpdate,
 	IWorkflowDb,
 	IWorkflowsMap,
 	WorkflowsState,
+	NodeMetadataMap,
+	WorkflowMetadata,
 } from '@/Interface';
 import { defineStore } from 'pinia';
 import type {
@@ -44,6 +47,7 @@ import type {
 	INodeCredentialsDetails,
 	INodeExecutionData,
 	INodeIssueData,
+	INodeIssueObjectProperty,
 	INodeParameters,
 	INodeTypeData,
 	INodeTypes,
@@ -55,9 +59,9 @@ import type {
 	IWorkflowSettings,
 } from 'n8n-workflow';
 import { deepCopy, NodeHelpers, Workflow } from 'n8n-workflow';
-import Vue from 'vue';
+import { findLast } from 'lodash-es';
 
-import { useRootStore } from './n8nRoot.store';
+import { useRootStore } from '@/stores/n8nRoot.store';
 import {
 	getActiveWorkflows,
 	getCurrentExecutions,
@@ -67,36 +71,37 @@ import {
 	getWorkflow,
 	getWorkflows,
 } from '@/api/workflows';
-import { useUIStore } from './ui.store';
+import { useUIStore } from '@/stores/ui.store';
 import { dataPinningEventBus } from '@/event-bus';
-import {
-	isJsonKeyObject,
-	getPairedItemsMapping,
-	stringSizeInBytes,
-	isObjectLiteral,
-	isEmpty,
-	makeRestApiRequest,
-	unflattenExecutionData,
-} from '@/utils';
-import { useNDVStore } from './ndv.store';
-import { useNodeTypesStore } from './nodeTypes.store';
-import { useWorkflowsEEStore } from '@/stores/workflows.ee.store';
+import { isObject } from '@/utils/objectUtils';
+import { getPairedItemsMapping } from '@/utils/pairedItemUtils';
+import { isJsonKeyObject, isEmpty, stringSizeInBytes } from '@/utils/typesUtils';
+import { makeRestApiRequest, unflattenExecutionData } from '@/utils/apiUtils';
+import { useNDVStore } from '@/stores/ndv.store';
+import { useNodeTypesStore } from '@/stores/nodeTypes.store';
 import { useUsersStore } from '@/stores/users.store';
 import { useSettingsStore } from '@/stores/settings.store';
+import { getCredentialOnlyNodeTypeName } from '@/utils/credentialOnlyNodes';
 
-const createEmptyWorkflow = (): IWorkflowDb => ({
-	id: PLACEHOLDER_EMPTY_WORKFLOW_ID,
+const defaults: Omit<IWorkflowDb, 'id'> & { settings: NonNullable<IWorkflowDb['settings']> } = {
 	name: '',
 	active: false,
 	createdAt: -1,
 	updatedAt: -1,
 	connections: {},
 	nodes: [],
-	settings: {},
+	settings: {
+		executionOrder: 'v1',
+	},
 	tags: [],
 	pinData: {},
 	versionId: '',
 	usedCredentials: [],
+};
+
+const createEmptyWorkflow = (): IWorkflowDb => ({
+	id: PLACEHOLDER_EMPTY_WORKFLOW_ID,
+	...defaults,
 });
 
 let cachedWorkflowKey: string | null = '';
@@ -116,9 +121,10 @@ export const useWorkflowsStore = defineStore(STORES.WORKFLOWS, {
 		workflowsById: {},
 		subWorkflowExecutionError: null,
 		activeExecutionId: null,
-		executingNode: null,
+		executingNode: [],
 		executionWaitingForWebhook: false,
 		nodeMetadata: {},
+		isInDebugMode: false,
 	}),
 	getters: {
 		// Workflow getters
@@ -132,10 +138,7 @@ export const useWorkflowsStore = defineStore(STORES.WORKFLOWS, {
 			return this.workflow.versionId;
 		},
 		workflowSettings(): IWorkflowSettings {
-			if (this.workflow.settings === undefined) {
-				return {};
-			}
-			return this.workflow.settings;
+			return this.workflow.settings ?? { ...defaults.settings };
 		},
 		workflowTags(): string[] {
 			return this.workflow.tags as string[];
@@ -152,22 +155,15 @@ export const useWorkflowsStore = defineStore(STORES.WORKFLOWS, {
 		workflowTriggerNodes(): INodeUi[] {
 			return this.workflow.nodes.filter((node: INodeUi) => {
 				const nodeTypesStore = useNodeTypesStore();
-				const nodeType = nodeTypesStore.getNodeType(
-					node.type as string,
-					node.typeVersion as number,
-				);
+				const nodeType = nodeTypesStore.getNodeType(node.type, node.typeVersion);
 				return nodeType && nodeType.group.includes('trigger');
 			});
 		},
 		currentWorkflowHasWebhookNode(): boolean {
-			return !!this.workflow.nodes.find((node: INodeUi) => !!node.webhookId);
+			return !!this.workflow.nodes.find((node: INodeUi) => !!node.webhookId); // includes Wait node
 		},
 		getWorkflowRunData(): IRunData | null {
-			if (
-				!this.workflowExecutionData ||
-				!this.workflowExecutionData.data ||
-				!this.workflowExecutionData.data.resultData
-			) {
+			if (!this.workflowExecutionData?.data?.resultData) {
 				return null;
 			}
 			return this.workflowExecutionData.data.resultData.runData;
@@ -199,6 +195,17 @@ export const useWorkflowsStore = defineStore(STORES.WORKFLOWS, {
 					return this.workflow.connections[nodeName];
 				}
 				return {};
+			};
+		},
+		isNodeInOutgoingNodeConnections() {
+			return (firstNode: string, secondNode: string): boolean => {
+				const firstNodeConnections = this.outgoingConnectionsByNodeName(firstNode);
+				if (!firstNodeConnections?.main?.[0]) return false;
+				const connections = firstNodeConnections.main[0];
+				if (connections.some((node) => node.node === secondNode)) return true;
+				return connections.some((node) =>
+					this.isNodeInOutgoingNodeConnections(node.node, secondNode),
+				);
 			};
 		},
 		allNodes(): INodeUi[] {
@@ -234,31 +241,25 @@ export const useWorkflowsStore = defineStore(STORES.WORKFLOWS, {
 			}
 			return false;
 		},
-		getPinData(): IPinData | undefined {
+		pinnedWorkflowData(): IPinData | undefined {
 			return this.workflow.pinData;
 		},
-		pinDataSize(): number {
-			const ndvStore = useNDVStore();
-			const activeNode = ndvStore.activeNodeName;
-			return this.workflow.nodes.reduce((acc, node) => {
-				if (typeof node.pinData !== 'undefined' && node.name !== activeNode) {
-					acc += stringSizeInBytes(node.pinData);
-				}
-
-				return acc;
-			}, 0);
+		shouldReplaceInputDataWithPinData(): boolean {
+			return !this.activeWorkflowExecution || this.activeWorkflowExecution?.mode === 'manual';
 		},
 		executedNode(): string | undefined {
 			return this.workflowExecutionData ? this.workflowExecutionData.executedNode : undefined;
 		},
 		getParametersLastUpdate(): (name: string) => number | undefined {
-			return (nodeName: string) =>
-				this.nodeMetadata[nodeName] && this.nodeMetadata[nodeName].parametersLastUpdatedAt;
+			return (nodeName: string) => this.nodeMetadata[nodeName]?.parametersLastUpdatedAt;
 		},
 
 		isNodePristine(): (name: string) => boolean {
 			return (nodeName: string) =>
-				this.nodeMetadata[nodeName] === undefined || this.nodeMetadata[nodeName].pristine === true;
+				this.nodeMetadata[nodeName] === undefined || this.nodeMetadata[nodeName].pristine;
+		},
+		isNodeExecuting(): (nodeName: string) => boolean {
+			return (nodeName: string) => this.executingNode.includes(nodeName);
 		},
 		// Executions getters
 		getExecutionDataById(): (id: string) => IExecutionsSummary | undefined {
@@ -278,6 +279,11 @@ export const useWorkflowsStore = defineStore(STORES.WORKFLOWS, {
 		},
 	},
 	actions: {
+		getPinDataSize(pinData: Record<string, string | INodeExecutionData[]> = {}): number {
+			return Object.values(pinData).reduce<number>((acc, value) => {
+				return acc + stringSizeInBytes(value);
+			}, 0);
+		},
 		getNodeTypes(): INodeTypes {
 			const nodeTypes: INodeTypes = {
 				nodeTypes: {},
@@ -312,7 +318,7 @@ export const useWorkflowsStore = defineStore(STORES.WORKFLOWS, {
 		// This has the advantage that it is very fast and does not cause problems with vuex
 		// when the workflow replaces the node-parameters.
 		getNodes(): INodeUi[] {
-			const nodes = useWorkflowsStore().allNodes;
+			const nodes = this.allNodes;
 			const returnNodes: INodeUi[] = [];
 
 			for (const node of nodes) {
@@ -325,23 +331,21 @@ export const useWorkflowsStore = defineStore(STORES.WORKFLOWS, {
 		// Returns a workflow instance.
 		getWorkflow(nodes: INodeUi[], connections: IConnections, copyData?: boolean): Workflow {
 			const nodeTypes = this.getNodeTypes();
-			let workflowId: string | undefined = useWorkflowsStore().workflowId;
+			let workflowId: string | undefined = this.workflowId;
 			if (workflowId && workflowId === PLACEHOLDER_EMPTY_WORKFLOW_ID) {
 				workflowId = undefined;
 			}
 
-			const workflowName = useWorkflowsStore().workflowName;
-
 			cachedWorkflow = new Workflow({
 				id: workflowId,
-				name: workflowName,
+				name: this.workflowName,
 				nodes: copyData ? deepCopy(nodes) : nodes,
 				connections: copyData ? deepCopy(connections) : connections,
 				active: false,
 				nodeTypes,
-				settings: useWorkflowsStore().workflowSettings,
+				settings: this.workflowSettings,
 				// @ts-ignore
-				pinData: useWorkflowsStore().getPinData,
+				pinData: this.pinnedWorkflowData,
 			});
 
 			return cachedWorkflow;
@@ -362,14 +366,18 @@ export const useWorkflowsStore = defineStore(STORES.WORKFLOWS, {
 		// Returns a workflow from a given URL
 		async getWorkflowFromUrl(url: string): Promise<IWorkflowDb> {
 			const rootStore = useRootStore();
-			return makeRestApiRequest(rootStore.getRestApiContext, 'GET', '/workflows/from-url', {
+			return await makeRestApiRequest(rootStore.getRestApiContext, 'GET', '/workflows/from-url', {
 				url,
 			});
 		},
 
-		async getActivationError(id: string): Promise<IActivationError | undefined> {
+		async getActivationError(id: string): Promise<string | undefined> {
 			const rootStore = useRootStore();
-			return makeRestApiRequest(rootStore.getRestApiContext, 'GET', `/active/error/${id}`);
+			return await makeRestApiRequest(
+				rootStore.getRestApiContext,
+				'GET',
+				`/active-workflows/error/${id}`,
+			);
 		},
 
 		async fetchAllWorkflows(): Promise<IWorkflowDb[]> {
@@ -387,11 +395,10 @@ export const useWorkflowsStore = defineStore(STORES.WORKFLOWS, {
 		},
 
 		async getNewWorkflowData(name?: string): Promise<INewWorkflowData> {
-			const workflowsEEStore = useWorkflowsEEStore();
-
 			let workflowData = {
 				name: '',
 				onboardingFlowEnabled: false,
+				settings: { ...defaults.settings },
 			};
 			try {
 				const rootStore = useRootStore();
@@ -413,8 +420,38 @@ export const useWorkflowsStore = defineStore(STORES.WORKFLOWS, {
 			this.workflow = createEmptyWorkflow();
 
 			if (settingsStore.isEnterpriseFeatureEnabled(EnterpriseEditionFeature.Sharing)) {
-				Vue.set(this.workflow, 'ownedBy', usersStore.currentUser);
+				this.workflow = {
+					...this.workflow,
+					ownedBy: usersStore.currentUser as IUser,
+				};
 			}
+		},
+
+		resetState(): void {
+			this.removeAllConnections({ setStateDirty: false });
+			this.removeAllNodes({ setStateDirty: false, removePinData: true });
+
+			// Reset workflow execution data
+			this.setWorkflowExecutionData(null);
+			this.resetAllNodesIssues();
+
+			this.setActive(defaults.active);
+			this.setWorkflowId(PLACEHOLDER_EMPTY_WORKFLOW_ID);
+			this.setWorkflowName({ newName: '', setStateDirty: false });
+			this.setWorkflowSettings({ ...defaults.settings });
+			this.setWorkflowTagIds([]);
+
+			this.activeExecutionId = null;
+			this.executingNode.length = 0;
+			this.executionWaitingForWebhook = false;
+		},
+
+		addExecutingNode(nodeName: string): void {
+			this.executingNode.push(nodeName);
+		},
+
+		removeExecutingNode(nodeName: string): void {
+			this.executingNode = this.executingNode.filter((name) => name !== nodeName);
 		},
 
 		setWorkflowId(id: string): void {
@@ -425,7 +462,7 @@ export const useWorkflowsStore = defineStore(STORES.WORKFLOWS, {
 			this.workflow.usedCredentials = data;
 			this.usedCredentials = data.reduce<{ [name: string]: IUsedCredential }>(
 				(accu, credential) => {
-					accu[credential.id!] = credential;
+					accu[credential.id] = credential;
 					return accu;
 				},
 				{},
@@ -461,7 +498,7 @@ export const useWorkflowsStore = defineStore(STORES.WORKFLOWS, {
 				const nodeCredentials: INodeCredentials | undefined = (node as unknown as INode)
 					.credentials;
 
-				if (!nodeCredentials || !nodeCredentials[data.type]) {
+				if (!nodeCredentials?.[data.type]) {
 					return;
 				}
 
@@ -506,10 +543,13 @@ export const useWorkflowsStore = defineStore(STORES.WORKFLOWS, {
 		},
 
 		addWorkflow(workflow: IWorkflowDb): void {
-			Vue.set(this.workflowsById, workflow.id, {
-				...this.workflowsById[workflow.id],
-				...deepCopy(workflow),
-			});
+			this.workflowsById = {
+				...this.workflowsById,
+				[workflow.id]: {
+					...this.workflowsById[workflow.id],
+					...deepCopy(workflow),
+				},
+			};
 		},
 
 		setWorkflowActive(workflowId: string): void {
@@ -522,6 +562,9 @@ export const useWorkflowsStore = defineStore(STORES.WORKFLOWS, {
 			if (this.workflowsById[workflowId]) {
 				this.workflowsById[workflowId].active = true;
 			}
+			if (workflowId === this.workflow.id) {
+				this.setActive(true);
+			}
 		},
 
 		setWorkflowInactive(workflowId: string): void {
@@ -531,6 +574,9 @@ export const useWorkflowsStore = defineStore(STORES.WORKFLOWS, {
 			}
 			if (this.workflowsById[workflowId]) {
 				this.workflowsById[workflowId].active = false;
+			}
+			if (workflowId === this.workflow.id) {
+				this.setActive(false);
 			}
 		},
 
@@ -573,57 +619,73 @@ export const useWorkflowsStore = defineStore(STORES.WORKFLOWS, {
 		},
 
 		setWorkflowSettings(workflowSettings: IWorkflowSettings): void {
-			Vue.set(this.workflow, 'settings', workflowSettings);
+			this.workflow = {
+				...this.workflow,
+				settings: workflowSettings as IWorkflowDb['settings'],
+			};
 		},
 
 		setWorkflowPinData(pinData: IPinData): void {
-			Vue.set(this.workflow, 'pinData', pinData || {});
+			this.workflow = {
+				...this.workflow,
+				pinData: pinData || {},
+			};
 			dataPinningEventBus.emit('pin-data', pinData || {});
 		},
 
 		setWorkflowTagIds(tags: string[]): void {
-			Vue.set(this.workflow, 'tags', tags);
+			this.workflow = {
+				...this.workflow,
+				tags,
+			};
 		},
 
 		addWorkflowTagIds(tags: string[]): void {
-			Vue.set(this.workflow, 'tags', [...new Set([...(this.workflow.tags || []), ...tags])]);
+			this.workflow = {
+				...this.workflow,
+				tags: [...new Set([...(this.workflow.tags || []), ...tags])] as IWorkflowDb['tags'],
+			};
 		},
 
 		removeWorkflowTagId(tagId: string): void {
 			const tags = this.workflow.tags as string[];
 			const updated = tags.filter((id: string) => id !== tagId);
-			Vue.set(this.workflow, 'tags', updated);
+			this.workflow = {
+				...this.workflow,
+				tags: updated as IWorkflowDb['tags'],
+			};
+		},
+
+		setWorkflowMetadata(metadata: WorkflowMetadata | undefined): void {
+			this.workflow.meta = metadata;
+		},
+
+		addToWorkflowMetadata(data: Partial<WorkflowMetadata>): void {
+			this.workflow.meta = {
+				...this.workflow.meta,
+				...data,
+			};
 		},
 
 		setWorkflow(workflow: IWorkflowDb): void {
-			Vue.set(this, 'workflow', workflow);
-
-			if (!this.workflow.hasOwnProperty('active')) {
-				Vue.set(this.workflow, 'active', false);
-			}
-			if (!this.workflow.hasOwnProperty('connections')) {
-				Vue.set(this.workflow, 'connections', {});
-			}
-			if (!this.workflow.hasOwnProperty('createdAt')) {
-				Vue.set(this.workflow, 'createdAt', -1);
-			}
-			if (!this.workflow.hasOwnProperty('updatedAt')) {
-				Vue.set(this.workflow, 'updatedAt', -1);
-			}
-			if (!this.workflow.hasOwnProperty('id')) {
-				Vue.set(this.workflow, 'id', PLACEHOLDER_EMPTY_WORKFLOW_ID);
-			}
-			if (!this.workflow.hasOwnProperty('nodes')) {
-				Vue.set(this.workflow, 'nodes', []);
-			}
-			if (!this.workflow.hasOwnProperty('settings')) {
-				Vue.set(this.workflow, 'settings', {});
-			}
+			this.workflow = workflow;
+			this.workflow = {
+				...this.workflow,
+				...(!this.workflow.hasOwnProperty('active') ? { active: false } : {}),
+				...(!this.workflow.hasOwnProperty('connections') ? { connections: {} } : {}),
+				...(!this.workflow.hasOwnProperty('createdAt') ? { createdAt: -1 } : {}),
+				...(!this.workflow.hasOwnProperty('updatedAt') ? { updatedAt: -1 } : {}),
+				...(!this.workflow.hasOwnProperty('id') ? { id: PLACEHOLDER_EMPTY_WORKFLOW_ID } : {}),
+				...(!this.workflow.hasOwnProperty('nodes') ? { nodes: [] } : {}),
+				...(!this.workflow.hasOwnProperty('settings')
+					? { settings: { ...defaults.settings } }
+					: {}),
+			};
 		},
 
 		pinData(payload: { node: INodeUi; data: INodeExecutionData[] }): void {
 			if (!this.workflow.pinData) {
-				Vue.set(this.workflow, 'pinData', {});
+				this.workflow = { ...this.workflow, pinData: {} };
 			}
 
 			if (!Array.isArray(payload.data)) {
@@ -631,10 +693,16 @@ export const useWorkflowsStore = defineStore(STORES.WORKFLOWS, {
 			}
 
 			const storedPinData = payload.data.map((item) =>
-				isJsonKeyObject(item) ? item : { json: item },
+				isJsonKeyObject(item) ? { json: item.json } : { json: item },
 			);
 
-			Vue.set(this.workflow.pinData!, payload.node.name, storedPinData);
+			this.workflow = {
+				...this.workflow,
+				pinData: {
+					...this.workflow.pinData,
+					[payload.node.name]: storedPinData,
+				},
+			};
 
 			const uiStore = useUIStore();
 			uiStore.stateIsDirty = true;
@@ -644,11 +712,14 @@ export const useWorkflowsStore = defineStore(STORES.WORKFLOWS, {
 
 		unpinData(payload: { node: INodeUi }): void {
 			if (!this.workflow.pinData) {
-				Vue.set(this.workflow, 'pinData', {});
+				this.workflow = { ...this.workflow, pinData: {} };
 			}
 
-			Vue.set(this.workflow.pinData!, payload.node.name, undefined);
-			delete this.workflow.pinData![payload.node.name];
+			const { [payload.node.name]: _, ...pinData } = this.workflow.pinData!;
+			this.workflow = {
+				...this.workflow,
+				pinData,
+			};
 
 			const uiStore = useUIStore();
 			uiStore.stateIsDirty = true;
@@ -667,10 +738,25 @@ export const useWorkflowsStore = defineStore(STORES.WORKFLOWS, {
 
 			// Check if source node and type exist already and if not add them
 			if (!this.workflow.connections.hasOwnProperty(sourceData.node)) {
-				Vue.set(this.workflow.connections, sourceData.node, {});
+				this.workflow = {
+					...this.workflow,
+					connections: {
+						...this.workflow.connections,
+						[sourceData.node]: {},
+					},
+				};
 			}
 			if (!this.workflow.connections[sourceData.node].hasOwnProperty(sourceData.type)) {
-				Vue.set(this.workflow.connections[sourceData.node], sourceData.type, []);
+				this.workflow = {
+					...this.workflow,
+					connections: {
+						...this.workflow.connections,
+						[sourceData.node]: {
+							...this.workflow.connections[sourceData.node],
+							[sourceData.type]: [],
+						},
+					},
+				};
 			}
 			if (
 				this.workflow.connections[sourceData.node][sourceData.type].length <
@@ -686,17 +772,14 @@ export const useWorkflowsStore = defineStore(STORES.WORKFLOWS, {
 			}
 
 			// Check if the same connection exists already
-			const checkProperties = ['index', 'node', 'type'];
-			let propertyName: string;
+			const checkProperties = ['index', 'node', 'type'] as Array<keyof IConnection>;
+			let propertyName: keyof IConnection;
 			let connectionExists = false;
 			connectionLoop: for (const existingConnection of this.workflow.connections[sourceData.node][
 				sourceData.type
 			][sourceData.index]) {
 				for (propertyName of checkProperties) {
-					if (
-						// eslint-disable-next-line @typescript-eslint/no-explicit-any
-						(existingConnection as any)[propertyName] !== (destinationData as any)[propertyName]
-					) {
+					if (existingConnection[propertyName] !== destinationData[propertyName]) {
 						continue connectionLoop;
 					}
 				}
@@ -704,7 +787,7 @@ export const useWorkflowsStore = defineStore(STORES.WORKFLOWS, {
 				break;
 			}
 			// Add the new connection if it does not exist already
-			if (connectionExists === false) {
+			if (!connectionExists) {
 				this.workflow.connections[sourceData.node][sourceData.type][sourceData.index].push(
 					destinationData,
 				);
@@ -800,8 +883,7 @@ export const useWorkflowsStore = defineStore(STORES.WORKFLOWS, {
 			// If node has any WorkflowResultData rename also that one that the data
 			// does still get displayed also after node got renamed
 			if (
-				this.workflowExecutionData !== null &&
-				this.workflowExecutionData.data &&
+				this.workflowExecutionData?.data &&
 				this.workflowExecutionData.data.resultData.runData.hasOwnProperty(nameData.old)
 			) {
 				this.workflowExecutionData.data.resultData.runData[nameData.new] =
@@ -814,15 +896,19 @@ export const useWorkflowsStore = defineStore(STORES.WORKFLOWS, {
 				uiStore.lastSelectedNode = nameData.new;
 			}
 
-			Vue.set(this.nodeMetadata, nameData.new, this.nodeMetadata[nameData.old]);
-			Vue.delete(this.nodeMetadata, nameData.old);
+			const { [nameData.old]: removed, ...rest } = this.nodeMetadata;
+			this.nodeMetadata = { ...rest, [nameData.new]: this.nodeMetadata[nameData.old] };
 
 			if (this.workflow.pinData && this.workflow.pinData.hasOwnProperty(nameData.old)) {
-				Vue.set(this.workflow.pinData, nameData.new, this.workflow.pinData[nameData.old]);
-				Vue.delete(this.workflow.pinData, nameData.old);
+				const { [nameData.old]: renamed, ...restPinData } = this.workflow.pinData;
+				this.workflow = {
+					...this.workflow,
+					pinData: {
+						...restPinData,
+						[nameData.new]: renamed,
+					},
+				};
 			}
-
-			this.workflowExecutionPairedItemMappings = getPairedItemsMapping(this.workflowExecutionData);
 		},
 
 		resetAllNodesIssues(): boolean {
@@ -832,28 +918,55 @@ export const useWorkflowsStore = defineStore(STORES.WORKFLOWS, {
 			return true;
 		},
 
+		updateNodeAtIndex(nodeIndex: number, nodeData: Partial<INodeUi>): void {
+			if (nodeIndex !== -1) {
+				const node = this.workflow.nodes[nodeIndex];
+				this.workflow = {
+					...this.workflow,
+					nodes: [
+						...this.workflow.nodes.slice(0, nodeIndex),
+						{ ...node, ...nodeData },
+						...this.workflow.nodes.slice(nodeIndex + 1),
+					],
+				};
+			}
+		},
+
 		setNodeIssue(nodeIssueData: INodeIssueData): boolean {
-			const node = this.workflow.nodes.find((node) => {
+			const nodeIndex = this.workflow.nodes.findIndex((node) => {
 				return node.name === nodeIssueData.node;
 			});
-			if (!node) {
+
+			if (nodeIndex === -1) {
 				return false;
 			}
+
+			const node = this.workflow.nodes[nodeIndex];
+
 			if (nodeIssueData.value === null) {
 				// Remove the value if one exists
-				if (node.issues === undefined || node.issues[nodeIssueData.type] === undefined) {
+				if (node.issues?.[nodeIssueData.type] === undefined) {
 					// No values for type exist so nothing has to get removed
 					return true;
 				}
 
-				// @ts-ignore
-				Vue.delete(node.issues, nodeIssueData.type);
+				const { [nodeIssueData.type]: removedNodeIssue, ...remainingNodeIssues } = node.issues;
+				this.updateNodeAtIndex(nodeIndex, {
+					issues: remainingNodeIssues,
+				});
 			} else {
 				if (node.issues === undefined) {
-					Vue.set(node, 'issues', {});
+					this.updateNodeAtIndex(nodeIndex, {
+						issues: {},
+					});
 				}
-				// Set/Overwrite the value
-				Vue.set(node.issues!, nodeIssueData.type, nodeIssueData.value);
+
+				this.updateNodeAtIndex(nodeIndex, {
+					issues: {
+						...node.issues,
+						[nodeIssueData.type]: nodeIssueData.value as INodeIssueObjectProperty,
+					},
+				});
 			}
 			return true;
 		},
@@ -865,24 +978,37 @@ export const useWorkflowsStore = defineStore(STORES.WORKFLOWS, {
 				return;
 			}
 
+			if (nodeData.extendsCredential) {
+				nodeData.type = getCredentialOnlyNodeTypeName(nodeData.extendsCredential);
+			}
+
 			this.workflow.nodes.push(nodeData);
 			// Init node metadata
 			if (!this.nodeMetadata[nodeData.name]) {
-				Vue.set(this.nodeMetadata, nodeData.name, {});
+				this.nodeMetadata = { ...this.nodeMetadata, [nodeData.name]: {} as INodeMetadata };
 			}
 		},
 
 		removeNode(node: INodeUi): void {
-			Vue.delete(this.nodeMetadata, node.name);
+			const uiStore = useUIStore();
+			const { [node.name]: removedNodeMetadata, ...remainingNodeMetadata } = this.nodeMetadata;
+			this.nodeMetadata = remainingNodeMetadata;
 
 			if (this.workflow.pinData && this.workflow.pinData.hasOwnProperty(node.name)) {
-				Vue.delete(this.workflow.pinData, node.name);
+				const { [node.name]: removedPinData, ...remainingPinData } = this.workflow.pinData;
+				this.workflow = {
+					...this.workflow,
+					pinData: remainingPinData,
+				};
 			}
 
 			for (let i = 0; i < this.workflow.nodes.length; i++) {
 				if (this.workflow.nodes[i].name === node.name) {
-					this.workflow.nodes.splice(i, 1);
-					const uiStore = useUIStore();
+					this.workflow = {
+						...this.workflow,
+						nodes: [...this.workflow.nodes.slice(0, i), ...this.workflow.nodes.slice(i + 1)],
+					};
+
 					uiStore.stateIsDirty = true;
 					return;
 				}
@@ -896,7 +1022,10 @@ export const useWorkflowsStore = defineStore(STORES.WORKFLOWS, {
 			}
 
 			if (data.removePinData) {
-				Vue.set(this.workflow, 'pinData', {});
+				this.workflow = {
+					...this.workflow,
+					pinData: {},
+				};
 			}
 
 			this.workflow.nodes.splice(0, this.workflow.nodes.length);
@@ -905,26 +1034,29 @@ export const useWorkflowsStore = defineStore(STORES.WORKFLOWS, {
 
 		updateNodeProperties(updateInformation: INodeUpdatePropertiesInformation): void {
 			// Find the node that should be updated
-			const node = this.workflow.nodes.find((node) => {
+			const nodeIndex = this.workflow.nodes.findIndex((node) => {
 				return node.name === updateInformation.name;
 			});
 
-			if (node) {
+			if (nodeIndex !== -1) {
 				for (const key of Object.keys(updateInformation.properties)) {
 					const uiStore = useUIStore();
 					uiStore.stateIsDirty = true;
-					Vue.set(node, key, updateInformation.properties[key]);
+
+					this.updateNodeAtIndex(nodeIndex, {
+						[key]: updateInformation.properties[key],
+					});
 				}
 			}
 		},
 
 		setNodeValue(updateInformation: IUpdateInformation): void {
 			// Find the node that should be updated
-			const node = this.workflow.nodes.find((node) => {
+			const nodeIndex = this.workflow.nodes.findIndex((node) => {
 				return node.name === updateInformation.name;
 			});
 
-			if (node === undefined || node === null || !updateInformation.key) {
+			if (nodeIndex === -1 || !updateInformation.key) {
 				throw new Error(
 					`Node with the name "${updateInformation.name}" could not be found to set parameter.`,
 				);
@@ -932,39 +1064,49 @@ export const useWorkflowsStore = defineStore(STORES.WORKFLOWS, {
 
 			const uiStore = useUIStore();
 			uiStore.stateIsDirty = true;
-			Vue.set(node, updateInformation.key, updateInformation.value);
+
+			this.updateNodeAtIndex(nodeIndex, {
+				[updateInformation.key]: updateInformation.value,
+			});
 		},
 
 		setNodeParameters(updateInformation: IUpdateInformation, append?: boolean): void {
 			// Find the node that should be updated
-			const node = this.workflow.nodes.find((node) => {
+			const nodeIndex = this.workflow.nodes.findIndex((node) => {
 				return node.name === updateInformation.name;
 			});
 
-			if (node === undefined || node === null) {
+			if (nodeIndex === -1) {
 				throw new Error(
 					`Node with the name "${updateInformation.name}" could not be found to set parameter.`,
 				);
 			}
 
+			const node = this.workflow.nodes[nodeIndex];
+
 			const uiStore = useUIStore();
 			uiStore.stateIsDirty = true;
 			const newParameters =
-				!!append && isObjectLiteral(updateInformation.value)
+				!!append && isObject(updateInformation.value)
 					? { ...node.parameters, ...updateInformation.value }
 					: updateInformation.value;
 
-			Vue.set(node, 'parameters', newParameters);
+			this.updateNodeAtIndex(nodeIndex, {
+				parameters: newParameters as INodeParameters,
+			});
 
-			if (!this.nodeMetadata[node.name]) {
-				Vue.set(this.nodeMetadata, node.name, {});
-			}
-
-			Vue.set(this.nodeMetadata[node.name], 'parametersLastUpdatedAt', Date.now());
+			this.nodeMetadata = {
+				...this.nodeMetadata,
+				[node.name]: {
+					...this.nodeMetadata[node.name],
+					parametersLastUpdatedAt: Date.now(),
+				},
+			} as NodeMetadataMap;
 		},
 
 		setLastNodeParameters(updateInformation: IUpdateInformation) {
-			const latestNode = this.workflow.nodes.findLast(
+			const latestNode = findLast(
+				this.workflow.nodes,
 				(node) => node.type === updateInformation.key,
 			) as INodeUi;
 			const nodeType = useNodeTypesStore().getNodeType(latestNode.type);
@@ -982,24 +1124,48 @@ export const useWorkflowsStore = defineStore(STORES.WORKFLOWS, {
 		},
 
 		addNodeExecutionData(pushData: IPushDataNodeExecuteAfter): void {
-			if (this.workflowExecutionData === null || !this.workflowExecutionData.data) {
+			if (!this.workflowExecutionData?.data) {
 				throw new Error('The "workflowExecutionData" is not initialized!');
 			}
 			if (this.workflowExecutionData.data.resultData.runData[pushData.nodeName] === undefined) {
-				Vue.set(this.workflowExecutionData.data.resultData.runData, pushData.nodeName, []);
+				this.workflowExecutionData = {
+					...this.workflowExecutionData,
+					data: {
+						...this.workflowExecutionData.data,
+						resultData: {
+							...this.workflowExecutionData.data.resultData,
+							runData: {
+								...this.workflowExecutionData.data.resultData.runData,
+								[pushData.nodeName]: [],
+							},
+						},
+					},
+				};
 			}
-			this.workflowExecutionData.data.resultData.runData[pushData.nodeName].push(pushData.data);
-			this.workflowExecutionPairedItemMappings = getPairedItemsMapping(this.workflowExecutionData);
+			this.workflowExecutionData.data!.resultData.runData[pushData.nodeName].push(pushData.data);
 		},
 		clearNodeExecutionData(nodeName: string): void {
-			if (this.workflowExecutionData === null || !this.workflowExecutionData.data) {
+			if (!this.workflowExecutionData?.data) {
 				return;
 			}
-			Vue.delete(this.workflowExecutionData.data.resultData.runData, nodeName);
+
+			const { [nodeName]: removedRunData, ...remainingRunData } =
+				this.workflowExecutionData.data.resultData.runData;
+			this.workflowExecutionData = {
+				...this.workflowExecutionData,
+				data: {
+					...this.workflowExecutionData.data,
+					resultData: {
+						...this.workflowExecutionData.data.resultData,
+						runData: remainingRunData,
+					},
+				},
+			};
 		},
 
 		pinDataByNodeName(nodeName: string): INodeExecutionData[] | undefined {
-			if (!this.workflow.pinData || !this.workflow.pinData[nodeName]) return undefined;
+			if (!this.workflow.pinData?.[nodeName]) return undefined;
+
 			return this.workflow.pinData[nodeName].map((item) => item.json) as INodeExecutionData[];
 		},
 
@@ -1030,28 +1196,37 @@ export const useWorkflowsStore = defineStore(STORES.WORKFLOWS, {
 			finishedActiveExecution: IPushDataExecutionFinished | IPushDataUnsavedExecutionFinished,
 		): void {
 			// Find the execution to set to finished
-			const activeExecution = this.activeExecutions.find((execution) => {
+			const activeExecutionIndex = this.activeExecutions.findIndex((execution) => {
 				return execution.id === finishedActiveExecution.executionId;
 			});
 
-			if (activeExecution === undefined) {
+			if (activeExecutionIndex === -1) {
 				// The execution could not be found
 				return;
 			}
 
-			if (finishedActiveExecution.executionId !== undefined) {
-				Vue.set(activeExecution, 'id', finishedActiveExecution.executionId);
-			}
+			const activeExecution = this.activeExecutions[activeExecutionIndex];
 
-			Vue.set(activeExecution, 'finished', finishedActiveExecution.data.finished);
-			Vue.set(activeExecution, 'stoppedAt', finishedActiveExecution.data.stoppedAt);
+			this.activeExecutions = [
+				...this.activeExecutions.slice(0, activeExecutionIndex),
+				{
+					...activeExecution,
+					...(finishedActiveExecution.executionId !== undefined
+						? { id: finishedActiveExecution.executionId }
+						: {}),
+					finished: finishedActiveExecution.data.finished,
+					stoppedAt: finishedActiveExecution.data.stoppedAt,
+				},
+				...this.activeExecutions.slice(activeExecutionIndex + 1),
+			];
+
 			if (finishedActiveExecution.data && (finishedActiveExecution.data as IRun).data) {
 				this.setWorkflowExecutionRunData((finishedActiveExecution.data as IRun).data);
 			}
 		},
 
 		setActiveExecutions(newActiveExecutions: IExecutionsCurrentSummaryExtended[]): void {
-			Vue.set(this, 'activeExecutions', newActiveExecutions);
+			this.activeExecutions = newActiveExecutions;
 		},
 
 		async retryExecution(id: string, loadWorkflow?: boolean): Promise<boolean> {
@@ -1062,7 +1237,7 @@ export const useWorkflowsStore = defineStore(STORES.WORKFLOWS, {
 				};
 			}
 			const rootStore = useRootStore();
-			return makeRestApiRequest(
+			return await makeRestApiRequest(
 				rootStore.getRestApiContext,
 				'POST',
 				`/executions/${id}/retry`,
@@ -1073,7 +1248,7 @@ export const useWorkflowsStore = defineStore(STORES.WORKFLOWS, {
 		// Deletes executions
 		async deleteExecutions(sendData: IExecutionDeleteFilter): Promise<void> {
 			const rootStore = useRootStore();
-			return makeRestApiRequest(
+			return await makeRestApiRequest(
 				rootStore.getRestApiContext,
 				'POST',
 				'/executions/delete',
@@ -1098,7 +1273,7 @@ export const useWorkflowsStore = defineStore(STORES.WORKFLOWS, {
 				};
 			}
 			const rootStore = useRootStore();
-			return makeRestApiRequest(rootStore.getRestApiContext, 'GET', '/executions', sendData);
+			return await makeRestApiRequest(rootStore.getRestApiContext, 'GET', '/executions', sendData);
 		},
 
 		async getCurrentExecutions(filter: IDataObject): Promise<IExecutionsCurrentSummaryExtended[]> {
@@ -1109,7 +1284,7 @@ export const useWorkflowsStore = defineStore(STORES.WORKFLOWS, {
 				};
 			}
 			const rootStore = useRootStore();
-			return makeRestApiRequest(
+			return await makeRestApiRequest(
 				rootStore.getRestApiContext,
 				'GET',
 				'/executions-current',
@@ -1129,8 +1304,11 @@ export const useWorkflowsStore = defineStore(STORES.WORKFLOWS, {
 
 		// Creates a new workflow
 		async createNewWorkflow(sendData: IWorkflowDataUpdate): Promise<IWorkflowDb> {
+			// make sure that the new ones are not active
+			sendData.active = false;
+
 			const rootStore = useRootStore();
-			return makeRestApiRequest(
+			return await makeRestApiRequest(
 				rootStore.getRestApiContext,
 				'POST',
 				'/workflows',
@@ -1145,7 +1323,7 @@ export const useWorkflowsStore = defineStore(STORES.WORKFLOWS, {
 			forceSave = false,
 		): Promise<IWorkflowDb> {
 			const rootStore = useRootStore();
-			return makeRestApiRequest(
+			return await makeRestApiRequest(
 				rootStore.getRestApiContext,
 				'PATCH',
 				`/workflows/${id}${forceSave ? '?forceSave=true' : ''}`,
@@ -1155,7 +1333,7 @@ export const useWorkflowsStore = defineStore(STORES.WORKFLOWS, {
 
 		async runWorkflow(startRunData: IStartRunData): Promise<IExecutionPushResponse> {
 			const rootStore = useRootStore();
-			return makeRestApiRequest(
+			return await makeRestApiRequest(
 				rootStore.getRestApiContext,
 				'POST',
 				'/workflows/run',
@@ -1165,7 +1343,7 @@ export const useWorkflowsStore = defineStore(STORES.WORKFLOWS, {
 
 		async removeTestWebhook(workflowId: string): Promise<boolean> {
 			const rootStore = useRootStore();
-			return makeRestApiRequest(
+			return await makeRestApiRequest(
 				rootStore.getRestApiContext,
 				'DELETE',
 				`/test-webhook/${workflowId}`,
@@ -1174,7 +1352,7 @@ export const useWorkflowsStore = defineStore(STORES.WORKFLOWS, {
 
 		async stopCurrentExecution(executionId: string): Promise<IExecutionsStopData> {
 			const rootStore = useRootStore();
-			return makeRestApiRequest(
+			return await makeRestApiRequest(
 				rootStore.getRestApiContext,
 				'POST',
 				`/executions-current/${executionId}/stop`,
@@ -1206,7 +1384,7 @@ export const useWorkflowsStore = defineStore(STORES.WORKFLOWS, {
 
 		async fetchExecutionDataById(executionId: string): Promise<IExecutionResponse | null> {
 			const rootStore = useRootStore();
-			return getExecutionData(rootStore.getRestApiContext, executionId);
+			return await getExecutionData(rootStore.getRestApiContext, executionId);
 		},
 
 		deleteExecution(execution: IExecutionsSummary): void {
@@ -1224,27 +1402,38 @@ export const useWorkflowsStore = defineStore(STORES.WORKFLOWS, {
 		// Returns all the available timezones
 		async getExecutionEvents(id: string): Promise<IAbstractEventMessage[]> {
 			const rootStore = useRootStore();
-			return makeRestApiRequest(rootStore.getRestApiContext, 'GET', '/eventbus/execution/' + id);
+			return await makeRestApiRequest(
+				rootStore.getRestApiContext,
+				'GET',
+				'/eventbus/execution/' + id,
+			);
 		},
 		// Binary data
 		getBinaryUrl(
-			dataPath: string,
-			mode: 'view' | 'download',
+			binaryDataId: string,
+			action: 'view' | 'download',
 			fileName: string,
 			mimeType: string,
 		): string {
 			const rootStore = useRootStore();
 			let restUrl = rootStore.getRestUrl;
 			if (restUrl.startsWith('/')) restUrl = window.location.origin + restUrl;
-			const url = new URL(`${restUrl}/data/${dataPath}`);
-			url.searchParams.append('mode', mode);
+			const url = new URL(`${restUrl}/binary-data`);
+			url.searchParams.append('id', binaryDataId);
+			url.searchParams.append('action', action);
 			if (fileName) url.searchParams.append('fileName', fileName);
 			if (mimeType) url.searchParams.append('mimeType', mimeType);
 			return url.toString();
 		},
 
 		setNodePristine(nodeName: string, isPristine: boolean): void {
-			Vue.set(this.nodeMetadata[nodeName], 'pristine', isPristine);
+			this.nodeMetadata = {
+				...this.nodeMetadata,
+				[nodeName]: {
+					...this.nodeMetadata[nodeName],
+					pristine: isPristine,
+				},
+			};
 		},
 	},
 });

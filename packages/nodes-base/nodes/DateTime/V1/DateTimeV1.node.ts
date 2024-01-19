@@ -12,7 +12,7 @@ import type {
 
 import { deepCopy, NodeOperationError } from 'n8n-workflow';
 
-import set from 'lodash.set';
+import set from 'lodash/set';
 
 import moment from 'moment-timezone';
 
@@ -585,6 +585,6 @@ export class DateTimeV1 implements INodeType {
 			}
 		}
 
-		return this.prepareOutputData(returnData);
+		return [returnData];
 	}
 }

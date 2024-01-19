@@ -1,8 +1,8 @@
 <template>
 	<div>
 		<img v-if="filePath" :class="$style.credIcon" :src="filePath" />
-		<NodeIcon v-else-if="relevantNode" :nodeType="relevantNode" :size="28" />
-		<span :class="$style.fallback" v-else></span>
+		<NodeIcon v-else-if="relevantNode" :node-type="relevantNode" :size="28" />
+		<span v-else :class="$style.fallback"></span>
 	</div>
 </template>
 
@@ -14,8 +14,12 @@ import { useCredentialsStore } from '@/stores/credentials.store';
 import { useRootStore } from '@/stores/n8nRoot.store';
 import { useNodeTypesStore } from '@/stores/nodeTypes.store';
 import type { ICredentialType, INodeTypeDescription } from 'n8n-workflow';
+import NodeIcon from '@/components/NodeIcon.vue';
 
 export default defineComponent({
+	components: {
+		NodeIcon,
+	},
 	props: {
 		credentialTypeName: {
 			type: String,
@@ -40,8 +44,11 @@ export default defineComponent({
 				const nodeType = this.credentialWithIcon.icon.replace('node:', '');
 				return this.nodeTypesStore.getNodeType(nodeType);
 			}
-			const nodesWithAccess = this.credentialsStore.getNodesWithAccess(this.credentialTypeName);
+			if (!this.credentialTypeName) {
+				return null;
+			}
 
+			const nodesWithAccess = this.credentialsStore.getNodesWithAccess(this.credentialTypeName);
 			if (nodesWithAccess.length) {
 				return nodesWithAccess[0];
 			}

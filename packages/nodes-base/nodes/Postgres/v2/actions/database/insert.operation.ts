@@ -1,7 +1,9 @@
-import type { IExecuteFunctions } from 'n8n-core';
-import type { IDataObject, INodeExecutionData, INodeProperties } from 'n8n-workflow';
-
-import { updateDisplayOptions } from '../../../../../utils/utilities';
+import type {
+	IDataObject,
+	IExecuteFunctions,
+	INodeExecutionData,
+	INodeProperties,
+} from 'n8n-workflow';
 
 import type {
 	PgpDatabase,
@@ -13,12 +15,14 @@ import type {
 import {
 	addReturning,
 	checkItemAgainstSchema,
+	configureTableSchemaUpdater,
 	getTableSchema,
 	prepareItem,
 	replaceEmptyStringsByNulls,
 } from '../../helpers/utils';
 
 import { optionsCollection } from '../common.descriptions';
+import { updateDisplayOptions } from '@utils/utilities';
 
 const properties: INodeProperties[] = [
 	{
@@ -40,10 +44,15 @@ const properties: INodeProperties[] = [
 		default: 'autoMapInputData',
 		description:
 			'Whether to map node input properties and the table data automatically or manually',
+		displayOptions: {
+			show: {
+				'@version': [2, 2.1],
+			},
+		},
 	},
 	{
 		displayName: `
-		In this mode, make sure incoming data fields are named the same as the columns in your table. If needed, use a 'Set' node before this node to change the field names.
+		In this mode, make sure incoming data fields are named the same as the columns in your table. If needed, use an 'Edit Fields' node before this node to change the field names.
 		`,
 		name: 'notice',
 		type: 'notice',
@@ -51,6 +60,7 @@ const properties: INodeProperties[] = [
 		displayOptions: {
 			show: {
 				dataMode: ['autoMapInputData'],
+				'@version': [2, 2.1],
 			},
 		},
 	},
@@ -66,6 +76,7 @@ const properties: INodeProperties[] = [
 		displayOptions: {
 			show: {
 				dataMode: ['defineBelow'],
+				'@version': [2, 2.1],
 			},
 		},
 		default: {},
@@ -79,8 +90,9 @@ const properties: INodeProperties[] = [
 						displayName: 'Column',
 						name: 'column',
 						type: 'options',
+						// eslint-disable-next-line n8n-nodes-base/node-param-description-wrong-for-dynamic-options
 						description:
-							'Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code-examples/expressions/">expression</a>',
+							'Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code-examples/expressions/" target="_blank">expression</a>',
 						typeOptions: {
 							loadOptionsMethod: 'getColumns',
 							loadOptionsDependsOn: ['schema.value', 'table.value'],
@@ -96,6 +108,35 @@ const properties: INodeProperties[] = [
 				],
 			},
 		],
+	},
+	{
+		displayName: 'Columns',
+		name: 'columns',
+		type: 'resourceMapper',
+		default: {
+			mappingMode: 'defineBelow',
+			value: null,
+		},
+		noDataExpression: true,
+		required: true,
+		typeOptions: {
+			loadOptionsDependsOn: ['table.value', 'operation'],
+			resourceMapper: {
+				resourceMapperMethod: 'getMappingColumns',
+				mode: 'add',
+				fieldWords: {
+					singular: 'column',
+					plural: 'columns',
+				},
+				addAllFields: true,
+				multiKeyMatch: true,
+			},
+		},
+		displayOptions: {
+			show: {
+				'@version': [2.2, 2.3],
+			},
+		},
 	},
 	optionsCollection,
 ];
@@ -120,15 +161,28 @@ export async function execute(
 	db: PgpDatabase,
 ): Promise<INodeExecutionData[]> {
 	items = replaceEmptyStringsByNulls(items, nodeOptions.replaceEmptyStrings as boolean);
+	const nodeVersion = nodeOptions.nodeVersion as number;
+
+	let schema = this.getNodeParameter('schema', 0, undefined, {
+		extractValue: true,
+	}) as string;
+
+	let table = this.getNodeParameter('table', 0, undefined, {
+		extractValue: true,
+	}) as string;
+
+	const updateTableSchema = configureTableSchemaUpdater(schema, table);
+
+	let tableSchema = await getTableSchema(db, schema, table);
 
 	const queries: QueryWithValues[] = [];
 
 	for (let i = 0; i < items.length; i++) {
-		const schema = this.getNodeParameter('schema', i, undefined, {
+		schema = this.getNodeParameter('schema', i, undefined, {
 			extractValue: true,
 		}) as string;
 
-		const table = this.getNodeParameter('table', i, undefined, {
+		table = this.getNodeParameter('table', i, undefined, {
 			extractValue: true,
 		}) as string;
 
@@ -142,7 +196,10 @@ export async function execute(
 		let query = `INSERT INTO $1:name.$2:name($3:name) VALUES($3:csv)${onConflict}`;
 		let values: QueryValues = [schema, table];
 
-		const dataMode = this.getNodeParameter('dataMode', i) as string;
+		const dataMode =
+			nodeVersion < 2.2
+				? (this.getNodeParameter('dataMode', i) as string)
+				: (this.getNodeParameter('columns.mappingMode', i) as string);
 
 		let item: IDataObject = {};
 
@@ -151,13 +208,20 @@ export async function execute(
 		}
 
 		if (dataMode === 'defineBelow') {
-			const valuesToSend = (this.getNodeParameter('valuesToSend', i, []) as IDataObject)
-				.values as IDataObject[];
+			const valuesToSend =
+				nodeVersion < 2.2
+					? ((this.getNodeParameter('valuesToSend', i, []) as IDataObject).values as IDataObject[])
+					: ((this.getNodeParameter('columns.values', i, []) as IDataObject)
+							.values as IDataObject[]);
 
-			item = prepareItem(valuesToSend);
+			if (nodeVersion < 2.2) {
+				item = prepareItem(valuesToSend);
+			} else {
+				item = this.getNodeParameter('columns.value', i) as IDataObject;
+			}
 		}
 
-		const tableSchema = await getTableSchema(db, schema, table);
+		tableSchema = await updateTableSchema(db, tableSchema, schema, table);
 
 		values.push(checkItemAgainstSchema(this.getNode(), item, tableSchema, i));
 
@@ -168,5 +232,5 @@ export async function execute(
 		queries.push({ query, values });
 	}
 
-	return runQueries(queries, items, nodeOptions);
+	return await runQueries(queries, items, nodeOptions);
 }

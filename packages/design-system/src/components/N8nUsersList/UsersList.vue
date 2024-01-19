@@ -3,17 +3,20 @@
 		<div
 			v-for="(user, i) in sortedUsers"
 			:key="user.id"
-			class="ph-no-capture"
 			:class="i === sortedUsers.length - 1 ? $style.itemContainer : $style.itemWithBorder"
 			:data-test-id="`user-list-item-${user.email}`"
 		>
-			<n8n-user-info v-bind="user" :isCurrentUser="currentUserId === user.id" />
+			<N8nUserInfo
+				v-bind="user"
+				:is-current-user="currentUserId === user.id"
+				:is-saml-login-enabled="isSamlLoginEnabled"
+			/>
 			<div :class="$style.badgeContainer">
-				<n8n-badge v-if="user.isOwner" theme="tertiary" bold>
+				<N8nBadge v-if="user.isOwner" theme="tertiary" bold>
 					{{ t('nds.auth.roles.owner') }}
-				</n8n-badge>
+				</N8nBadge>
 				<slot v-if="!user.isOwner && !readonly" name="actions" :user="user" />
-				<n8n-action-toggle
+				<N8nActionToggle
 					v-if="
 						!user.isOwner &&
 						user.signInType !== 'ldap' &&
@@ -41,13 +44,13 @@ import type { PropType } from 'vue';
 import { defineComponent } from 'vue';
 
 export default defineComponent({
-	name: 'n8n-users-list',
-	mixins: [Locale],
+	name: 'N8nUsersList',
 	components: {
 		N8nActionToggle,
 		N8nBadge,
 		N8nUserInfo,
 	},
+	mixins: [Locale],
 	props: {
 		readonly: {
 			type: Boolean,
@@ -66,6 +69,10 @@ export default defineComponent({
 		actions: {
 			type: Array as PropType<UserAction[]>,
 			default: () => [],
+		},
+		isSamlLoginEnabled: {
+			type: Boolean,
+			default: false,
 		},
 	},
 	computed: {
