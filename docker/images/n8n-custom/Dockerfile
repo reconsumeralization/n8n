@@ -12,7 +12,7 @@ RUN apk add --update libc6-compat jq
 RUN corepack enable && corepack prepare --activate
 USER node
 
-RUN pnpm install
+RUN pnpm install --no-frozen-lockfile
 RUN pnpm build
 RUN rm -rf node_modules
 RUN # Removed command to modify package.json file
