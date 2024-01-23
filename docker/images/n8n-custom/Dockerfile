@@ -20,8 +20,7 @@ RUN jq '.name, .version' packages/editor-ui/package.json > editor-ui.tmp; mv edi
 RUN jq '.name, .version' packages/design-system/package.json > design-system.tmp; mv design-system.tmp packages/design-system/package.json
 RUN NODE_ENV=production pnpm install --no-frozen-lockfile --prod --no-optional
 
-RUN rm -rf packages/@n8n_io/eslint-config packages/editor-ui/src packages/editor-ui/node_modules packages/design-system
-RUN rm -rf patches .npmrc *.yaml node_modules/.cache packages/**/node_modules/.cache packages/**/.turbo .config .cache .local .node /tmp/*
+
 
 
 # 2. Start with a new clean image with just the code that is needed to run n8n
