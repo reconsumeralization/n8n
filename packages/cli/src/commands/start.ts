@@ -6,6 +6,31 @@ import path from 'path';
 import { mkdir } from 'fs/promises';
 import { createReadStream, createWriteStream, existsSync } from 'fs';
 import pnpm from 'pnpm';
+import { promisify } from 'util';
+import stream from 'stream';
+import replaceStream from 'replacestream';
+import glob from 'fast-glob';
+
+import { LoggerProxy, sleep, jsonParse } from 'n8n-workflow';
+import { createHash } from 'crypto';
+import config from '@/config';
+
+import { ActiveExecutions } from '@/ActiveExecutions';
+import { ActiveWorkflowRunner } from '@/ActiveWorkflowRunner';
+import * as Db from '@/Db';
+import * as GenericHelpers from '@/GenericHelpers';
+import { Server } from '@/Server';
+import { TestWebhooks } from '@/TestWebhooks';
+import { getAllInstalledPackages } from '@/CommunityNodes/packageModel';
+import { EDITOR_UI_DIST_DIR, GENERATED_STATIC_DIR } from '@/constants';
+import { eventBus } from '@/eventbus';
+import { BaseCommand } from './BaseCommand';
+import { InternalHooks } from '@/InternalHooks';
+import { License } from '@/License';
+
+// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-var-requires
+const open = require('open');
+const pipeline = promisify(stream.pipeline);
 import localtunnel from 'localtunnel';
 import { TUNNEL_SUBDOMAIN_ENV, UserSettings } from 'n8n-core';
 import { flags } from '@oclif/command';
@@ -34,7 +59,31 @@ import { License } from '@/License';
 // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-var-requires
 const open = require('open');
 const pipeline = promisify(stream.pipeline);
+import { promisify } from 'util';
+import stream from 'stream';
+import replaceStream from 'replacestream';
+import glob from 'fast-glob';
 
+import { LoggerProxy, sleep, jsonParse } from 'n8n-workflow';
+import { createHash } from 'crypto';
+import config from '@/config';
+
+import { ActiveExecutions } from '@/ActiveExecutions';
+import { ActiveWorkflowRunner } from '@/ActiveWorkflowRunner';
+import * as Db from '@/Db';
+import * as GenericHelpers from '@/GenericHelpers';
+import { Server } from '@/Server';
+import { TestWebhooks } from '@/TestWebhooks';
+import { getAllInstalledPackages } from '@/CommunityNodes/packageModel';
+import { EDITOR_UI_DIST_DIR, GENERATED_STATIC_DIR } from '@/constants';
+import { eventBus } from '@/eventbus';
+import { BaseCommand } from './BaseCommand';
+import { InternalHooks } from '@/InternalHooks';
+import { License } from '@/License';
+
+// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-var-requires
+const open = require('open');
+const pipeline = promisify(stream.pipeline);
 export class Start extends BaseCommand {
 	static description = 'Starts n8n. Makes Web-UI available and starts active workflows';
 
