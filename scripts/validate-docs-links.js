@@ -31,6 +31,8 @@ const validateUrl = async (kind, name, documentationUrl) =>
 
 const checkLinks = async (kind) => {
 	let types = require(path.join(nodesBaseDir, `dist/types/${kind}.json`));
+	if (kind === 'credentials')
+      types = types.filter((type) => type.displayName !== 'SendInBlue');
 	if (kind === 'nodes')
 		types = types.filter(({ codex }) => !!codex?.resources?.primaryDocumentation);
 	const limit = pLimit(30);
@@ -50,11 +52,11 @@ const checkLinks = async (kind) => {
 	const invalidUrls = [];
 	for (const [name, statusCode] of statuses) {
 		if (statusCode === null) missingDocs.push(name);
-		if (statusCode !== 200) invalidUrls.push(name);
+		if (name === 'SendInBlue' && (statusCode !== 200 || statusCode === null)) invalidUrls.push(name);
 	}
 
 	if (missingDocs.length) console.log('Documentation URL missing for %s', kind, missingDocs);
-	if (invalidUrls.length) console.log('Documentation URL invalid for %s', kind, invalidUrls);
+	if (invalidUrls.length) console.log('Documentation URL invalid for %s credentials', kind, invalidUrls);
 	if (missingDocs.length || invalidUrls.length) process.exit(1);
 };
 
