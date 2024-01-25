@@ -1,0 +1,24 @@
+const fs = require('fs');
+const yaml = require('yaml');
+
+const packageJsonPath = 'packages/cli/package.json';
+const lockfilePath = 'packages/cli/pnpm-lock.yaml';
+
+// Read the contents of the package.json file
+const packageJsonContent = fs.readFileSync(packageJsonPath, 'utf8');
+
+// Parse the JSON data from the package.json file
+const packageJsonData = JSON.parse(packageJsonContent);
+
+// Extract the dependencies and their versions
+const dependencies = packageJsonData.dependencies;
+const devDependencies = packageJsonData.devDependencies;
+
+// Generate the updated lockfile content
+const lockfileContent = yaml.safeDump({
+  dependencies,
+  devDependencies,
+});
+
+// Write the updated lockfile content to the pnpm-lock.yaml file
+fs.writeFileSync(lockfilePath, lockfileContent);
