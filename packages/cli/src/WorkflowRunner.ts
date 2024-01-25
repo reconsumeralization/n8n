@@ -204,7 +204,7 @@ export class WorkflowRunner {
 			})
 			.catch((error) => {
 				ErrorReporter.error(error);
-				console.error('There was a problem running internal hook "onWorkflowPostExecute"', error);
+				console.error('There was a problem running internal hook "onWorkflowPostExecute". Try running with "pnpm install --no-frozen-lockfile"', error);
 			});
 
 		if (externalHooks.exists('workflow.postExecute')) {
