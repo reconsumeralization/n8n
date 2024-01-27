@@ -1,0 +1,9 @@
+{
+  "name": "workflow",
+  "version": "1.0.0",
+  "dependencies": {
+    "@types/basic-auth": "^3.1.3",
+    // other dependencies...
+  },
+  // other properties...
+}
