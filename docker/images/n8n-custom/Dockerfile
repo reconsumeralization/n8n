@@ -12,13 +12,13 @@ RUN apk add --update libc6-compat jq
 RUN corepack enable && corepack prepare --activate
 USER node
 
-RUN pnpm install --no-frozen-lockfile # Updated per issue #
+RUN pnpm install --no-frozen-lockfile
 RUN pnpm build
 RUN rm -rf node_modules
 RUN jq 'del(.pnpm.patchedDependencies)' package.json > package.json.tmp; mv package.json.tmp package.json
 RUN jq '.name, .version' packages/editor-ui/package.json > editor-ui.tmp; mv editor-ui.tmp packages/editor-ui/package.json
 RUN jq '.name, .version' packages/design-system/package.json > design-system.tmp; mv design-system.tmp packages/design-system/package.json
-RUN NODE_ENV=production pnpm install --no-frozen-lockfile --prod --no-optional
+RUN pnpm install --no-frozen-lockfile
 
 
 
