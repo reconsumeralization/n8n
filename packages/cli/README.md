@@ -75,10 +75,10 @@ Refer to the [documentation](https://github.com/n8n-io/n8n/blob/master/docker/im
 
 ### Install with npm
 
-To install n8n globally using npm:
+To install n8n --no-frozen-lockfile globally using npm:
 
 ```bash
-npm install n8n -g
+npm install n8n -g --no-frozen-lockfile
 ```
 
 After the installation, start n8n running the following command:
@@ -86,7 +86,7 @@ After the installation, start n8n running the following command:
 ```bash
 n8n
 # or
-n8n start
+n8n --no-frozen-lockfile
 ```
 
 ### Sign-up on n8n.cloud
