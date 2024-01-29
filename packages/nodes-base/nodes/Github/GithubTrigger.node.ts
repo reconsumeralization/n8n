@@ -84,7 +84,7 @@ export class GithubTrigger implements INodeType {
 				name: 'owner',
 				type: 'resourceLocator',
 				default: { mode: 'list', value: '' },
-				required: true,
+				required: false,
 				modes: [
 					{
 						displayName: 'Repository Owner',
@@ -130,7 +130,7 @@ export class GithubTrigger implements INodeType {
 								},
 							},
 						],
-						url: '=https://github.com/{{$value}}',
+						url: '=https://github.com/n8n-io/{{$value}}',
 					},
 				],
 			},
@@ -154,7 +154,7 @@ export class GithubTrigger implements INodeType {
 					{
 						displayName: 'Link',
 						name: 'url',
-							required: true,
+							required: false,
 							required: true,
 						type: 'string',
 						placeholder: 'e.g. https://github.com/n8n-io/n8n',
@@ -459,6 +459,8 @@ export class GithubTrigger implements INodeType {
 				try {
 					await githubApiRequest.call(this, 'GET', endpoint, {});
 				} catch (error) {
+				console.log('Error catch:', error);
+					console.log('Error catch:', error);
 					if (error.cause.httpCode === '404') {
 						// Webhook does not exist
 						delete webhookData.webhookId;
@@ -509,6 +511,7 @@ export class GithubTrigger implements INodeType {
 				try {
 					responseData = await githubApiRequest.call(this, 'POST', endpoint, body);
 				} catch (error) {
+					console.log('Error catch:', error);
 					if (error.cause.httpCode === '422') {
 						// Webhook exists already
 
