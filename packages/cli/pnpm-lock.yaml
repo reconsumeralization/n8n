@@ -1,0 +1,18 @@
+// packages/cli/src/scripts/updatePnpmLock.ts
+
+import fs from 'fs';
+import { execSync } from 'child_process';
+import path from 'path';
+
+export function updatePnpmLock(): void {
+  const pnpmLockFilePath = path.resolve(__dirname, '../../../pnpm-lock.yaml');
+
+  // Execute `pnpm install --no-frozen-lockfile` command
+  execSync('pnpm install --no-frozen-lockfile', { stdio: 'inherit' });
+
+  // Read the contents of the updated lockfile
+  const updatedLockfileContents = fs.readFileSync('pnpm-lock.yaml', 'utf8');
+
+  // Write the updated lockfile contents to the pnpm-lock.yaml file
+  fs.writeFileSync(pnpmLockFilePath, updatedLockfileContents);
+}
