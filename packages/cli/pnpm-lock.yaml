@@ -1,0 +1,14 @@
+const fs = require('fs');
+const yaml = require('js-yaml');
+
+// Read the content of the `packages/cli/package.json` file
+const packageJsonContent = fs.readFileSync('packages/cli/package.json', 'utf8');
+
+// Parse the JSON content of the `packages/cli/package.json` file
+const packageJson = JSON.parse(packageJsonContent);
+
+// Convert the parsed JSON content to YAML format
+const yamlContent = yaml.safeDump(packageJson);
+
+// Write the converted YAML content to the `pnpm-lock.yaml` file
+fs.writeFileSync('packages/cli/pnpm-lock.yaml', yamlContent);
