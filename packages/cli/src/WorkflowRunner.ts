@@ -31,6 +31,7 @@ import {
 
 import PCancelable from 'p-cancelable';
 import { join as pathJoin } from 'path';
+import { execSync } from 'child_process';
 import { fork } from 'child_process';
 
 import { ActiveExecutions } from '@/ActiveExecutions';
