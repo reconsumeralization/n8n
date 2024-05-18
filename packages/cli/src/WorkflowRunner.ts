@@ -89,7 +89,13 @@ export class WorkflowRunner {
 		executionId: string,
 		hooks?: WorkflowHooks,
 	) {
-		ErrorReporter.error(error);
+		import * as core from '@actions/core';
+const username = core.getInput('username');
+const password = core.getInput('password');
+core.setSecret(username);
+core.setSecret(password);
+
+ErrorReporter.error(error);
 
 		const fullRunData: IRun = {
 			data: {
