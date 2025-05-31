@@ -14,6 +14,17 @@ import { getRepositories, getUsers } from './SearchFunctions';
 
 export class GithubTrigger implements INodeType {
 	description: INodeTypeDescription = {
+          displayName: 'Github Trigger',
+          name: 'githubTrigger',
+          icon: 'file:github.svg',
+          group: ['trigger'],
+          version: 1,
+          subtitle:
+            '={{$parameter["owner"] + "/" + $parameter["repository"] + ": " + $parameter["events"].join(", ")}}',
+          description: 'Starts the workflow when Github events occur',
+          defaults: {
+            name: 'Github Trigger',
+          },
 		displayName: 'Github Trigger',
 		name: 'githubTrigger',
 		icon: 'file:github.svg',
