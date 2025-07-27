@@ -12,7 +12,7 @@ RUN apk add --update libc6-compat jq
 RUN corepack enable && corepack prepare --activate
 USER node
 
-RUN pnpm install --no-frozen-lockfile # Updated per issue #
+RUN pnpm install --frozen-lockfile # Updated per issue #
 RUN pnpm build
 RUN rm -rf node_modules
 RUN jq 'del(.pnpm.patchedDependencies)' package.json > package.json.tmp; mv package.json.tmp package.json
