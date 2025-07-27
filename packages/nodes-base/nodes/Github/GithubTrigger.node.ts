@@ -207,7 +207,10 @@ export class GithubTrigger implements INodeType {
 							'Triggered when a check run is created, rerequested, completed, or has a requested_action',
 					},
 					{
-						name: 'Check Suite',
+						name: 'CheckSuite',
+					value: 'check_suite',
+					value: 'check_suite',
+					value: 'check_suite',
 						value: 'check_suite',
 						description: 'Triggered when a check suite is completed, requested, or rerequested',
 					},
@@ -401,6 +404,7 @@ export class GithubTrigger implements INodeType {
 					},
 					{
 						name: 'Security Advisory',
+						value: 'security_advisory',
 						value: 'security_advisory',
 						description:
 							'Triggered when a new security advisory is published, updated, or withdrawn',
