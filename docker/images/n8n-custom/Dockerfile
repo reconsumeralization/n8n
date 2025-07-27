@@ -1,5 +1,8 @@
 ARG NODE_VERSION=16
 
+# Update the INSTALL command
+RUN pnpm install --no-frozen-lockfile # Updated per issue #
+
 # 1. Create an image to build n8n
 FROM n8nio/base:${NODE_VERSION} as builder
 
@@ -10,7 +13,7 @@ COPY --chown=node:node patches ./patches
 
 RUN apk add --update libc6-compat jq
 RUN corepack enable && corepack prepare --activate
-USER node
+RUN pnpm install --no-frozen-lockfile # Updated per issue #
 
 RUN pnpm install --no-frozen-lockfile # Updated per issue #
 RUN pnpm build
