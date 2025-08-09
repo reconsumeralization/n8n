@@ -151,7 +151,7 @@
     "flatted": "^3.2.4",
     "google-timezones-json": "^1.1.0",
     "handlebars": "4.7.7",
-    "inquirer": "^7.0.1",
+    "inquirer": "^8.2.7",
     "ioredis": "^5.2.4",
     "json-diff": "^0.5.4",
     "jsonschema": "^1.4.1",
