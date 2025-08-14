@@ -58,7 +58,7 @@
     "@oclif/errors": "^1.2.2",
     "change-case": "^4.1.1",
     "fast-glob": "^3.2.5",
-    "inquirer": "^7.0.1",
+    "inquirer": "^8.2.7",
     "n8n-core": "workspace:*",
     "n8n-workflow": "workspace:*",
     "oauth-1.0a": "^2.2.6",
