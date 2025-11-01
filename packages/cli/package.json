@@ -206,7 +206,7 @@
     "typedi": "^0.10.0",
     "typeorm": "^0.3.12",
     "uuid": "^8.3.2",
-    "validator": "13.7.0",
+    "validator": "13.15.20",
     "winston": "^3.3.3",
     "ws": "^8.12.0",
     "xmllint-wasm": "^3.0.1",
