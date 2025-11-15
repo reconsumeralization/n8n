@@ -119,7 +119,7 @@
     "@n8n_io/license-sdk": "~2.4.0",
     "@n8n/client-oauth2": "workspace:*",
     "@oclif/command": "^1.8.16",
-    "@oclif/core": "^1.16.4",
+    "@oclif/core": "^4.0.0",
     "@oclif/errors": "^1.3.6",
     "@rudderstack/rudder-sdk-node": "2.1.3",
     "@sentry/integrations": "^7.28.1",
