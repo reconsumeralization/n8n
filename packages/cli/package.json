@@ -178,7 +178,7 @@
     "n8n-editor-ui": "workspace:*",
     "n8n-nodes-base": "workspace:*",
     "n8n-workflow": "workspace:*",
-    "nodemailer": "^6.7.1",
+    "nodemailer": "^7.0.11",
     "oauth-1.0a": "^2.2.6",
     "open": "^7.0.0",
     "openapi-types": "^10.0.0",
