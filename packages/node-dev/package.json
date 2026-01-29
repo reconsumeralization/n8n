@@ -54,7 +54,7 @@
     "@types/vorpal": "^1.11.0"
   },
   "dependencies": {
-    "@oclif/command": "^1.5.18",
+    "@oclif/command": "^1.8.36",
     "@oclif/errors": "^1.2.2",
     "change-case": "^4.1.1",
     "fast-glob": "^3.2.5",
